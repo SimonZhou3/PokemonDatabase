@@ -1,6 +1,9 @@
 <script setup>
 import { RouterLink, RouterView } from "vue-router";
-import HelloWorld from "./components/HelloWorld.vue";
+import 'bootstrap/dist/css/bootstrap.css';
+import 'bootstrap-vue/dist/bootstrap-vue.css';
+import 'vue3-simple-typeahead/dist/vue3-simple-typeahead.css';
+
 </script>
 
 <template>
@@ -8,17 +11,18 @@ import HelloWorld from "./components/HelloWorld.vue";
     <img
       alt="Vue logo"
       class="logo"
-      src="@/assets/logo.svg"
+      src="@/assets/pokeball.png"
       width="125"
       height="125"
     />
 
-    <div class="wrapper">
-      <HelloWorld msg="You did it!" />
-
+    <div>
+      <h1>
+        Pokemon Database
+      </h1>
       <nav>
         <RouterLink to="/">Home</RouterLink>
-        <RouterLink to="/about">About</RouterLink>
+        <RouterLink to="/pokemon">Pokemon</RouterLink>
       </nav>
     </div>
   </header>
