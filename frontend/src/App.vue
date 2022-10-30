@@ -16,13 +16,14 @@ import 'vue3-simple-typeahead/dist/vue3-simple-typeahead.css';
       height="125"
     />
 
-    <div>
+    <div class="">
       <h1>
         Pokemon Database
       </h1>
       <nav>
         <RouterLink to="/">Home</RouterLink>
         <RouterLink to="/pokemon">Pokemon</RouterLink>
+        <RouterLink to ="/trainer">Trainer</RouterLink>
       </nav>
     </div>
   </header>

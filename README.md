@@ -2,6 +2,8 @@
  ##Task:
     1. Frontend Development (using Vue.js)
         - Initial framework
+        - Home page
+        - Query result page
         - Bridging frontend and backend
     2. Backend Development (using Flask)
         - Initial REST API bridging between DBMS
@@ -26,6 +28,14 @@
      November 7th, 2022 - November 15th, 2022: Complete GUI Template
      November 15th, 2022 - November 21st, 2022: Bridge Frontend and backend together
      November 21st, 2022 - November 25th, 2022: Test and polish project
+
+#GUI Template
+Home Search Page
+![alt text](https://cdn.discordapp.com/attachments/1023670708779356220/1036388287251742730/unknown.png)
+
+Information Page
+![alt text](https://cdn.discordapp.com/attachments/1023670708779356220/1036397617841705060/unknown.png)
+
 # Backend Setup
 
 > pipenv shell
