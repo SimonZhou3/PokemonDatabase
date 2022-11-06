@@ -1,14 +1,24 @@
 from flask import Flask
 import psycopg
 import pokebase as pb
+import os
+from os.path import join, dirname
+from dotenv import load_dotenv
+from route import routes
 from init_DB.initGeneration import init as initGeneration
 #make sure postgres is running before running this
 #i keep forgetting
 #sudo systemctl start postgresql.service
 #psql -d myDatabaseName
 
+#Load environmental variables
+dotenv_path = join(dirname(__file__), '.env')
+load_dotenv(dotenv_path)
+DBNAME = os.environ.get('DBNAME')
+USER = os.environ.get('USER')
+PASSWORD = os.environ.get('PASSWORD')
 # Connect to an existing database
-with psycopg.connect("dbname=304 user=keqi") as conn:
+with psycopg.connect(F"dbname={DBNAME} user={USER} password={PASSWORD}") as conn:
         # Open a cursor to perform database operations
     with conn.cursor() as cur:
         #wipe database
@@ -22,8 +32,6 @@ with psycopg.connect("dbname=304 user=keqi") as conn:
 
 app = Flask(__name__)
 
-@app.route("/")
-def hello_world():
-    return "<p>Hello, World!</p>" 
+routes(app)
 
 

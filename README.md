@@ -1,5 +1,7 @@
 # project_n7z5j_r0b7x_x7g3b
+
 # Task:
+
     1. Frontend Development (using Vue.js)
         - Initial framework
         - Home page
@@ -8,7 +10,7 @@
     2. Backend Development (using Flask)
         - Initial REST API bridging between DBMS
         -  Build API:
-            - Pokemon 
+            - Pokemon
             - Pokemon_Item
             - Moves
             - Trainer
@@ -20,7 +22,8 @@
         - Intialize and populate tables and database
 
 # Timeline
-     Note: Every groupmate will meet up during specified dates to work on and complete tasks together 
+
+     Note: Every groupmate will meet up during specified dates to work on and complete tasks together
 
      October 30th, 2022 - November 5th, 2022: Set up Postgres and create Empty tables
      November 5th, 2022 - November 7th, 2022: Link Database to Flask
@@ -30,6 +33,7 @@
      November 21st, 2022 - November 25th, 2022: Test and polish project
 
 # GUI Template
+
 Home Search Page
 ![alt text](https://cdn.discordapp.com/attachments/1023670708779356220/1036388287251742730/unknown.png)
 
@@ -38,9 +42,13 @@ Information Page
 
 # Backend Setup
 
+> Goto backend /backend
 > pipenv shell
+
+# To install packages please use:
 
 > pipenv install
 
-> pipenv run app
+# To
 
+> pipenv run app
