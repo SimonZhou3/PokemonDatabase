@@ -1,14 +1,21 @@
 #change this according to API resource names\
 api_name = "location-area"
 table = "area"
-table_id = table + "_id"
+table_id = table+"_id"
+parent = "location"
+fk_id = parent+"_id"
+
+populate_table = True
+
+#index for child id
+child_id = 1
 
 def init(cur, pb):
 #if the table exist then skip entirely
-#if need to remake the table, enter DROP TABLE tablename; before running
     cur.execute("SELECT EXISTS(SELECT * FROM information_schema.tables WHERE table_name='"+table+"')")
     if bool(cur.fetchone()[0]):
         print("**table " + table + " exists already**")
+        populate_table = False
     else :
 
     # Execute a command: this creates a new table
@@ -16,17 +23,26 @@ def init(cur, pb):
             CREATE TABLE """ + table + """ (
                 """+ table_id + """  integer PRIMARY KEY,
                 name text,
-                location_id integer,
-                CONSTRAINT fk_location_id
-                    FOREIGN KEY(location_id)
-                        REFERENCES location(location_id)
+                """+fk_id+""" integer,
+                CONSTRAINT fk_"""+fk_id +"""
+                    FOREIGN KEY("""+fk_id+""")
+                        REFERENCES """+parent+"""("""+fk_id+""")
                         ON DELETE CASCADE
                     )
             """)
         print("!!table " + table + " created!!")
+    #create tables of dependent entities
+    # initChildTable(cur, pb)
 
-
-def insert(cur,pb,resource,parent_id, child_id):
-    cur.execute(
-        "INSERT INTO " +  table + " (" + table_id + ", name, location_id) VALUES (%s, %s, %s)",
-        (child_id , resource.name, parent_id))
+def insert(cur, pb, resource, parent_id, id):
+    #populate this table
+    if populate_table:
+        cur.execute(
+            "INSERT INTO " +  table + " (" + table_id + ", name, "+fk_id+") VALUES (%s, %s, %s)",
+            (id , resource.name, parent_id))
+    
+    #populate child tables 
+    # global child_id
+    # for child in resource.children:
+    #     insertChildTable(cur, pb, area, id, child_id)
+    #     child_id += 1

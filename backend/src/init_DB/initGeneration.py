@@ -14,6 +14,8 @@ version_id = 1
 region_id = 1
 
 def init(cur, pb):  
+    global version_id
+    global region_id
     #if the table exist then skip entirely
     cur.execute("SELECT EXISTS(SELECT * FROM information_schema.tables WHERE table_name='"+table+"')")
     if bool(cur.fetchone()[0]):

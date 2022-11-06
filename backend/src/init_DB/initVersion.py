@@ -7,6 +7,8 @@ fk_id = parent+"_id"
 
 populate_table = True
 
+#index for child id
+
 def init(cur, pb):
 #if the table exist then skip entirely
     cur.execute("SELECT EXISTS(SELECT * FROM information_schema.tables WHERE table_name='"+table+"')")
@@ -28,7 +30,7 @@ def init(cur, pb):
                     )
             """)
         print("!!table " + table + " created!!")
-        #create tables of dependent entities
+    #create tables of dependent entities
 
 def insert(cur, pb, resource, parent_id, id):
     # resource = pb.APIresource(api_name,resource_name)

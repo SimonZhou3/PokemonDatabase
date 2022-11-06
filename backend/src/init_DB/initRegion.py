@@ -1,5 +1,5 @@
 from init_DB.initLocation import init as initLocationTable
-from init_DB.initLocationTable import insert as insertLocationTable
+from init_DB.initLocation import insert as insertLocationTable
 #change this according to API resource names\
 api_name = "region"
 table = api_name
@@ -42,9 +42,10 @@ def insert(cur, pb, resource, parent_id, id):
             "INSERT INTO " +  table + " (" + table_id + ", name, "+fk_id+") VALUES (%s, %s, %s)",
             (id , resource.name, parent_id))
 
-        for location in resource.locations:
-            insertLocationTable(cur, pb, location, id, location_id)
-            location_id += 1
+    global location_id  
+    for location in resource.locations:
+        insertLocationTable(cur, pb, location, id, location_id)
+        location_id += 1
 
 
     # Query the database and obtain data as Python objects.
