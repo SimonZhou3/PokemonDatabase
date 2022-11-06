@@ -1,5 +1,5 @@
-from init_DB.initVersion import init as initVersionTable
-from init_DB.initVersion import insert as insertVersionTable
+from init_DB.initVersionGroup import init as initVersionTable
+from init_DB.initVersionGroup import insert as insertVersionTable
 from init_DB.initRegion import init as initRegionTable
 from init_DB.initRegion import insert as insertRegionTable
 #change this according to API resource names
@@ -36,13 +36,13 @@ def init(cur, pb):
     initRegionTable(cur, pb)
 
     #get list of all generations
-    resourceList = pb.APIResourceList(table)
+    resourceList = pb.APIResourceList(api_name)
     for id, item in enumerate(resourceList):
     # Pass data to fill a query placeholders and let Psycopg perform
     # the correct conversion (no SQL injections!)
 
         #insert into generation table
-        resource = pb.APIResource(table, item['name'])
+        resource = pb.APIResource(api_name, item['name'])
         if populate_table:
             cur.execute(
                 "INSERT INTO " +  table + " (" + table_id + ", name) VALUES (%s, %s)",
