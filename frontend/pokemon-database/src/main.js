@@ -4,7 +4,6 @@ import 'bootstrap-vue';
 import 'bootstrap';
 import SimpleTypeahead from 'vue3-simple-typeahead';
 
-
 import App from "./App.vue";
 import router from "./router";
 
