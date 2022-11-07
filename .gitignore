@@ -2,3 +2,4 @@
 ./frontend/pokemon-database/.vscode
 .idea/*
 .vscode
+.env
