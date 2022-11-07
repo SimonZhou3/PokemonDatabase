@@ -1,7 +1,7 @@
 #change this according to API resource names\
 api_name = "version-group"
 table = "version_group"
-table_id = "version_id"
+table_id = table+"_id"
 parent = "generation"
 fk_id = parent+"_id"
 
