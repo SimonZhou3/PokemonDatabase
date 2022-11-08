@@ -22,7 +22,7 @@ def init(cur, pb):
     # Execute a command: this creates a new table
         cur.execute("""
             CREATE TABLE """ + table + """ (
-                """+ table_id + """  integer PRIMARY KEY,
+                """+ table_id + """ SERIAL PRIMARY KEY,
                 name text,
                 """+fk_id+""" integer,
                 CONSTRAINT fk_"""+fk_id +"""
@@ -39,8 +39,8 @@ def insert(cur, pb, resource, parent_id, id):
     # resource = pb.APIresource(api_name,resource_name)
     if populate_table:
         cur.execute(
-            "INSERT INTO " +  table + " (" + table_id + ", name, "+fk_id+") VALUES (%s, %s, %s)",
-            (id , resource.name, parent_id))
+            "INSERT INTO " +  table + " (name, "+fk_id+") VALUES (%s, %s)",
+            (resource.name, parent_id))
 
     global location_id  
     for location in resource.locations:

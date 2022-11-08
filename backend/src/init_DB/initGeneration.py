@@ -26,7 +26,7 @@ def init(cur, pb):
     # Execute a command: this creates a new table
         cur.execute("""
             CREATE TABLE """ + table + """ (
-                """+ table_id + """  integer PRIMARY KEY,
+                """+ table_id + """  SERIAL PRIMARY KEY,
                 name text UNIQUE)
             """)
         print("!!table " + table + " created!!")
@@ -45,8 +45,8 @@ def init(cur, pb):
         resource = pb.APIResource(api_name, item['name'])
         if populate_table:
             cur.execute(
-                "INSERT INTO " +  table + " (" + table_id + ", name) VALUES (%s, %s)",
-                (id + 1 , resource.name,))
+                "INSERT INTO " +  table + " (name) VALUES (%s)",
+                (resource.name,))
         
         #insert into version_group table
         for version in resource.version_groups:
