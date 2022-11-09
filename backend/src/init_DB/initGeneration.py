@@ -45,6 +45,7 @@ def init(cur, pb):
         #insert into generation table
         generation = pb.APIResource(api_name, item['name'])
         if populate_table:
+            generation.name = generation.name.replace("-", " ")
             print("TUPLE(GENERATION): ", id + 1, generation.name)
             cur.execute(
                 "INSERT INTO " +  table + " (name) VALUES (%s)",
@@ -58,13 +59,3 @@ def init(cur, pb):
         #insert into region table
         insertRegionTable(cur, pb, generation.main_region, id + 1, region_id)
         region_id += 1
-
-    # Query the database and obtain data as Python objects.
-    # cur.execute("SELECT * FROM " + table)
-    # cur.fetchone()
-    # will return (1, 1996-02-27, "red")
-
-    # You can use `cur.fetchmany()`, `cur.fetchall()` to return a list
-    # of several records, or even iterate on the cursor
-    # for record in cur:
-    #     print(record)
