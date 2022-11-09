@@ -1,7 +1,7 @@
 from db import Database
 from models.move import Move
 from models.type import Type
-
+from models.stat import Stat
 class Pokemon:
 
     @staticmethod
@@ -44,14 +44,14 @@ class Pokemon:
         self.weight = query[0][2]
         self.sprite = query[0][3]
         self.pokemon_specific_id = query[0][4]
-        print(self.pokemon_specific_id)
         self.description = query[0][5]
+
+        # Get stat
+        self.stat = Stat(self.pokemon_generic_id)
+        await self.stat.load()
         # Get Type
         self.type = Type(self.pokemon_generic_id)
         await self.type.load()
-
-        # Get Stats 
-    
         # Get moves
         self.moves = Move(self.pokemon_specific_id)
         await self.moves.load()

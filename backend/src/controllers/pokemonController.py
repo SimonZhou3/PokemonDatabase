@@ -22,6 +22,7 @@ class PokemonController:
                 "height" : pokemon.height,
                 "sprite" : pokemon.sprite,
                 "description": pokemon.description,
+                "stat": pokemon.stat.getStats(),
                 "type": pokemon.type.getTypes(),
                 "moves": pokemon.moves.getMoves()
             }]}
