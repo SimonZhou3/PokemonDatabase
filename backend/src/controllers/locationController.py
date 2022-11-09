@@ -37,12 +37,12 @@ class LocationController:
         await location.load()
         return LocationController.locationFormat(location)
 
-    @staticmethod
-    async def update(data):
-        location = Location(location_id)
-        return { "data" : None}
+    # @staticmethod
+    # async def update(data):
+    #     location = Location(location_id)
+    #     return { "data" : None}
 
-    @staticmethod
-    async def delete(data):
-        location = Location()
-        return { "data" : None}
+    # @staticmethod
+    # async def delete(data):
+    #     location = Location()
+    #     return { "data" : None}
