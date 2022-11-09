@@ -1,96 +1,26 @@
-<script setup>
-import { RouterLink, RouterView } from "vue-router";
-import 'bootstrap/dist/css/bootstrap.css';
-import 'bootstrap-vue/dist/bootstrap-vue.css';
-import 'vue3-simple-typeahead/dist/vue3-simple-typeahead.css';
-
-</script>
-
 <template>
-  <header>
-    <img
-      alt="Vue logo"
-      class="logo"
-      src="@/assets/pokeball.png"
-      width="125"
-      height="125"
-    />
-
-    <div class="">
-      <h1>
-        Pokemon Database
-      </h1>
-      <nav>
-        <RouterLink to="/">Home</RouterLink>
-        <RouterLink to="/pokemon">Pokemon</RouterLink>
-        <RouterLink to ="/trainer">Trainer</RouterLink>
-      </nav>
-    </div>
-  </header>
-
-  <RouterView />
+  <img alt="Vue logo" src="./assets/logo.png">
+  <HelloWorld msg="Welcome to Your Vue.js App"/>
 </template>
 
-<style scoped>
-header {
-  line-height: 1.5;
-  max-height: 100vh;
-}
+<script>
+import HelloWorld from './components/HelloWorld.vue'
 
-.logo {
-  display: block;
-  margin: 0 auto 2rem;
+export default {
+  name: 'App',
+  components: {
+    HelloWorld
+  }
 }
+</script>
 
-nav {
-  width: 100%;
-  font-size: 12px;
+<style>
+#app {
+  font-family: Avenir, Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
   text-align: center;
-  margin-top: 2rem;
-}
-
-nav a.router-link-exact-active {
-  color: var(--color-text);
-}
-
-nav a.router-link-exact-active:hover {
-  background-color: transparent;
-}
-
-nav a {
-  display: inline-block;
-  padding: 0 1rem;
-  border-left: 1px solid var(--color-border);
-}
-
-nav a:first-of-type {
-  border: 0;
-}
-
-@media (min-width: 1024px) {
-  header {
-    display: flex;
-    place-items: center;
-    padding-right: calc(var(--section-gap) / 2);
-  }
-
-  .logo {
-    margin: 0 2rem 0 0;
-  }
-
-  header .wrapper {
-    display: flex;
-    place-items: flex-start;
-    flex-wrap: wrap;
-  }
-
-  nav {
-    text-align: left;
-    margin-left: -1rem;
-    font-size: 1rem;
-
-    padding: 1rem 0;
-    margin-top: 1rem;
-  }
+  color: #2c3e50;
+  margin-top: 60px;
 }
 </style>
