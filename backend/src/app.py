@@ -8,6 +8,8 @@ from route import routes
 from init_DB.initGeneration import init as initGeneration
 from init_DB.initType import init as initType
 from init_DB.initPokemonGeneric import init as initPokemon
+from init_DB.initItem import init as initItem
+from init_DB.initStat import init as initStat
 
 # make sure postgres is running before running this
 # i keep forgetting
@@ -31,8 +33,9 @@ with psycopg.connect(F"dbname=304 user=keqi") as conn:
         # initialize tables
         initGeneration(cur, pb)
         initType(cur, pb)
+        initItem(cur,pb)
+        initStat(cur,pb)
         initPokemon(cur, pb)
-        initItem
         # Make the changes to the database persistent
         conn.commit()
         print("commited to database")

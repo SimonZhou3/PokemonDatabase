@@ -25,8 +25,7 @@ def init(cur, pb):
         cur.execute("""
             CREATE TABLE """ + table + """ (
                 """+ table_id + """  integer PRIMARY KEY,
-                name text,
-                damage_class text
+                name text
                     )
             """)
         print("!!table " + table + " created!!")
@@ -40,6 +39,7 @@ def init(cur, pb):
         poke_type = pb.APIResource(api_name, typeID['name'])
         #populate this table
         if populate_table:
+            print("TUPLE(TYPE): ", typeIndex, poke_type.name)
             cur.execute(
                 "INSERT INTO " +  table + " (" + table_id + ", name"+") VALUES (%s, %s)",
                 (typeIndex , poke_type.name))

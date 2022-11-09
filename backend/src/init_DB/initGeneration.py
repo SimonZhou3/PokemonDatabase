@@ -37,25 +37,26 @@ def init(cur, pb):
     initRegionTable(cur, pb)
 
     #get list of all generations
-    resourceList = pb.APIResourceList(api_name)
-    for id, item in enumerate(resourceList):
+    generationList = pb.APIResourceList(api_name)
+    for id, item in enumerate(generationList):
     # Pass data to fill a query placeholders and let Psycopg perform
     # the correct conversion (no SQL injections!)
 
         #insert into generation table
-        resource = pb.APIResource(api_name, item['name'])
+        generation = pb.APIResource(api_name, item['name'])
         if populate_table:
+            print("TUPLE(GENERATION): ", id + 1, generation.name)
             cur.execute(
                 "INSERT INTO " +  table + " (" + table_id + ", name) VALUES (%s, %s)",
-                (id + 1 , resource.name,))
+                (id + 1 , generation.name,))
         
         #insert into version_group table
-        for version in resource.version_groups:
+        for version in generation.version_groups:
             insertVersionTable(cur, pb, version, id + 1, version_id)
             version_id += 1
         
         #insert into region table
-        insertRegionTable(cur, pb, resource.main_region, id + 1, region_id)
+        insertRegionTable(cur, pb, generation.main_region, id + 1, region_id)
         region_id += 1
 
     # Query the database and obtain data as Python objects.

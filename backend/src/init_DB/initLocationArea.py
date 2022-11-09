@@ -35,12 +35,13 @@ def init(cur, pb):
     #create tables of dependent entities
     # initChildTable(cur, pb)
 
-def insert(cur, pb, resource, parent_id, id):
+def insert(cur, pb, area, location_id, id):
     #populate this table
     if populate_table:
+        print("TUPLE(AREA): ", id, area.name, location_id)
         cur.execute(
             "INSERT INTO " +  table + " (" + table_id + ", name, "+fk_id+") VALUES (%s, %s, %s)",
-            (id , resource.name, parent_id))
+            (id , area.name, location_id))
     
     #populate child tables 
     # global child_id
