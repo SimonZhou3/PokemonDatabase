@@ -1,26 +1,30 @@
-from models.pokemon import pokemon
+from models.pokemon import Pokemon
 from operator import itemgetter
 from flask import request
 class PokemonController:
     @staticmethod
-    def listPokemonFormat(locations):
+    def listPokemonFormat(pokemons):
         arr=[]
-        for location in locations:
+        for pokemon in pokemons:
             vals = {}
-            vals['pokemon_id']=location[0]
-            vals['name']=location[1]
+            vals['pokemon_id']=pokemon[0]
+            vals['name']=pokemon[1]
             arr.append(vals)
         return arr
 
-    # @staticmethod
-    # def locationFormat(location):
-    #     return { "data": [
-    #         {
-    #             "location_id" : location.location_id,
-    #             "name" : location.name,
-    #             "version_id": location.version_id
-    #         }
-    #     ]}
+    @staticmethod
+    def pokemonFormat(pokemon):
+        return { "data": [
+            {
+                "pokemon_specific_id": pokemon.pokemon_specific_id,
+                "pokemon_version_id": pokemon.version_id,
+                "name" : pokemon.name,
+                "height" : pokemon.height,
+                "sprite" : pokemon.sprite,
+                "description": pokemon.description,
+                "type": pokemon.type.getTypes(),
+                "moves": pokemon.moves.getMoves()
+            }]}
 
 
     @staticmethod
@@ -34,11 +38,17 @@ class PokemonController:
     async def get(pokemon_id):
         print("Get pokemon Called")
         version_id = request.args.get("version_id")
-        pokemon = await Pokemon(pokemon_id,version_id)
-
-        await pokemon.load()
-        result = PokemonController.listPokemonFormat(pokemon)
-        return { "data" : result}
+        result = None
+        if (not version_id):
+            versionIdList = await Pokemon.getPokemonVersions(pokemon_id)
+            pokemon = Pokemon(pokemon_id,versionIdList[0][0])
+            await pokemon.load()
+            result = PokemonController.pokemonFormat(pokemon)
+        else:
+            pokemon = Pokemon(pokemon_id,version_id)
+            await pokemon.load()
+            result = PokemonController.pokemonFormat(pokemon)
+        return result
 
 
 

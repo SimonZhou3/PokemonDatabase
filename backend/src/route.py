@@ -27,5 +27,5 @@ def routes(app):
 
     # Pokemon
     @app.route("/pokemon/<pokemon_id>", methods=['GET'])
-    async def pokemonList(pokemon_id):
-        return await PokemonController.get(pokemon_id);
+    async def pokemonGet(pokemon_id):
+        return await PokemonController.get(pokemon_id)
