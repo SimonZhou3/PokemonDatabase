@@ -33,6 +33,11 @@ with psycopg.connect(F"dbname={DBNAME} user={USER} password={PASSWORD}") as conn
         cur.execute("CREATE SCHEMA public")
         #initialize tables
         initGeneration(cur, pb)
+        initType(cur, pb)
+        initItem(cur,pb)
+        initStat(cur,pb)
+        initPokemon(cur, pb)
+        
         # Make the changes to the database persistent
         conn.commit()
         print("commited to database")
