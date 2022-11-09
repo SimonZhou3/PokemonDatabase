@@ -13,7 +13,8 @@ populate_table = True
 version_id = 1
 
 def init(cur, pb):
-#if the table exist then skip entirely
+    global populate_table
+    #if the table exist then skip entirely
     cur.execute("SELECT EXISTS(SELECT * FROM information_schema.tables WHERE table_name='"+table+"')")
     if bool(cur.fetchone()[0]):
         print("**table " + table + " exists already**")

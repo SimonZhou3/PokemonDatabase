@@ -13,7 +13,8 @@ populate_table = True
 version_id = 1
 region_id = 1
 
-def init(cur, pb):  
+def init(cur, pb):
+    global populate_table
     global version_id
     global region_id
     #if the table exist then skip entirely

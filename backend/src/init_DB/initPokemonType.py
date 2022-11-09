@@ -1,9 +1,11 @@
 #change this according to API resource names\
-api_name = "location-area"
-table = "area"
+api_name = "null"
+table = "pokemon_type"
 table_id = table+"_id"
-parent = "location"
+parent = "pokemon_generic"
 fk_id = parent+"_id"
+parent2 = "type"
+fk2_id = parent2+"_id"
 
 populate_table = True
 
@@ -23,11 +25,16 @@ def init(cur, pb):
         cur.execute("""
             CREATE TABLE """ + table + """ (
                 """+ table_id + """  integer PRIMARY KEY,
-                name text,
+                slot integer,
                 """+fk_id+""" integer,
+                """+fk2_id+""" integer,
                 CONSTRAINT fk_"""+fk_id +"""
                     FOREIGN KEY("""+fk_id+""")
                         REFERENCES """+parent+"""("""+fk_id+""")
+                        ON DELETE CASCADE,
+                CONSTRAINT fk_"""+fk2_id +"""
+                    FOREIGN KEY("""+fk2_id+""")
+                        REFERENCES """+parent2+"""("""+fk2_id+""")
                         ON DELETE CASCADE
                     )
             """)
@@ -35,14 +42,19 @@ def init(cur, pb):
     #create tables of dependent entities
     # initChildTable(cur, pb)
 
-def insert(cur, pb, resource, parent_id, id):
+def insert(cur, pb, poke_type, pokemon_id, id):
     #populate this table
     if populate_table:
         cur.execute(
-            "INSERT INTO " +  table + " (" + table_id + ", name, "+fk_id+") VALUES (%s, %s, %s)",
-            (id , resource.name, parent_id))
-    
-    #populate child tables 
+            "SELECT type_id FROM type WHERE name = '" + poke_type.type.name+"'"
+        )
+        type_id = cur.fetchone()[0]
+        print("TUPLE(POKEMON_TYPE): ", id, pokemon_id, type_id, poke_type.slot)
+        cur.execute(
+            "INSERT INTO " +  table + " (" + table_id + ", " + fk_id + ", " + fk2_id + ", slot) VALUES (%s, %s, %s, %s)",
+            (id , pokemon_id, type_id, poke_type.slot))
+
+    # #populate child tables
     # global child_id
     # for child in resource.children:
     #     insertChildTable(cur, pb, area, id, child_id)

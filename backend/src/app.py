@@ -6,13 +6,15 @@ import pokebase as pb
 # from dotenv import load_dotenv
 from route import routes
 from init_DB.initGeneration import init as initGeneration
-from init_DB.initPokemon import init as initPokemon
-#make sure postgres is running before running this
-#i keep forgetting
-#sudo systemctl start postgresql.service
-#psql -d myDatabaseName
+from init_DB.initType import init as initType
+from init_DB.initPokemonGeneric import init as initPokemon
 
-#Load environmental variables
+# make sure postgres is running before running this
+# i keep forgetting
+# sudo systemctl start postgresql.service
+# psql -d myDatabaseName
+
+# Load environmental variables
 # dotenv_path = join(dirname(__file__), '.env')
 # load_dotenv(dotenv_path)
 # DBNAME = os.environ.get('DBNAME')
@@ -21,14 +23,16 @@ from init_DB.initPokemon import init as initPokemon
 
 # Connect to an existing database
 with psycopg.connect(F"dbname=304 user=keqi") as conn:
-        # Open a cursor to perform database operations
+    # Open a cursor to perform database operations
     with conn.cursor() as cur:
-        #wipe database
-        # cur.execute("DROP SCHEMA public CASCADE")
-        # cur.execute("CREATE SCHEMA public")
-        #initialize tables
-        # initGeneration(cur, pb)
-        # initPokemon(cur,pb)
+        # wipe database
+        cur.execute("DROP SCHEMA public CASCADE")
+        cur.execute("CREATE SCHEMA public")
+        # initialize tables
+        initGeneration(cur, pb)
+        initType(cur, pb)
+        initPokemon(cur, pb)
+        initItem
         # Make the changes to the database persistent
         conn.commit()
         print("commited to database")
@@ -36,5 +40,3 @@ with psycopg.connect(F"dbname=304 user=keqi") as conn:
 app = Flask(__name__)
 
 # routes(app)
-
-

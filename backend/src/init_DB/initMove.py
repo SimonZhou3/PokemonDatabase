@@ -1,11 +1,9 @@
 #change this according to API resource names\
-api_name = "null"
-table = "pokemon_area_version"
-table_id = "pav_id"
-parent = "pokemon_area"
+api_name = "move"
+table = api_name
+table_id = table+"_id"
+parent = "type"
 fk_id = parent+"_id"
-parent2 = "version"
-fk2_id = parent2+"_id"
 
 populate_table = True
 
@@ -13,7 +11,8 @@ populate_table = True
 child_id = 1
 
 def init(cur, pb):
-#if the table exist then skip entirely
+    global populate_table
+    #if the table exist then skip entirely
     cur.execute("SELECT EXISTS(SELECT * FROM information_schema.tables WHERE table_name='"+table+"')")
     if bool(cur.fetchone()[0]):
         print("**table " + table + " exists already**")
@@ -24,14 +23,16 @@ def init(cur, pb):
         cur.execute("""
             CREATE TABLE """ + table + """ (
                 """+ table_id + """  integer PRIMARY KEY,
+                name text,
+                accuracy integer,
+                effect_chance integer,
+                pp integer,
+                priority integer,
+                power integer,
                 """+fk_id+""" integer,
                 CONSTRAINT fk_"""+fk_id +"""
                     FOREIGN KEY("""+fk_id+""")
                         REFERENCES """+parent+"""("""+fk_id+""")
-                        ON DELETE CASCADE,
-                CONSTRAINT fk_"""+fk2_id +"""
-                    FOREIGN KEY("""+fk2_id+""")
-                        REFERENCES """+parent2+"""("""+fk2_id+""")
                         ON DELETE CASCADE
                     )
             """)
@@ -39,20 +40,16 @@ def init(cur, pb):
     #create tables of dependent entities
     # initChildTable(cur, pb)
 
-def insert(cur, pb, version, parent_id, id):
-    #populate this table
+def insert(cur, pb, move, type_id, id):
     if populate_table:
+        print("TUPLE(MOVE) :", id, move.name, type_id, move.accuracy, move.effect_chance, move.pp, move.priority, move.power)
         cur.execute(
-            "SELECT version_id FROM version WHERE name = '" + version.name+"'"
-        )
-        version_id = cur.fetchone()[0]
-        cur.execute(
-            "INSERT INTO " +  table + " (" + table_id + ", name, "+fk_id+") VALUES (%s, %s, %s)",
-            (id, parent_id, version_id))
-    
-    # #populate child tables 
-    # global child_id
-    # for child in resource.children:
-    #     insertChildTable(cur, pb, area, id, child_id)
-    #     child_id += 1
+            "INSERT INTO " +  table + " (" + table_id + ", " + fk_id + ", name, accuracy, effect_chance, pp, priority, power) VALUES (%s, %s, %s)",
+            (id, type_id, move.name, move.accuracy, move.effect_chance, move.pp, move, priority, move.power))
+
+        #populate child tables
+        # global child_id
+        # for child in resource.children:
+        #     insertChildTable(cur, pb, area, id, child_id)
+        #     child_id += 1
 
