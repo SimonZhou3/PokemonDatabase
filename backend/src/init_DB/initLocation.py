@@ -13,7 +13,8 @@ populate_table = True
 area_id = 1
 
 def init(cur, pb):
-#if the table exist then skip entirely
+    global populate_table
+    #if the table exist then skip entirely
     cur.execute("SELECT EXISTS(SELECT * FROM information_schema.tables WHERE table_name='"+table+"')")
     if bool(cur.fetchone()[0]):
         print("**table " + table + " exists already**")
@@ -36,14 +37,15 @@ def init(cur, pb):
     #create tables of dependent entities
     initAreaTable(cur, pb)
 
-def insert(cur, pb, resource, parent_id, id):
+def insert(cur, pb, location, region_id, id):
     if populate_table:
+        print("TUPLE(LOCATION): ", id, location.name, region_id)
         cur.execute(
             f"INSERT INTO {table} (name, {fk_id}) VALUES (%s, %s)",
             (resource.name, parent_id))
     
     global area_id
-    for area in resource.areas:
+    for area in location.areas:
         insertAreaTable(cur, pb, area, id, area_id)
         area_id += 1
 

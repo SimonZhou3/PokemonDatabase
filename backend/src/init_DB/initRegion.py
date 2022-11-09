@@ -13,7 +13,8 @@ populate_table = True
 location_id = 1
 
 def init(cur, pb):
-#if the table exist then skip entirely
+    global populate_table
+    #if the table exist then skip entirely
     cur.execute("SELECT EXISTS(SELECT * FROM information_schema.tables WHERE table_name='"+table+"')")
     if bool(cur.fetchone()[0]):
         print("**table " + table + " exists already**")
@@ -35,15 +36,16 @@ def init(cur, pb):
     #create tables of dependent entities
     initLocationTable(cur,pb)
 
-def insert(cur, pb, resource, parent_id, id):
+def insert(cur, pb, region, generation_id, id):
     # resource = pb.APIresource(api_name,resource_name)
+    print("TUPLE(REGION): ", id, region.name, generation_id)
     if populate_table:
         cur.execute(
             "INSERT INTO " +  table + " (name, "+fk_id+") VALUES (%s, %s)",
             (resource.name, parent_id))
 
     global location_id  
-    for location in resource.locations:
+    for location in region.locations:
         insertLocationTable(cur, pb, location, id, location_id)
         location_id += 1
 

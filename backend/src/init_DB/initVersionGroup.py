@@ -13,7 +13,8 @@ populate_table = True
 version_id = 1
 
 def init(cur, pb):
-#if the table exist then skip entirely
+    global populate_table
+    #if the table exist then skip entirely
     cur.execute("SELECT EXISTS(SELECT * FROM information_schema.tables WHERE table_name='"+table+"')")
     if bool(cur.fetchone()[0]):
         print("**table " + table + " exists already**")
@@ -36,15 +37,16 @@ def init(cur, pb):
     #create tables of dependent entities
     initVersionTable(cur,pb)
 
-def insert(cur, pb, resource, parent_id, id):
+def insert(cur, pb, version_group, generation_id, id):
     # resource = pb.APIresource(api_name,resource_name)
     if populate_table:
+        print("TUPLE: ", id, version_group.name, generation_id)
         cur.execute(
             "INSERT INTO " +  table + " (name, "+fk_id+") VALUES (%s, %s)",
             (resource.name, parent_id))
 
     global version_id
-    for version in resource.versions:
+    for version in version_group.versions:
         insertVersionTable(cur,pb,version,id, version_id)
         version_id += 1
 

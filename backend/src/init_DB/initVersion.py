@@ -28,6 +28,7 @@ child_id = 1
 
 
 def init(cur, pb):
+    global populate_table
     # if the table exist then skip entirely
     cur.execute("SELECT EXISTS(SELECT * FROM information_schema.tables WHERE table_name='" + table + "')")
     if bool(cur.fetchone()[0]):
@@ -53,9 +54,10 @@ def init(cur, pb):
     # initChildTable(cur, pb)
 
 
-def insert(cur, pb, resource, parent_id, id):
+def insert(cur, pb, version, version_group_id, id):
     # populate this table
     if populate_table:
+        print("TUPLE(VERSION): ", id, version.name, version_release[version.name], version_group_id)
         cur.execute(
             "INSERT INTO " + table + " (name, release_date, " + fk_id + ") VALUES (%s, %s, %s)",
             (resource.name, version_release[resource.name], parent_id))

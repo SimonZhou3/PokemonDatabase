@@ -7,7 +7,7 @@ class Location:
     @staticmethod
     async def listLocations():
         SQL = "SELECT location_id,name FROM location"
-        query = await Database.execute(SQL)
+        query = await Database.execute(SQL,None)
         return query
 
     # Add location to database return id and all information on location

@@ -1,10 +1,10 @@
 #change this according to API resource names\
 api_name = "null"
-table = "pokemon_area"
+table = "pokemon_move"
 table_id = table+"_id"
 parent = "pokemon_specific"
 fk_id = parent+"_id"
-parent2= "area"
+parent2= "move"
 fk2_id = parent2+"_id"
 
 populate_table = True
@@ -43,7 +43,7 @@ def init(cur, pb):
     #create tables of dependent entities
     # initChildTable(cur, pb)
 
-def insert(cur, pb, area, encounter_version, pokemon_id, id):
+def insert(cur, pb, move, poke_move_version, pokemon_id, id):
     #populate this table
     if populate_table:
         #get move_id
@@ -78,7 +78,7 @@ def insert(cur, pb, area, encounter_version, pokemon_id, id):
                 (id, pokemon_specific_id, move_id, poke_move_version.move_learn_method.name, poke_move_version.level_learned_at))
             id +=1
         return id
-    # #populate child tables
+    # #populate child tables 
     # global child_id
     # for child in resource.children:
     #     insertChildTable(cur, pb, area, id, child_id)

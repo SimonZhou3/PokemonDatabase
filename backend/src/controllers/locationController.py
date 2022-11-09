@@ -39,7 +39,7 @@ class LocationController:
 
     @staticmethod
     async def update(data):
-        location = Location()
+        location = Location(location_id)
         return { "data" : None}
 
     @staticmethod

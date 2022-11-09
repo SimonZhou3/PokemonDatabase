@@ -5,8 +5,19 @@ need location-area for pokemon encounter relationship
     new location-area and pokemon table for many to many
     location-area will have fk to location
 
-version should be version_group instead
-    the api does not contain release date
+new version-group table 
+    it will what a list of versions
+    the version table will have a fk to version-group
 
 need a generation entity which will connect to version_group
     Generation will be 1 and version-group will be many
+
+new table with pokemon, area, and version fks
+    the area and version in which the pokemon can be encountered
+    its big so avoid regenerating it
+
+query for generic_pokemon using name
+ we get a list of version
+  
+
+
