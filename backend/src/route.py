@@ -1,17 +1,20 @@
-from entities.pokemon import Pokemon
+from controllers.locationController import LocationController
+from flask import request
 def routes(app):
     @app.route("/")
-    def hello_world():
+    def home():
         return "<p>Welcome to the backend pokemon server</p>" 
 
 
-    # Pokemon
-    @app.route("/pokemon", methods=['GET'])
-    def run():
-        return Pokemon.listPokemon()
 
 
     # Location
     @app.route("/location", methods=['GET'])
-    def run():
-        return Pokemon.listPokemon()
+    async def locationList():
+        return await LocationController.list();
+    
+    # Location
+    @app.route("/location", methods=['POST'])
+    async def locationCreate():
+        print(request.json)
+        return await LocationController.create(request.json);

@@ -6,6 +6,10 @@ from init_DB.initPokemonArea import init as initPokemonAreaTable
 from init_DB.initPokemonArea import insert as insertPokemonAreaTable
 from init_DB.initPokemonType import init as initPokemonTypeTable
 from init_DB.initPokemonType import insert as insertPokemonTypeTable
+from init_DB.initPokemonItem import init as initPokemonItemTable
+from init_DB.initPokemonItem import insert as insertPokemonItemTable
+from init_DB.initPokemonStat import init as initPokemonStatTable
+from init_DB.initPokemonStat import insert as insertPokemonStatTable
 # TODO -- Add description to table by calling PokemonSpecies. REMEMBER THAT many pokemons can be in different versions.
 #change this according to API resource names
 api_name = "pokemon"
@@ -21,6 +25,8 @@ pokemon_version_specificIndex = 1
 pokemon_moveIndex = 1
 pokemon_areaIndex = 1
 pokemon_typeIndex = 1
+pokemon_itemIndex = 1
+pokemon_statIndex = 1
 
 def init(cur, pb):
     global populate_table
@@ -47,6 +53,8 @@ def init(cur, pb):
     initPokemonMoveTable(cur,pb)
     initPokemonAreaTable(cur, pb)
     initPokemonTypeTable(cur,pb)
+    initPokemonItemTable(cur,pb)
+    initPokemonStatTable(cur,pb)
 
     #get list of pokemon
     pokemonList = pb.APIResourceList(api_name)
@@ -61,6 +69,11 @@ def init(cur, pb):
                 (pokemon_index , pokemon.name, pokemon.height, pokemon.weight, pokemon.sprites.front_default,))
 
         #insert into child tables
+        global pokemon_statIndex
+        for poke_stat in pokemon.stats:
+            insertPokemonStatTable(cur,pb,poke_stat, pokemon_index, pokemon_statIndex)
+            pokemon_statIndex += 1
+
         global pokemon_version_specificIndex
         for gameIndex in pokemon.game_indices:
             insertPokemonSpecificTable(cur, pb, gameIndex.version, pokemon.species.flavor_text_entries, pokemon_index, pokemon_version_specificIndex)
@@ -83,5 +96,10 @@ def init(cur, pb):
             insertPokemonTypeTable(cur,pb, poke_type, pokemon_index, pokemon_typeIndex)
             pokemon_typeIndex += 1
 
+        global pokemon_itemIndex
+        for poke_held_item in pokemon.held_items:
+            for poke_held_item_version in poke_held_item.version_details:
+                insertPokemonItemTable(cur,pb, poke_held_item.item, poke_held_item_version, pokemon_index, pokemon_itemIndex)
+                pokemon_itemIndex += 1
 
         pokemon_index+=1

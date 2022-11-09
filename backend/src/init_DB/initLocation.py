@@ -24,7 +24,7 @@ def init(cur, pb):
     # Execute a command: this creates a new table
         cur.execute("""
             CREATE TABLE """ + table + """ (
-                """+ table_id + """  integer PRIMARY KEY,
+                """+ table_id + """ SERIAL PRIMARY KEY,
                 name text,
                 """+fk_id+""" integer,
                 CONSTRAINT fk_"""+fk_id +"""
@@ -37,14 +37,15 @@ def init(cur, pb):
     #create tables of dependent entities
     initAreaTable(cur, pb)
 
-def insert(cur, pb, resource, parent_id, id):
+def insert(cur, pb, location, region_id, id):
     if populate_table:
+        print("TUPLE(LOCATION): ", id, location.name, region_id)
         cur.execute(
-            "INSERT INTO " +  table + " (" + table_id + ", name, "+fk_id+") VALUES (%s, %s, %s)",
-            (id , resource.name, parent_id))
+            f"INSERT INTO {table} (name, {fk_id}) VALUES (%s, %s)",
+            (location.name, region_id))
     
     global area_id
-    for area in resource.areas:
+    for area in location.areas:
         insertAreaTable(cur, pb, area, id, area_id)
         area_id += 1
 

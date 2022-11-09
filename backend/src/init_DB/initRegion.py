@@ -23,7 +23,7 @@ def init(cur, pb):
     # Execute a command: this creates a new table
         cur.execute("""
             CREATE TABLE """ + table + """ (
-                """+ table_id + """  integer PRIMARY KEY,
+                """+ table_id + """ SERIAL PRIMARY KEY,
                 name text,
                 """+fk_id+""" integer,
                 CONSTRAINT fk_"""+fk_id +"""
@@ -36,15 +36,16 @@ def init(cur, pb):
     #create tables of dependent entities
     initLocationTable(cur,pb)
 
-def insert(cur, pb, resource, parent_id, id):
+def insert(cur, pb, region, generation_id, id):
     # resource = pb.APIresource(api_name,resource_name)
+    print("TUPLE(REGION): ", id, region.name, generation_id)
     if populate_table:
         cur.execute(
-            "INSERT INTO " +  table + " (" + table_id + ", name, "+fk_id+") VALUES (%s, %s, %s)",
-            (id , resource.name, parent_id))
+            "INSERT INTO " +  table + " (name, "+fk_id+") VALUES (%s, %s)",
+            (region.name, generation_id))
 
     global location_id  
-    for location in resource.locations:
+    for location in region.locations:
         insertLocationTable(cur, pb, location, id, location_id)
         location_id += 1
 

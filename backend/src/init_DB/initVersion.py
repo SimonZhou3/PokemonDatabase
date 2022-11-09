@@ -39,7 +39,7 @@ def init(cur, pb):
         # Execute a command: this creates a new table
         cur.execute("""
             CREATE TABLE IF NOT EXISTS """ + table + """ (
-                """ + table_id + """  integer PRIMARY KEY,
+                """ + table_id + """ SERIAL PRIMARY KEY,
                 name text,
                 release_date date,
                 """ + fk_id + """ integer,
@@ -54,9 +54,10 @@ def init(cur, pb):
     # initChildTable(cur, pb)
 
 
-def insert(cur, pb, resource, parent_id, id):
+def insert(cur, pb, version, version_group_id, id):
     # populate this table
     if populate_table:
+        print("TUPLE(VERSION): ", id, version.name, version_release[version.name], version_group_id)
         cur.execute(
-            "INSERT INTO " + table + " (" + table_id + ", name, release_date, " + fk_id + ") VALUES (%s, %s, %s, %s)",
-            (id, resource.name, version_release[resource.name], parent_id))
+            "INSERT INTO " + table + " (name, release_date, " + fk_id + ") VALUES (%s, %s, %s)",
+            (version.name, version_release[version.name], version_group_id))

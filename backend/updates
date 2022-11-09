@@ -16,3 +16,8 @@ new table with pokemon, area, and version fks
     the area and version in which the pokemon can be encountered
     its big so avoid regenerating it
 
+query for generic_pokemon using name
+ we get a list of version
+  
+
+
