@@ -70,9 +70,8 @@ def init(cur, pb):
 
         #insert into child tables
         global pokemon_statIndex
-        for poke_stat in pokemon.stats:
-            insertPokemonStatTable(cur,pb,poke_stat, pokemon_index, pokemon_statIndex)
-            pokemon_statIndex += 1
+        insertPokemonStatTable(cur,pb,pokemon.stats, pokemon_index, pokemon_statIndex)
+        pokemon_statIndex += 1
 
         global pokemon_version_specificIndex
         for gameIndex in pokemon.game_indices:
