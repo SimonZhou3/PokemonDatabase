@@ -42,7 +42,7 @@ def insert(cur, pb, location, region_id, id):
         print("TUPLE(LOCATION): ", id, location.name, region_id)
         cur.execute(
             f"INSERT INTO {table} (name, {fk_id}) VALUES (%s, %s)",
-            (resource.name, parent_id))
+            (location.name, region_id))
     
     global area_id
     for area in location.areas:

@@ -48,7 +48,7 @@ def init(cur, pb):
             print("TUPLE(GENERATION): ", id + 1, generation.name)
             cur.execute(
                 "INSERT INTO " +  table + " (name) VALUES (%s)",
-                (resource.name,))
+                (generation.name,))
         
         #insert into version_group table
         for version in generation.version_groups:

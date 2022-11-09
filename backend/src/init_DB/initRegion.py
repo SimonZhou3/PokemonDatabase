@@ -42,7 +42,7 @@ def insert(cur, pb, region, generation_id, id):
     if populate_table:
         cur.execute(
             "INSERT INTO " +  table + " (name, "+fk_id+") VALUES (%s, %s)",
-            (resource.name, parent_id))
+            (region.name, generation_id))
 
     global location_id  
     for location in region.locations:

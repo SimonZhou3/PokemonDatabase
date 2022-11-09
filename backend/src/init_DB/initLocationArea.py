@@ -41,7 +41,7 @@ def insert(cur, pb, area, location_id, id):
         print("TUPLE(AREA): ", id, area.name, location_id)
         cur.execute(
             "INSERT INTO " +  table + " (name, "+fk_id+") VALUES (%s, %s)",
-            (resource.name, parent_id))
+            (area.name, location_id))
     
     #populate child tables 
     # global child_id

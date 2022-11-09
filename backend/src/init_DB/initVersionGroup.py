@@ -43,7 +43,7 @@ def insert(cur, pb, version_group, generation_id, id):
         print("TUPLE: ", id, version_group.name, generation_id)
         cur.execute(
             "INSERT INTO " +  table + " (name, "+fk_id+") VALUES (%s, %s)",
-            (resource.name, parent_id))
+            (version_group.name, generation_id))
 
     global version_id
     for version in version_group.versions:

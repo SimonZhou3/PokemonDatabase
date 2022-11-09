@@ -24,18 +24,18 @@ PASSWORD = os.environ.get('PASSWORD')
 if sys.platform == "win32":
     asyncio.set_event_loop_policy(asyncio.WindowsSelectorEventLoopPolicy())
 
-# Connect to an existing database
-# with psycopg.connect(F"dbname={DBNAME} user={USER} password={PASSWORD}") as conn:
-#         # Open a cursor to perform database operations
-#     with conn.cursor() as cur:
-#         #wipe database
-#         cur.execute("DROP SCHEMA public CASCADE")
-#         cur.execute("CREATE SCHEMA public")
-#         #initialize tables
-#         initGeneration(cur, pb)
-#         # Make the changes to the database persistent
-#         conn.commit()
-#         print("commited to database")
+#Connect to an existing database
+with psycopg.connect(F"dbname={DBNAME} user={USER} password={PASSWORD}") as conn:
+        # Open a cursor to perform database operations
+    with conn.cursor() as cur:
+        #wipe database
+        cur.execute("DROP SCHEMA public CASCADE")
+        cur.execute("CREATE SCHEMA public")
+        #initialize tables
+        initGeneration(cur, pb)
+        # Make the changes to the database persistent
+        conn.commit()
+        print("commited to database")
 app = Flask(__name__)
 
 routes(app)
