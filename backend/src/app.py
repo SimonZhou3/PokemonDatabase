@@ -20,7 +20,7 @@ from init_DB.initItem import init as initItem
 # Load environmental variables
 dotenv_path = join(dirname(__file__), '.env')
 load_dotenv(dotenv_path)
-DBNAME = os.environ.get('DBNAME')
+DBNAME = os.environ.get('DBNAMES')
 USER = os.environ.get('DBUSER')
 PASSWORD = os.environ.get('PASSWORD')
 PORT = os.environ.get('PORT')
@@ -30,7 +30,7 @@ SSLMODE = os.environ.get('SSLMODE')
 # Window and python == bad
 if sys.platform == "win32":
     asyncio.set_event_loop_policy(asyncio.WindowsSelectorEventLoopPolicy())
-
+print(DBNAME)
 # Connect to an existing database
 psycopg.connect(F"dbname={DBNAME} user={USER} password={PASSWORD} port={PORT} host={HOST} sslmode = {SSLMODE}")
     # # Open a cursor to perform database operations

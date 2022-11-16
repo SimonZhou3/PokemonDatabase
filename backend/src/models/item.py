@@ -1,5 +1,33 @@
+from db import Database
+
 class Item:
 
-    def __init__(self):
-        #STUB
+    @staticmethod
+    async def listItem():
+        SQL = "SELECT item_id,name FROM item"
+        query = await Database.execute(SQL,None)
+        print(query)
+        return query
+
+    def itemFormat(self,item):
+        self.name = item[0]
+
+    def __init__(self,item_id):
+        self.item_id = item_id
+        self.name = None
+        self.cost = None
+        self.category = None
+        self.description = None
+        self.sprite = None
         return
+
+    async def load(self):
+        SQL = (f"SELECT name,cost,category,description,sprite FROM item WHERE item_id=(%s) LIMIT 1")
+        query = await Database.execute(SQL,[self.item_id])
+        self.name = query[0][0]
+        self.cost = query[0][1]
+        self.category = query[0][2]
+        self.description = query[0][3]
+        self.sprite = query[0][4]
+        return
+    
