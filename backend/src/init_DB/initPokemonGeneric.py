@@ -10,7 +10,6 @@ from init_DB.initPokemonItem import init as initPokemonItemTable
 from init_DB.initPokemonItem import insert as insertPokemonItemTable
 from init_DB.initPokemonStat import init as initPokemonStatTable
 from init_DB.initPokemonStat import insert as insertPokemonStatTable
-# TODO -- Add description to table by calling PokemonSpecies. REMEMBER THAT many pokemons can be in different versions.
 #change this according to API resource names
 api_name = "pokemon"
 table = "pokemon_generic"
