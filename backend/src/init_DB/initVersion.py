@@ -60,4 +60,4 @@ def insert(cur, pb, version, version_group_id, id):
         print("TUPLE(VERSION): ", id, version.name, version_release[version.name], version_group_id)
         cur.execute(
             "INSERT INTO " + table + " (name, release_date, " + fk_id + ") VALUES (%s, %s, %s)",
-            (version.name, version_release[version.name], version_group_id))
+            (version.name.replace("-", " "), version_release[version.name], version_group_id))
