@@ -1,6 +1,7 @@
 from controllers.locationController import LocationController
 from controllers.pokemonController import PokemonController
 from controllers.itemController import ItemController
+from controllers.moveController import MoveController
 
 from flask import request
 
@@ -39,3 +40,10 @@ def routes(app):
     @app.route("/item/<item_id>", methods=['GET'])
     async def itemGet(item_id):
         return await ItemController.get(item_id)
+
+    # Move LIST
+    @app.route("/move", methods=['GET'])
+    async def moveList():
+        pokemon_specific_id = request.args.get("pokemon_specific_id")
+        return await MoveController.list(pokemon_specific_id)
+
