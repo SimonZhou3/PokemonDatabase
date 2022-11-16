@@ -36,12 +36,12 @@ class MoveController:
         result = MoveController.listMoveFormat(moves)
         return { "data" : result}
 
-    @staticmethod
-    async def get(item_id):
-        print("Get Item Called")
-        item = Item(item_id)
-        await item.load()
-        return ItemController.listMoveFormat(item)
+    # @staticmethod
+    # async def get(item_id):
+    #     print("Get Item Called")
+    #     item = Item(item_id)
+    #     await item.load()
+    #     return ItemController.listMoveFormat(item)
 
 
 
