@@ -13,37 +13,6 @@ populate_table = True
 child_id = 1
 
 
-def init(cur, pb):
-    global populate_table
-    # if the table exist then skip entirely
-    cur.execute("SELECT EXISTS(SELECT * FROM information_schema.tables WHERE table_name='" + table + "')")
-    if bool(cur.fetchone()[0]):
-        print("**table " + table + " exists already**")
-        populate_table = False
-    else:
-
-        # Execute a command: this creates a new table
-        cur.execute("""
-            CREATE TABLE """ + table + """ (
-                """ + table_id + """  integer PRIMARY KEY,
-                """ + fk_id + """ integer,
-                """ + fk2_id + """ integer,
-                rarity integer,
-                CONSTRAINT fk_""" + fk_id + """
-                    FOREIGN KEY(""" + fk_id + """)
-                        REFERENCES """ + parent + """(""" + fk_id + """)
-                        ON DELETE CASCADE,
-                CONSTRAINT fk_""" + fk2_id + """
-                    FOREIGN KEY(""" + fk2_id + """)
-                        REFERENCES """ + parent2 + """(""" + fk2_id + """)
-                        ON DELETE CASCADE
-                    )
-            """)
-        print("!!table " + table + " created!!")
-    # create tables of dependent entities
-    # initChildTable(cur, pb)
-
-
 def insert(cur, pb, item, poke_held_item_version, pokemon_id, id):
     # populate this table
     if populate_table:
@@ -53,14 +22,17 @@ def insert(cur, pb, item, poke_held_item_version, pokemon_id, id):
         )
         item_id = cur.fetchone()[0]
         # get_specific_pokemon_id
+        versionString = poke_held_item_version.version.name.replace("-", " ")
+        print("(DEBUGGING) -- " + versionString)
         cur.execute(
-            "SELECT version_id FROM version WHERE name = '" + poke_held_item_version.version.name + "'"
+            "SELECT version_id FROM version WHERE name = '" + versionString + "'"
         )
         version_id = cur.fetchone()[0]
         # print(version_ids)
         pokemon_specific_ids = []
         cur.execute(
-            "SELECT pokemon_specific_id FROM pokemon_specific WHERE pokemon_generic_id = '" + str(pokemon_id) + "' AND version_id = '" + str(version_id) + "'"
+            "SELECT pokemon_specific_id FROM pokemon_specific WHERE pokemon_generic_id = '" + str(
+                pokemon_id) + "' AND version_id = '" + str(version_id) + "'"
         )
         poke_id = cur.fetchone()
         if poke_id is not None:

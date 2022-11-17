@@ -12,34 +12,6 @@ populate_table = True
 # index for child id
 child_id = 1
 
-def init(cur, pb):
-    global populate_table
-    # if the table exist then skip entirely
-    cur.execute("SELECT EXISTS(SELECT * FROM information_schema.tables WHERE table_name='" + table + "')")
-    if bool(cur.fetchone()[0]):
-        print("**table " + table + " exists already**")
-        populate_table = False
-    else:
-
-        # Execute a command: this creates a new table
-        cur.execute("""
-            CREATE TABLE """ + table + """ (
-                """ + fk_id + """ integer PRIMARY KEY,
-                hp integer,
-                attack integer,
-                defence integer,
-                special_attack integer,
-                special_defence integer,
-                speed integer,
-                CONSTRAINT fk_""" + fk_id + """
-                    FOREIGN KEY(""" + fk_id + """)
-                        REFERENCES """ + parent + """(""" + fk_id + """)
-                        ON DELETE CASCADE
-                    )
-            """)
-        print("!!table " + table + " created!!")
-    # create tables of dependent entities
-    # initChildTable(cur, pb)
 
 def insert(cur, pb, stat, pokemon_id, id):
     # populate this table
