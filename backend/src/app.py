@@ -11,6 +11,7 @@ import asyncio
 import sys
 from init_DB.initPokemonGeneric import init as initPokemon
 from init_DB.initItem import init as initItem
+from flask_cors import CORS
 
 # make sure postgres is running before running this
 # i keep forgetting
@@ -48,5 +49,6 @@ print('Connected to DB')
 #     conn.commit()
 #     print("commited to database")
 app = Flask(__name__)
+CORS(app)
 
 routes(app)

@@ -8,6 +8,7 @@ psycopg = "*"
 pokebase = "*"
 python-dotenv = "*"
 flask = {extras = ["async"], version = "*"}
+flask-cors = "*"
 
 [dev-packages]
 
