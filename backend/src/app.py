@@ -21,7 +21,7 @@ from flask_cors import CORS
 # Load environmental variables
 dotenv_path = join(dirname(__file__), '.env')
 load_dotenv(dotenv_path)
-DBNAME = os.environ.get('DBNAMES')
+DBNAME = os.environ.get('DBNAME')
 USER = os.environ.get('DBUSER')
 PASSWORD = os.environ.get('PASSWORD')
 PORT = os.environ.get('PORT')
@@ -36,18 +36,18 @@ print(DBNAME)
 conn = psycopg.connect(F"dbname={DBNAME} user={USER} password={PASSWORD} port={PORT} host={HOST} sslmode = {SSLMODE}")
 print('Connected to DB')
 # Open a cursor to perform database operations
-# with conn.cursor() as cur:
-#     # wipe database
-#     # cur.execute("DROP SCHEMA public CASCADE")
-#     # cur.execute("CREATE SCHEMA public")
-#     # initialize tables
-#     # initGeneration(cur, pb)
-#     # initItem(cur, pb)
-#     # initType(cur,pb)
-#     initPokemon(cur, pb)
-#     # Make the changes to the database persistent
-#     conn.commit()
-#     print("commited to database")
+with conn.cursor() as cur:
+    # wipe database
+    # cur.execute("DROP SCHEMA public CASCADE")
+    # cur.execute("CREATE SCHEMA public")
+    # initialize tables
+    # initGeneration(cur, pb)
+    # initItem(cur, pb)
+    # initType(cur,pb)
+    # initPokemon(cur, pb)
+    # Make the changes to the database persistent
+    conn.commit()
+    print("commited to database")
 app = Flask(__name__)
 CORS(app)
 
