@@ -1,35 +1,40 @@
 <template>
-  <div class="barContainer" ref="barContainer">
-    <input
-      class="search"
-      ref="search"
-      type="text"
-      v-model="this.query"
-      placeholder="Search Pokemon"
-    />
-    <div class="pokeball" ref="pokeball" v-show="this.loading">
-      <div class="ballTop" ref="ballTop"></div>
-      <div class="ballMid" ref="ballMid"></div>
-      <div class="ballCenter" id="outer" ref="ballCenterOuter">
-        <div class="ballCenter" id="inner" ref="ballCenterInner"></div>
+  <div>
+    <div class="barContainer" ref="barContainer">
+      <input
+        class="search"
+        ref="search"
+        type="text"
+        v-model="this.query"
+        placeholder="Search Pokemon"
+        v-if="!loading"
+      />
+      <div class="pokeball" ref="pokeball" v-show="this.loading">
+        <div class="ballTop" ref="ballTop"></div>
+        <div class="ballMid" ref="ballMid"></div>
+        <div class="ballCenter" id="outer" ref="ballCenterOuter">
+          <div class="ballCenter" id="inner" ref="ballCenterInner"></div>
+        </div>
+        <div class="ballBottom" ref="ballBot"></div>
+      </div>
+      <div class="searchResults" ref="searchResults">
+        <div v-for="pokemon of findPokemons" :key="pokemon">
+          <PokemonEntry
+            :pokemon="pokemon"
+            v-if="this.query.length > 1"
+            @querying="onQuery"
+          />
+        </div>
       </div>
     </div>
-    <div class="searchResults" ref="searchResults">
-      <div v-for="pokemon of findPokemons" :key="pokemon">
-        <PokemonEntry
-          :pokemon="pokemon"
-          v-if="this.query.length > 1"
-          @querying="onQuery"
-        />
-      </div>
-    </div>
+    <button class="debug" @click="test">Mock Complete</button>
   </div>
-  <!-- <button class="submit" @click="test">Test</button>
-  <button class="submit" v-if="showResults"></button> -->
 </template>
 
 <script>
 import { gsap } from "gsap";
+// import { InertiaPlugin } from "gsap/InertiaPlugin.min.js"
+// gsap.registerPlugin(InertiaPlugin)
 import PokemonEntry from "./PokemonEntry.vue";
 export default {
   name: "SearchBar",
@@ -41,6 +46,7 @@ export default {
     return {
       query: "",
       loading: false,
+      loaded: false,
     };
   },
   computed: {
@@ -56,8 +62,85 @@ export default {
   },
   methods: {
     test() {
-      this.showResults = false;
-      console.log(this.showResults);
+      this.loaded = true;
+    },
+    signalComplete() {
+      this.$emit("completed");
+    },
+    showPokemon() {
+      let pokeball = this.$refs.pokeball;
+      let ballTop = this.$refs.ballTop;
+      let ballMid = this.$refs.ballMid;
+      let ballCenterOuter = this.$refs.ballCenterOuter;
+      let ballCenterInner = this.$refs.ballCenterInner;
+      let ballBot = this.$refs.ballBot;
+      gsap.to(ballCenterInner, {
+        scale: 0,
+        duration: 0.2,
+        ease: "expo",
+      });
+      gsap.to(ballCenterOuter, {
+        scale: 0,
+        duration: 0.2,
+        ease: "expo",
+        delay: 0.2,
+      });
+      gsap.to(ballMid, {
+        top: "-60%",
+        duration: 0.2,
+        ease: "expo",
+        delay: 0.4,
+      });
+      gsap.to(ballTop, {
+        top: "-55%",
+        duration: 0.2,
+        ease: "expo",
+        delay: 0.4,
+        onComplete: () => {
+          this.$emit("completed");
+        },
+      });
+      gsap.to(ballBot, { scale: 10, duration: 0.2, delay: 0.4 });
+
+      gsap.to(pokeball, {
+        top: "-35vh",
+        duration: 1,
+        ease: "expo",
+        delay: 0.5,
+      });
+      //TODO: display pokemon picture
+    },
+    stopAnimation() {
+      if (this.loaded) {
+        console.log("stopping animation", this.loaded);
+        let all = gsap.exportRoot();
+        gsap.to(all, { timeScale: 0 });
+        let pokeball = this.$refs.pokeball;
+        gsap.to(pokeball, {
+          rotate: 0,
+          duration: 0.5,
+          ease: "elastic",
+          onComplete: this.showPokemon,
+        });
+      }
+    },
+    waitForResults() {
+      console.log("waiting for query to complete");
+      this.$refs.barContainer.style.backgroundColor = "#00000000";
+      let pokeball = this.$refs.pokeball;
+      pokeball.style.transformOrigin = "bottom";
+      gsap.to(pokeball, { rotation: 20, duration: 0.2, ease: "expo" });
+      gsap.to(pokeball, {
+        rotation: 0,
+        duration: 1,
+        ease: "elastic",
+        repeat: -1,
+        yoyo: true,
+        delay: 0.3,
+        onRepeat: () => {
+          this.stopAnimation();
+        },
+      });
     },
     loadAnimation() {
       let bar = this.$refs.barContainer;
@@ -67,31 +150,36 @@ export default {
       let ballCenterOuter = this.$refs.ballCenterOuter;
       let ballCenterInner = this.$refs.ballCenterInner;
       input.style.opacity = 0;
-      gsap.to(bar, { width: "20vh", duration: 1, ease: "expo" });
-      gsap.to(bar, { height: "20vh", duration: 1, ease: "expo" });
+      gsap.to(bar, { width: "20vh", duration: 0.9, ease: "expo" });
+      gsap.to(bar, { height: "20vh", duration: 0.9, ease: "expo" });
       gsap.to(bar, { "border-radius": "10vh", duration: 1, ease: "expo" });
       gsap.to(bar, { top: "40vh", duration: 1, ease: "expo" });
-      gsap.to(ballTop, { backgroundColor: "#cf4444" });
       gsap.fromTo(
         ballTop,
         { top: "-55%" },
-        { top: "0%", duration: 1, ease: "expo", delay: 0.6 }
+        { top: "0%", duration: 1, ease: "expo", delay: 0.8 }
       );
-      // gsap.to(ballTop, {autoAlpha: 1, delay: 0.7})
+
       gsap.fromTo(
         ballMid,
         { height: "0%" },
-        { height: "8%", duration: 0.5, ease: "expo", delay: 1.1 }
+        { height: "8%", duration: 0.5, ease: "expo", delay: 1.2 }
       );
       gsap.fromTo(
         ballCenterOuter,
         { scale: 0 },
-        { scale: 1, duration: 0.5, ease: "expo", delay: 1.2 }
+        { scale: 1, duration: 0.5, ease: "expo", delay: 1.3 }
       );
       gsap.fromTo(
         ballCenterInner,
         { scale: 0 },
-        { scale: 1, duration: 1, ease: "expo", delay: 1.4 }
+        {
+          scale: 1,
+          duration: 1,
+          ease: "expo",
+          delay: 1.5,
+          onComplete: this.waitForResults,
+        }
       );
     },
     onQuery() {
@@ -159,7 +247,7 @@ input:focus {
   height: 75%;
   width: 90%;
   left: 5%;
-  overflow: auto
+  overflow: auto;
 }
 /* width */
 ::-webkit-scrollbar {
@@ -182,22 +270,20 @@ input:focus {
   background: rgb(255, 77, 77);
 }
 
-
 .pokeball {
   position: relative;
   height: 100%;
   width: 100%;
   transform-origin: center;
-  transform: translateY(-50%);
+  transform: translateY(0%);
   clip-path: circle(10vh at center);
 }
 .ballTop {
   position: relative;
-  background-color: #ffffff;
+  background-color: #cf4444;
   height: 50%;
-  width: 100%;
+  width: 110%;
   top: -60%;
-  opacity: 1;
 }
 .ballMid {
   position: relative;
@@ -223,5 +309,18 @@ input:focus {
   width: 60%;
   left: 20%;
   top: 20%;
+}
+.ballBottom {
+  position: relative;
+  background-color: #ffffff;
+  height: 50%;
+  width: 100%;
+  top: -35%;
+  z-index: -1;
+}
+.debug {
+  position: absolute;
+  left: 0%;
+  top: 0%;
 }
 </style>
