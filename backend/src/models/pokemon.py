@@ -1,5 +1,6 @@
 from db import Database
 from controllers.moveController import MoveController
+from controllers.itemController import ItemController
 from models.type import Type
 from models.stat import Stat
 class Pokemon:
@@ -19,6 +20,7 @@ class Pokemon:
     def initPokemon(self):
         self.versionIdList = []
         self.moves = []
+        self.items = []
         self.pokemon_specific_id = None
         self.name = None
         self.height = None
@@ -26,6 +28,7 @@ class Pokemon:
         self.stat = None
         self.description = None
         self.type = None
+    
 
     def __init__(self, pokemon_generic_id, version_id):
         self.pokemon_generic_id = pokemon_generic_id
@@ -56,6 +59,11 @@ class Pokemon:
         # Get moves
         self.moves = await MoveController.list(self.pokemon_specific_id)
         self.moves = self.moves['data']
+
+
+        # Get items
+        self.items = await ItemController.list(self.pokemon_specific_id)
+        self.items = self.items['data']
     
 
     

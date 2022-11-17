@@ -47,3 +47,7 @@ def routes(app):
         pokemon_specific_id = request.args.get("pokemon_specific_id")
         return await MoveController.list(pokemon_specific_id)
 
+    # Move GET
+    @app.route("/move/<move_id>", methods=['GET'])
+    async def moveGet(move_id):
+        return await MoveController.get(move_id)
