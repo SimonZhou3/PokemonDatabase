@@ -9,6 +9,10 @@ class ItemController:
             vals = {}
             vals['item_id']=item[0]
             vals['name']=item[1]
+            try:
+                vals['rarity'] = item[2]
+            except:
+                None
             arr.append(vals)
         return arr
 
@@ -26,9 +30,13 @@ class ItemController:
 
 
     @staticmethod
-    async def list():
-        print("List pokemon Called")
-        items = await Item.listItem()
+    async def list(pokemon_specific_id):
+        print("List item Called")
+        items = None
+        if (pokemon_specific_id):
+            items = await Item.listPokemonItem(pokemon_specific_id)  
+        else:
+            items = await Item.listItem()
         result = ItemController.listItemFormat(items)
         return { "data" : result}
 

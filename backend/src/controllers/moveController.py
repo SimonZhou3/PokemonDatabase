@@ -13,15 +13,19 @@ class MoveController:
         return arr
 
     @staticmethod
-    def moveFormat(item):
+    def moveFormat(move):
         return { "data": [
             {
-                'item_id': item.item_id,
-                'name': item.name,
-                'cost': item.cost,
-                'category': item.category,
-                'description': item.description,
-                'sprite': item.sprite
+                'move_id': move.moveId,
+                'name': move.name,
+                'type_id': move.typeId,
+                'type': move.type,
+                'accuracy': move.accuracy,
+                'effect_chance': move.effectChance,
+                'pp': move.pp,
+                'priority': move.priority,
+                'power': move.power,
+                'damage_class': move.damageClass
             }]}
 
 
@@ -36,12 +40,12 @@ class MoveController:
         result = MoveController.listMoveFormat(moves)
         return { "data" : result}
 
-    # @staticmethod
-    # async def get(item_id):
-    #     print("Get Item Called")
-    #     item = Item(item_id)
-    #     await item.load()
-    #     return ItemController.listMoveFormat(item)
+    @staticmethod
+    async def get(move_id):
+        print("Get Move Called")
+        move = Move(move_id)
+        await move.load()
+        return MoveController.moveFormat(move)
 
 
 
