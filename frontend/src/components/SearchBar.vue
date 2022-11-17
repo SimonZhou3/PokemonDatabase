@@ -277,6 +277,7 @@ input:focus {
   transform-origin: center;
   transform: translateY(0%);
   clip-path: circle(10vh at center);
+  
 }
 .ballTop {
   position: relative;

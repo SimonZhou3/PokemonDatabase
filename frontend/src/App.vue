@@ -1,41 +1,44 @@
 <template>
   <SearchBar :pokemonList="this.pokemonList" @completed="displayResults" />
-  <DataPane v-if="this.received"/>
+  <DataPane v-if="this.received" />
+  <StatPane v-if="this.received"/>
 </template>
 
 <script>
 import SearchBar from "./components/SearchBar.vue";
 import DataPane from "./components/dataPane.vue";
+import StatPane from "./components/statsPane.vue";
 export default {
   name: "App",
   components: {
     SearchBar,
     DataPane,
+    StatPane,
   },
   data() {
     return {
       received: false,
       typeColor: {
-        "normal" : "#CC99A8",
-        "fighting" : "#EF6138",
-        "flying" : "#93B2C7",
-        "poison" : "#9B69D9",
-        "ground" : "#A96F2E",
-        "rock" : "#8B3E21",
-        "bug" : "#3B9852",
-        "ghost" : "#906790",
-        "steel" : "#44BD94",
-        "fire" : "#FD4C5A",
-        "water" : "#86A9FA",
-        "grass" : "#27CB4F",
-        "electric" : "#FBFB72",
-        "psychic" : "#F81D8F",
-        "ice" : "#84D2F7",
-        "dragon" : "#63C9D7",
-        "dark" : "#5A5979",
-        "fairy" : "#EA1369",
-        "unknown" : "#A6A8A8",
-        "shadow" : "#1F2024"
+        normal: "#CC99A8",
+        fighting: "#EF6138",
+        flying: "#93B2C7",
+        poison: "#9B69D9",
+        ground: "#A96F2E",
+        rock: "#8B3E21",
+        bug: "#3B9852",
+        ghost: "#906790",
+        steel: "#44BD94",
+        fire: "#FD4C5A",
+        water: "#86A9FA",
+        grass: "#27CB4F",
+        electric: "#FBFB72",
+        psychic: "#F81D8F",
+        ice: "#84D2F7",
+        dragon: "#63C9D7",
+        dark: "#5A5979",
+        fairy: "#EA1369",
+        unknown: "#A6A8A8",
+        shadow: "#1F2024",
       },
       pokemonList: [
         "Bulbasaur",
@@ -950,7 +953,8 @@ export default {
     displayResults() {
       console.log("received query results");
       this.received = true;
-      document.getElementById("app").style.backgroundColor = this.typeColor["steel"]
+      document.getElementById("app").style.backgroundColor =
+        this.typeColor["ice"];
     },
   },
   mounted() {

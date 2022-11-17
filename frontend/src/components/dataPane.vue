@@ -22,6 +22,7 @@ export default {
     mounted() {
         console.log("showing data")
         let pane = this.$refs.pane
+        pane.style.opacity = 1
         gsap.fromTo(pane, {top: "50vh"}, {top: "15vh", duration: 1, ease: "expo"})
     }
 }
@@ -34,7 +35,11 @@ export default {
     height: 65vh;
     left: 5vw;
     background-color: #ffffff;
-    border-radius: 5vh
+    border-radius: 5vh;
+    opacity: 0;
+    transition: opacity 1s;
+box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+    /* filter: drop-shadow(0px 0px 6px #ebebeb) */
 }
 .dataContainer {
     position: relative;
