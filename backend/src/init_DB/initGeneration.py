@@ -1,6 +1,4 @@
-from init_DB.initVersionGroup import init as initVersionTable
 from init_DB.initVersionGroup import insert as insertVersionTable
-from init_DB.initRegion import init as initRegionTable
 from init_DB.initRegion import insert as insertRegionTable
 #change this according to API resource names
 api_name = "generation"
@@ -17,24 +15,6 @@ def init(cur, pb):
     global populate_table
     global version_id
     global region_id
-    #if the table exist then skip entirely
-    cur.execute("SELECT EXISTS(SELECT * FROM information_schema.tables WHERE table_name='"+table+"')")
-    if bool(cur.fetchone()[0]):
-        print("**table " + table + " exists already**")
-        populate_table = False
-    else :
-
-    # Execute a command: this creates a new table
-        cur.execute("""
-            CREATE TABLE """ + table + """ (
-                """+ table_id + """  SERIAL PRIMARY KEY,
-                name text UNIQUE)
-            """)
-        print("!!table " + table + " created!!")
-        populate_table = True
-    #create tables of dependent entities
-    initVersionTable(cur, pb)
-    initRegionTable(cur, pb)
 
     #get list of all generations
     generationList = pb.APIResourceList(api_name)

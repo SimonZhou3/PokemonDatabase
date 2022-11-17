@@ -1,14 +1,8 @@
-from init_DB.initPokemonSpecific import init as initPokemonSpecificTable
 from init_DB.initPokemonSpecific import insert as insertPokemonSpecificTable
-from init_DB.initPokemonMove import init as initPokemonMoveTable
 from init_DB.initPokemonMove import insert as insertPokemonMoveTable
-from init_DB.initPokemonArea import init as initPokemonAreaTable
 from init_DB.initPokemonArea import insert as insertPokemonAreaTable
-from init_DB.initPokemonType import init as initPokemonTypeTable
 from init_DB.initPokemonType import insert as insertPokemonTypeTable
-from init_DB.initPokemonItem import init as initPokemonItemTable
 from init_DB.initPokemonItem import insert as insertPokemonItemTable
-from init_DB.initPokemonStat import init as initPokemonStatTable
 from init_DB.initPokemonStat import insert as insertPokemonStatTable
 #change this according to API resource names
 api_name = "pokemon"
@@ -29,31 +23,8 @@ pokemon_statIndex = 1
 
 def init(cur, pb):
     global populate_table
-    #if the table exist then skip entirely
-    cur.execute("SELECT EXISTS(SELECT * FROM information_schema.tables WHERE table_name='"+table+"')")
-    if bool(cur.fetchone()[0]):
-        print("**table " + table + " exists already**")
-        populate_table = False
-    else :
-        # Execute a command: this creates a new table
-        cur.execute("""
-            CREATE TABLE """ + table + """ (
-                """+ table_id + """  integer PRIMARY KEY,
-                name text,
-                height integer,
-                weight integer,
-                sprite text
-                )
-            """)
-        print("!!table " + table + " created!!")
-        populate_table = True
+
     #create tables of dependent entities
-    initPokemonSpecificTable(cur, pb)
-    initPokemonMoveTable(cur,pb)
-    initPokemonAreaTable(cur, pb)
-    initPokemonTypeTable(cur,pb)
-    initPokemonItemTable(cur,pb)
-    initPokemonStatTable(cur,pb)
 
     #get list of pokemon
     pokemonList = pb.APIResourceList(api_name)

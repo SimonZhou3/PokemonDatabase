@@ -12,39 +12,6 @@ populate_table = True
 # index for child id
 child_id = 1
 
-
-def init(cur, pb):
-    global populate_table
-    # if the table exist then skip entirely
-    cur.execute("SELECT EXISTS(SELECT * FROM information_schema.tables WHERE table_name='" + table + "')")
-    if bool(cur.fetchone()[0]):
-        print("**table " + table + " exists already**")
-        populate_table = False
-    else:
-
-        # Execute a command: this creates a new table
-        cur.execute("""
-            CREATE TABLE """ + table + """ (
-                """ + table_id + """  integer PRIMARY KEY,
-                """ + fk_id + """ integer,
-                """ + fk2_id + """ integer,
-                method text,
-                level integer,
-                CONSTRAINT fk_""" + fk_id + """
-                    FOREIGN KEY(""" + fk_id + """)
-                        REFERENCES """ + parent + """(""" + fk_id + """)
-                        ON DELETE CASCADE,
-                CONSTRAINT fk_""" + fk2_id + """
-                    FOREIGN KEY(""" + fk2_id + """)
-                        REFERENCES """ + parent2 + """(""" + fk2_id + """)
-                        ON DELETE CASCADE
-                    )
-            """)
-        print("!!table " + table + " created!!")
-    # create tables of dependent entities
-    # initChildTable(cur, pb)
-
-
 def insert(cur, pb, move, poke_move_version, pokemon_id, id):
     # populate this table
     if populate_table:
@@ -83,8 +50,3 @@ def insert(cur, pb, move, poke_move_version, pokemon_id, id):
                  poke_move_version.level_learned_at))
             id += 1
         return id
-    # #populate child tables 
-    # global child_id
-    # for child in resource.children:
-    #     insertChildTable(cur, pb, area, id, child_id)
-    #     child_id += 1
