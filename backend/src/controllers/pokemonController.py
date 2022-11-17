@@ -24,7 +24,7 @@ class PokemonController:
                 "description": pokemon.description,
                 "stat": pokemon.stat.getStats(),
                 "type": pokemon.type.getTypes(),
-                "moves": pokemon.moves.getMoves()
+                "moves": pokemon.moves
             }]}
 
 

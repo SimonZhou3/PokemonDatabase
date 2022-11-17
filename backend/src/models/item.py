@@ -6,7 +6,6 @@ class Item:
     async def listItem():
         SQL = "SELECT item_id,name FROM item"
         query = await Database.execute(SQL,None)
-        print(query)
         return query
 
     def itemFormat(self,item):

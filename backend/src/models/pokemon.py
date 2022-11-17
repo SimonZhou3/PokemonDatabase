@@ -1,5 +1,5 @@
 from db import Database
-from models.move import Move
+from controllers.moveController import MoveController
 from models.type import Type
 from models.stat import Stat
 class Pokemon:
@@ -52,8 +52,10 @@ class Pokemon:
         # Get Type
         self.type = Type(self.pokemon_generic_id)
         await self.type.load()
+        
         # Get moves
-        self.moves = Move(self.pokemon_specific_id)
-        await self.moves.load()
+        self.moves = await MoveController.list(self.pokemon_specific_id)
+        self.moves = self.moves['data']
+    
 
     
