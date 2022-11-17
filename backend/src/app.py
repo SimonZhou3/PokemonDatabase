@@ -41,7 +41,7 @@ with conn.cursor() as cur:
     # initGeneration(cur, pb)
     # initItem(cur, pb)
     # initType(cur,pb)
-    initPokemon(cur, pb)
+    # initPokemon(cur, pb)
     # Make the changes to the database persistent
     conn.commit()
     print("commited to database")
