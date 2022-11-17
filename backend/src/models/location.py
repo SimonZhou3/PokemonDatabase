@@ -19,8 +19,8 @@ class Location:
 
     def __init__(self, location_id):
         self.location_id = location_id
-        self.name = 1
-        self.location =1
+        self.name = None
+        self.location = None
 
     async def load(self):
         SQL = f"SELECT * FROM location WHERE location_id=({self.location_id})"

@@ -1,16 +1,9 @@
-from init_DB.initPokemonSpecific import init as initPokemonSpecificTable
 from init_DB.initPokemonSpecific import insert as insertPokemonSpecificTable
-from init_DB.initPokemonMove import init as initPokemonMoveTable
 from init_DB.initPokemonMove import insert as insertPokemonMoveTable
-from init_DB.initPokemonArea import init as initPokemonAreaTable
 from init_DB.initPokemonArea import insert as insertPokemonAreaTable
-from init_DB.initPokemonType import init as initPokemonTypeTable
 from init_DB.initPokemonType import insert as insertPokemonTypeTable
-from init_DB.initPokemonItem import init as initPokemonItemTable
 from init_DB.initPokemonItem import insert as insertPokemonItemTable
-from init_DB.initPokemonStat import init as initPokemonStatTable
 from init_DB.initPokemonStat import insert as insertPokemonStatTable
-# TODO -- Add description to table by calling PokemonSpecies. REMEMBER THAT many pokemons can be in different versions.
 #change this according to API resource names
 api_name = "pokemon"
 table = "pokemon_generic"
@@ -30,31 +23,8 @@ pokemon_statIndex = 1
 
 def init(cur, pb):
     global populate_table
-    #if the table exist then skip entirely
-    cur.execute("SELECT EXISTS(SELECT * FROM information_schema.tables WHERE table_name='"+table+"')")
-    if bool(cur.fetchone()[0]):
-        print("**table " + table + " exists already**")
-        populate_table = False
-    else :
-        # Execute a command: this creates a new table
-        cur.execute("""
-            CREATE TABLE """ + table + """ (
-                """+ table_id + """  integer PRIMARY KEY,
-                name text,
-                height integer,
-                weight integer,
-                sprite text
-                )
-            """)
-        print("!!table " + table + " created!!")
-        populate_table = True
+
     #create tables of dependent entities
-    initPokemonSpecificTable(cur, pb)
-    initPokemonMoveTable(cur,pb)
-    initPokemonAreaTable(cur, pb)
-    initPokemonTypeTable(cur,pb)
-    initPokemonItemTable(cur,pb)
-    initPokemonStatTable(cur,pb)
 
     #get list of pokemon
     pokemonList = pb.APIResourceList(api_name)
@@ -70,9 +40,8 @@ def init(cur, pb):
 
         #insert into child tables
         global pokemon_statIndex
-        for poke_stat in pokemon.stats:
-            insertPokemonStatTable(cur,pb,poke_stat, pokemon_index, pokemon_statIndex)
-            pokemon_statIndex += 1
+        insertPokemonStatTable(cur,pb,pokemon.stats, pokemon_index, pokemon_statIndex)
+        pokemon_statIndex += 1
 
         global pokemon_version_specificIndex
         for gameIndex in pokemon.game_indices:
