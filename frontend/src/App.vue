@@ -1,5 +1,5 @@
 <template>
-  <SearchBar :pokemonList="this.pokemonList" @completed="displayResults" />
+  <SearchBar :pokemonList="this.pokemonList" @received="compileData(data)" @completed="displayResults" />
   <DataPane v-if="this.received" />
   <StatPane v-if="this.received"/>
 </template>
@@ -18,6 +18,7 @@ export default {
   data() {
     return {
       received: false,
+      pokemonData: null,
       typeColor: {
         normal: "#CC99A8",
         fighting: "#EF6138",
@@ -956,6 +957,17 @@ export default {
       document.getElementById("app").style.backgroundColor =
         this.typeColor["ice"];
     },
+    sortResult(data) {
+      let nameList = []
+      for (let pokemon of data) {
+        nameList.push(pokemon.name)
+      }
+      this.pokemonList = nameList
+      console.log(nameList)
+    },
+    compileData(data) {
+
+    }
   },
   mounted() {
     console.log("mounted")
@@ -963,7 +975,7 @@ export default {
       method: "GET",
     }
     ).then((response) => response.json())
-    .then((data) => console.log(data))
+    .then((data) => this.sortResult(data))
   },
   onBeforeMount() {
     //get list of pokemons from backend

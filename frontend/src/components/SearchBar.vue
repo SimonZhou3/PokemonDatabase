@@ -23,6 +23,7 @@
             :pokemon="pokemon"
             v-if="this.query.length > 1"
             @querying="onQuery"
+            @received="onReceive(data)"
           />
         </div>
       </div>
@@ -64,8 +65,9 @@ export default {
     test() {
       this.loaded = true;
     },
-    signalComplete() {
-      this.$emit("completed");
+    onReceive(data) {
+      this.loaded = true
+      this.$emit("received", data)
     },
     showPokemon() {
       let pokeball = this.$refs.pokeball;

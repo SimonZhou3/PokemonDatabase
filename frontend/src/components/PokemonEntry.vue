@@ -13,6 +13,11 @@ export default {
     queryPokemon() {
       this.$emit("querying");
       //send request to back end
+      fetch("http://127.0.0.1:5000/pokemon/"+this.$props.pokemon, {
+      method: "GET",
+    }
+    ).then((response) => response.json())
+    .then((data) => this.$emit("received", data))
     },
   },
 };
