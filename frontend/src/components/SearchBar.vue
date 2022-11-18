@@ -54,7 +54,7 @@ export default {
     findPokemons() {
       let filteredList = [];
       for (let pokemon of this.$props.pokemonList) {
-        if (pokemon.toLowerCase().startsWith(this.query.toLowerCase())) {
+        if (pokemon.name.toLowerCase().startsWith(this.query.toLowerCase())) {
           filteredList.push(pokemon);
         }
       }
@@ -66,6 +66,7 @@ export default {
       this.loaded = true;
     },
     onReceive(data) {
+      console.log("received data")
       this.loaded = true
       this.$emit("received", data)
     },

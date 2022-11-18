@@ -53,12 +53,12 @@ export default {
     },
     sortResult(data) {
       // console.log(data)
-      let nameList = []
+      let pokemonList = []
       for (let pokemon of data['data']) {
-        nameList.push(pokemon.name)
+        pokemonList.push(pokemon)
       }
-      this.pokemonList = nameList
-      // console.log(nameList)
+      this.pokemonList = pokemonList
+      // console.log(this.pokemonList)
     },
     compileData(data) {
       console.log(data)
@@ -71,9 +71,6 @@ export default {
     }
     ).then((response) => response.json())
     .then((data) => this.sortResult(data))
-  },
-  onBeforeMount() {
-    //get list of pokemons from backend
   },
 };
 </script>

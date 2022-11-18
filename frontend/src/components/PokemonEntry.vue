@@ -1,5 +1,5 @@
 <template>
-  <button class="entry" ref="entry" @click="queryPokemon">{{this.$props.pokemon}}</button>
+  <button class="entry" ref="entry" @click="queryPokemon">{{this.$props.pokemon.name}}</button>
 </template>
 
 <script>
@@ -13,7 +13,7 @@ export default {
     queryPokemon() {
       this.$emit("querying");
       //send request to back end
-      fetch("http://127.0.0.1:5000/pokemon/"+this.$props.pokemon, {
+      fetch("http://127.0.0.1:5000/pokemon/"+this.$props.pokemon.pokemon_id, {
       method: "GET",
     }
     ).then((response) => response.json())
