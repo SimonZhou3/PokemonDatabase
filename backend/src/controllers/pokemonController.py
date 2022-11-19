@@ -24,7 +24,8 @@ class PokemonController:
                 "description": pokemon.description,
                 "stat": pokemon.stat.getStats(),
                 "type": pokemon.type.getTypes(),
-                "moves": pokemon.moves.getMoves()
+                "moves": pokemon.moves,
+                "items": pokemon.items
             }]}
 
 
@@ -57,11 +58,13 @@ class PokemonController:
 
     # @staticmethod
     # async def create(data):
-    #     name,version_id = itemgetter('name', 'version_id')(data)
-    #     location_id = await Location.addLocation(name,version_id)
-    #     location = Location(location_id)
-    #     await location.load()
-    #     return LocationController.locationFormat(location)
+    #     try:
+    #         name,version_id = itemgetter('name', 'version_id')(data)
+    #         location_id = await Pokemon.create(name,version_id)
+    #     except:
+    #         print("An exception occurred")
+    
+  
 
     # @staticmethod
     # async def update(data):

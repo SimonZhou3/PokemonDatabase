@@ -11,6 +11,7 @@ import asyncio
 import sys
 from init_DB.initPokemonGeneric import init as initPokemon
 from init_DB.initItem import init as initItem
+from flask_cors import CORS
 
 # make sure postgres is running before running this
 # i keep forgetting
@@ -30,22 +31,24 @@ SSLMODE = os.environ.get('SSLMODE')
 # Window and python == bad
 if sys.platform == "win32":
     asyncio.set_event_loop_policy(asyncio.WindowsSelectorEventLoopPolicy())
-
 # Connect to an existing database
+
 conn = psycopg.connect(F"dbname={DBNAME} user={USER} password={PASSWORD} port={PORT} host={HOST} sslmode = {SSLMODE}")
+print('Connected to DB')
 # Open a cursor to perform database operations
-with conn.cursor() as cur:
-    # wipe database
-    # cur.execute("DROP SCHEMA public CASCADE")
-    # cur.execute("CREATE SCHEMA public")
-    # initialize tables
-    # initGeneration(cur, pb)
-    # initItem(cur, pb)
-    # initType(cur,pb)
-    initPokemon(cur, pb)
-    # Make the changes to the database persistent
-    conn.commit()
-    print("commited to database")
+# with conn.cursor() as cur:
+#     # wipe database
+#     # cur.execute("DROP SCHEMA public CASCADE")
+#     # cur.execute("CREATE SCHEMA public")
+#     # initialize tables
+#     # initGeneration(cur, pb)
+#     # initItem(cur, pb)
+#     # initType(cur,pb)
+#     initPokemon(cur, pb)
+#     # Make the changes to the database persistent
+#     conn.commit()
+#     print("commited to database")
 app = Flask(__name__)
+CORS(app)
 
 routes(app)

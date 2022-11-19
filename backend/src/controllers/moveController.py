@@ -1,51 +1,51 @@
-from models.item import Item
+from models.move import Move
 from operator import itemgetter
 from flask import request
-class ItemController:
+class MoveController:
     @staticmethod
-    def listItemFormat(items):
+    def listMoveFormat(items):
         arr=[]
         for item in items:
             vals = {}
-            vals['item_id']=item[0]
+            vals['move_id']=item[0]
             vals['name']=item[1]
-            try:
-                vals['rarity'] = item[2]
-            except:
-                None
             arr.append(vals)
         return arr
 
     @staticmethod
-    def itemFormat(item):
+    def moveFormat(move):
         return { "data": [
             {
-                'item_id': item.item_id,
-                'name': item.name,
-                'cost': item.cost,
-                'category': item.category,
-                'description': item.description,
-                'sprite': item.sprite
+                'move_id': move.moveId,
+                'name': move.name,
+                'type_id': move.typeId,
+                'type': move.type,
+                'accuracy': move.accuracy,
+                'effect_chance': move.effectChance,
+                'pp': move.pp,
+                'priority': move.priority,
+                'power': move.power,
+                'damage_class': move.damageClass
             }]}
 
 
     @staticmethod
     async def list(pokemon_specific_id):
-        print("List item Called")
-        items = None
+        print("List moves Called")
+        moves = None
         if (pokemon_specific_id):
-            items = await Item.listPokemonItem(pokemon_specific_id)  
+            moves = await Move.listPokemonMoves(pokemon_specific_id)  
         else:
-            items = await Item.listItem()
-        result = ItemController.listItemFormat(items)
+            moves = await Move.listMoves()  
+        result = MoveController.listMoveFormat(moves)
         return { "data" : result}
 
     @staticmethod
-    async def get(item_id):
-        print("Get Item Called")
-        item = Item(item_id)
-        await item.load()
-        return ItemController.itemFormat(item)
+    async def get(move_id):
+        print("Get Move Called")
+        move = Move(move_id)
+        await move.load()
+        return MoveController.moveFormat(move)
 
 
 
