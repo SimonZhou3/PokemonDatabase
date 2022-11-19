@@ -85,6 +85,7 @@ CREATE TABLE IF NOT EXISTS pokemon_specific (
     FOREIGN KEY(version_id) REFERENCES version(version_id) ON DELETE CASCADE
 );
 
+/* TODO -- NEED ASSERTIONS */
 CREATE TABLE IF NOT EXISTS pokemon_move (
     pokemon_move_id SERIAL PRIMARY KEY,
     pokemon_specific_id integer NOT NULL,
@@ -95,6 +96,7 @@ CREATE TABLE IF NOT EXISTS pokemon_move (
     FOREIGN KEY(move_id) REFERENCES  move(move_id) ON DELETE CASCADE
 );
 
+/* TODO -- NEED ASSERTIONS */
 CREATE TABLE IF NOT EXISTS pokemon_area (
     pokemon_area_id SERIAL PRIMARY KEY,
     pokemon_specific_id integer NOT NULL,
@@ -103,7 +105,7 @@ CREATE TABLE IF NOT EXISTS pokemon_area (
     FOREIGN KEY(pokemon_specific_id) REFERENCES pokemon_specific(pokemon_specific_id) ON DELETE CASCADE,
     FOREIGN KEY(area_id) REFERENCES  area(area_id) ON DELETE CASCADE
 );
-
+/* TODO -- NEED ASSERTIONS */
 CREATE TABLE IF NOT EXISTS pokemon_type (
     pokemon_type_id SERIAL PRIMARY KEY,
     slot integer,
@@ -140,12 +142,12 @@ CREATE TABLE IF NOT EXISTS trainer (
 );
 
 CREATE TABLE IF NOT EXISTS trained_pokemon (
-    pokemon_specific_id SERIAL,
-    version_id integer,
+    trained_pokemon_id SERIAL,
+    pokemon_specific_id integer,
     trainer_id integer,
     nickname text,
-    PRIMARY KEY (pokemon_specific_id,version_id,trainer_id),
+    level integer,
+    PRIMARY KEY (trained_pokemon_id, pokemon_specific_id, trainer_id),
     FOREIGN KEY(pokemon_specific_id) REFERENCES pokemon_specific(pokemon_specific_id) ON DELETE CASCADE,
-    FOREIGN KEY(version_id) REFERENCES version(version_id) ON DELETE CASCADE,
     FOREIGN KEY(trainer_id) REFERENCES trainer(trainer_id) ON DELETE CASCADE
 );
