@@ -21,7 +21,7 @@ from flask_cors import CORS
 # Load environmental variables
 dotenv_path = join(dirname(__file__), '.env')
 load_dotenv(dotenv_path)
-DBNAME = os.environ.get('DBNAMES')
+DBNAME = os.environ.get('DBNAME')
 USER = os.environ.get('DBUSER')
 PASSWORD = os.environ.get('PASSWORD')
 PORT = os.environ.get('PORT')
@@ -32,7 +32,7 @@ SSLMODE = os.environ.get('SSLMODE')
 if sys.platform == "win32":
     asyncio.set_event_loop_policy(asyncio.WindowsSelectorEventLoopPolicy())
 # Connect to an existing database
-print(DBNAME)
+
 conn = psycopg.connect(F"dbname={DBNAME} user={USER} password={PASSWORD} port={PORT} host={HOST} sslmode = {SSLMODE}")
 print('Connected to DB')
 # Open a cursor to perform database operations

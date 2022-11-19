@@ -6,7 +6,7 @@ from dotenv import load_dotenv
 # Load env variables
 dotenv_path = join(dirname(__file__), '.env')
 load_dotenv(dotenv_path)
-DBNAME = os.environ.get('DBNAMES')
+DBNAME = os.environ.get('DBNAME')
 USER = os.environ.get('DBUSER')
 PASSWORD = os.environ.get('PASSWORD')
 PORT = os.environ.get('PORT')
