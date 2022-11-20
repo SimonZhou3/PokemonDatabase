@@ -13,7 +13,8 @@ class Pokemon:
 
     @staticmethod
     async def getPokemonVersions(generic_id):
-        SQL = f"SELECT version_id FROM pokemon_specific WHERE pokemon_generic_id=(%s)"
+        SQL = (f"SELECT version.version_id,name FROM pokemon_specific,version "
+         f"WHERE pokemon_generic_id=(%s) AND version.version_id = pokemon_specific.version_id")
         query = await Database.execute(SQL,[generic_id])
         print(query)
         return query
@@ -61,7 +62,6 @@ class Pokemon:
         # Get moves
         self.moves = await MoveController.list(self.pokemon_specific_id)
         self.moves = self.moves['data']
-
 
         # Get items
         self.items = await ItemController.list(self.pokemon_specific_id)
