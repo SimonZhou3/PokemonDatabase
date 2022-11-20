@@ -21,9 +21,8 @@ def init(cur, pb):
         #populate this table
         if populate_table:
             print("TUPLE(TYPE): ", typeIndex, poke_type.name)
-            cur.execute(
-                "INSERT INTO " +  table + " (" + table_id + ", name"+") VALUES (%s, %s)",
-                (typeIndex , poke_type.name))
+            print("INSTANCE: ", type(poke_type.name))
+            cur.execute("INSERT INTO " + table +"(name) VALUES (%s)", (poke_type.name,))
 
         global moveIndex
         for move in poke_type.moves:

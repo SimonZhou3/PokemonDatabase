@@ -22,5 +22,5 @@ def insert(cur, pb, poke_type, pokemon_id, id):
         type_id = cur.fetchone()[0]
         print("TUPLE(POKEMON_TYPE): ", id, pokemon_id, type_id, poke_type.slot)
         cur.execute(
-            "INSERT INTO " + table + " (" + table_id + ", " + fk_id + ", " + fk2_id + ", slot) VALUES (%s, %s, %s, %s)",
-            (id, pokemon_id, type_id, poke_type.slot))
+            "INSERT INTO " + table + " (" + fk_id + ", " + fk2_id + ", slot) VALUES (%s, %s, %s)",
+            (pokemon_id, type_id, poke_type.slot))

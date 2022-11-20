@@ -23,6 +23,6 @@ def insert(cur, pb, stat, pokemon_id, id):
 
         print(pokemon_specific_stat)
         cur.execute(
-            "INSERT INTO " + table + " (" + table_id + ", " + fk_id + ", hp,  attack, defence, special_attack, special_defence, speed ) VALUES (%s, %s, %s, %s, %s, %s, %s, %s)",
-            (id, pokemon_id, pokemon_specific_stat[0], pokemon_specific_stat[1], pokemon_specific_stat[2],
+            "INSERT INTO " + table + " (" + fk_id + ", hp,  attack, defence, special_attack, special_defence, speed ) VALUES (%s, %s, %s, %s, %s, %s, %s)",
+            (pokemon_id, pokemon_specific_stat[0], pokemon_specific_stat[1], pokemon_specific_stat[2],
              pokemon_specific_stat[3], pokemon_specific_stat[4], pokemon_specific_stat[5]))

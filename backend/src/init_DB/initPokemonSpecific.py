@@ -31,6 +31,6 @@ def insert(cur, pb, version, descs, pokemon_id, id):
                     break
         print("TUPLE(POKEMON_SPECIFIC): ", id, pokemon_id, version_id, description)
         cur.execute(
-            "INSERT INTO " +  table + " (" + table_id + ", " + fk_id + ", " + fk2_id + ", description) VALUES (%s, %s, %s, %s)",
-            (id , pokemon_id, version_id, description))
+            "INSERT INTO " +  table + " (" + fk_id + ", " + fk2_id + ", description) VALUES (%s, %s, %s)",
+            (pokemon_id, version_id, description))
 
