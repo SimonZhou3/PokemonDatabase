@@ -12,12 +12,21 @@ class PokemonController:
             arr.append(vals)
         return arr
 
+    def versionIdFormat(versionIdList):
+        arr = []
+        for version in versionIdList:
+            vals = {}
+            vals['version_id']=version[0]
+            vals['name']=version[1]
+            arr.append(vals)
+        return arr      
     @staticmethod
-    def pokemonFormat(pokemon):
+    def pokemonFormat(pokemon,versionIdList):
         return { "data": [
             {
                 "pokemon_specific_id": pokemon.pokemon_specific_id,
                 "pokemon_version_id": pokemon.version_id,
+                "version_list": PokemonController.versionIdFormat(versionIdList),
                 "name" : pokemon.name,
                 "height" : pokemon.height,
                 "sprite" : pokemon.sprite,
@@ -41,15 +50,15 @@ class PokemonController:
         print("Get pokemon Called")
         version_id = request.args.get("version_id")
         result = None
+        versionIdList = await Pokemon.getPokemonVersions(pokemon_id)
         if (not version_id):
-            versionIdList = await Pokemon.getPokemonVersions(pokemon_id)
             pokemon = Pokemon(pokemon_id,versionIdList[0][0])
             await pokemon.load()
-            result = PokemonController.pokemonFormat(pokemon)
+            result = PokemonController.pokemonFormat(pokemon,versionIdList)
         else:
             pokemon = Pokemon(pokemon_id,version_id)
             await pokemon.load()
-            result = PokemonController.pokemonFormat(pokemon)
+            result = PokemonController.pokemonFormat(pokemon,versionIdList)
         return result
 
 
