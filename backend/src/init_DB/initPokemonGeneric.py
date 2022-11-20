@@ -35,8 +35,8 @@ def init(cur, pb):
         print("TUPLE(POKEMON_GENERIC): ",pokemon.name, pokemon.height, pokemon.weight)
         if populate_table:
             cur.execute(
-                "INSERT INTO " +  table + " (" + table_id + ", name, height, weight, sprite) VALUES (%s, %s, %s, %s, %s)",
-                (pokemon_index , pokemon.name, pokemon.height, pokemon.weight, pokemon.sprites.front_default,))
+                "INSERT INTO " +  table + " (" + " name, height, weight, sprite) VALUES (%s, %s, %s, %s)",
+                (pokemon.name, pokemon.height, pokemon.weight, pokemon.sprites.front_default,))
 
         #insert into child tables
         global pokemon_statIndex

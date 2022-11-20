@@ -32,7 +32,7 @@ SSLMODE = os.environ.get('SSLMODE')
 if sys.platform == "win32":
     asyncio.set_event_loop_policy(asyncio.WindowsSelectorEventLoopPolicy())
 # Connect to an existing database
-print(DBNAME)
+
 conn = psycopg.connect(F"dbname={DBNAME} user={USER} password={PASSWORD} port={PORT} host={HOST} sslmode = {SSLMODE}")
 print('Connected to DB')
 # Open a cursor to perform database operations

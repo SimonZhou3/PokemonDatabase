@@ -41,8 +41,8 @@ def insert(cur, pb, item, poke_held_item_version, pokemon_id, id):
         for pokemon_specific_id in pokemon_specific_ids:
             print("TUPLE(POKEMON_ITEM): ", id, pokemon_specific_id, item_id, poke_held_item_version.rarity)
             cur.execute(
-                "INSERT INTO " + table + " (" + table_id + ", " + fk_id + ", " + fk2_id + ", rarity) VALUES (%s, %s, %s, %s)",
-                (id, pokemon_specific_id, item_id, poke_held_item_version.rarity))
+                "INSERT INTO " + table + " (" + fk_id + ", " + fk2_id + ", rarity) VALUES (%s, %s, %s)",
+                (pokemon_specific_id, item_id, poke_held_item_version.rarity))
             id += 1
         return id
     # #populate child tables

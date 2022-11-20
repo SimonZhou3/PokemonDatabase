@@ -41,7 +41,7 @@ def insert(cur, pb, area, encounter_version, pokemon_id, id):
         for pokemon_specific_id in pokemon_specific_ids:
             print("TUPLE(POKEMON_AREA): ", id, pokemon_specific_id, area_id, encounter_version.max_chance)
             cur.execute(
-                "INSERT INTO " + table + " (" + table_id + ", " + fk_id + ", " + fk2_id + ", max_chance) VALUES (%s, %s, %s, %s)",
-                (id, pokemon_specific_id, area_id, encounter_version.max_chance))
+                "INSERT INTO " + table + " (" + fk_id + ", " + fk2_id + ", max_chance) VALUES (%s, %s, %s)",
+                (pokemon_specific_id, area_id, encounter_version.max_chance))
             id += 1
         return id
