@@ -20,6 +20,7 @@ class PokemonController:
             vals['name']=version[1]
             arr.append(vals)
         return arr      
+        
     @staticmethod
     def pokemonFormat(pokemon,versionIdList):
         return { "data": [
