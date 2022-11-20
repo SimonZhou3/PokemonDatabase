@@ -68,7 +68,6 @@ export default {
       this.pokemonStats = data.data[0].stat
       // console.log(data)
       this.pokemonTypes = data.data[0].type
-      console.log(this.pokemonStats, this.pokemonTypes)
     }
   },
   mounted() {

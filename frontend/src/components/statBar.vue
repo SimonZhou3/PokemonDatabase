@@ -47,7 +47,13 @@ export default {
         this.shortenName(this.$props.stat.key)
         this.statValue = this.$props.stat.value
         let bar = this.$refs.bar
-        gsap.fromTo(bar, {width: "10%"}, {width: this.statValue + "%", duration: 1, ease: "expo", delay: 0.5})
+        let width;
+        if (this.statValue > 100) {
+            width = 100;
+        } else {
+            width = this.statValue;
+        }
+        gsap.fromTo(bar, {width: "10%"}, {width: width + "%", duration: 1, ease: "expo", delay: 0.5})
     }
 }
 </script>
@@ -64,6 +70,8 @@ export default {
     margin-left: 0%;
     text-align: right;
     float: left;
+    font-weight: bold;
+    color: #707070;
 }
 .barContainer{
     position:relative;
@@ -94,5 +102,6 @@ export default {
     z-index: 2;
     color: #ffffff;
     margin-top: 0.75%;
+    font-weight: bold;
 }
 </style>
