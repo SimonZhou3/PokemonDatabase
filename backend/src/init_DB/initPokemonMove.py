@@ -45,8 +45,8 @@ def insert(cur, pb, move, poke_move_version, pokemon_id, id):
             print("TUPLE(POKEMON_MOVE): ", id, pokemon_specific_id, move_id, poke_move_version.move_learn_method.name,
                   poke_move_version.level_learned_at)
             cur.execute(
-                "INSERT INTO " + table + " (" + table_id + ", " + fk_id + ", " + fk2_id + ", method, level) VALUES (%s, %s, %s, %s, %s)",
-                (id, pokemon_specific_id, move_id, poke_move_version.move_learn_method.name,
+                "INSERT INTO " + table + " (" + fk_id + ", " + fk2_id + ", method, level) VALUES (%s, %s, %s, %s)",
+                (pokemon_specific_id, move_id, poke_move_version.move_learn_method.name,
                  poke_move_version.level_learned_at))
             id += 1
         return id

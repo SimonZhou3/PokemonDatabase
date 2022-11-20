@@ -18,6 +18,6 @@ def insert(cur, pb, move, type_id, id):
             effect = move.flavor_text_entries[7].flavor_text
         print("TUPLE(MOVE) :", id, move.name, type_id, move.accuracy, move.effect_chance, move.pp, move.priority, move.power, move.damage_class.name, effect)
         cur.execute(
-            "INSERT INTO " +  table + " (" + table_id + ", " + fk_id + ", name, accuracy, effect_chance, pp, priority, power, damage_class, effect) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s)",
-            (id, type_id, move.name, move.accuracy, move.effect_chance, move.pp, move.priority, move.power, move.damage_class.name, effect))
+            "INSERT INTO " + table + " (" + fk_id + ", name, accuracy, effect_chance, pp, priority, power, damage_class, effect) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s)",
+            (type_id, move.name, move.accuracy, move.effect_chance, move.pp, move.priority, move.power, move.damage_class.name, effect))
 
