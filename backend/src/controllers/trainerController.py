@@ -9,6 +9,7 @@ class TrainerController:
             vals = {}
             vals['trainer_id']=trainer[0]
             vals['name']=trainer[1]
+            vals['gender']=trainer[2]
             arr.append(vals)
         return arr
 
@@ -17,6 +18,7 @@ class TrainerController:
         return { "data": [
             {
                'trainer_id': trainer.trainer_id,
+               'gender': trainer.gender,
                'name': trainer.name
             }]}
 
@@ -31,9 +33,7 @@ class TrainerController:
     @staticmethod
     async def create(data):
         try:
-            name = itemgetter('name')(data)
-            print(name)
-            trainer_id = await Trainer.create(name)
+            trainer_id = await Trainer.create(data)
             trainer = Trainer(trainer_id)
             await trainer.load()
             return TrainerController.trainerFormat(trainer)
