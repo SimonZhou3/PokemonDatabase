@@ -1,6 +1,6 @@
 from models.trainer import Trainer
 from operator import itemgetter
-from flask import request
+from flask import request,jsonify
 class TrainerController:
     @staticmethod
     def listTrainerFormat(trainers):
@@ -49,12 +49,19 @@ class TrainerController:
     
   
 
-    # @staticmethod
-    # async def update(data):
-    #     location = Location(location_id)
-    #     return { "data" : None}
+    @staticmethod
+    async def update(trainer_id,data):
+        try:
+            trainer = Trainer(trainer_id)
+            print(trainer_id)
+            await trainer.update(data)
+            return TrainerController.trainerFormat(trainer)
+        except Exception as e:
+            print(e)
+            return None
 
-    # @staticmethod
-    # async def delete(data):
-    #     location = Location()
-    #     return { "data" : None}
+    @staticmethod
+    async def delete(trainer_id):
+        trainer = Trainer(trainer_id)
+        await trainer.delete()
+        return jsonify(sucess=True)
