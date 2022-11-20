@@ -17,8 +17,12 @@ export default {
       method: "GET",
     }
     ).then((response) => response.json())
-    .then((data) => this.$emit("received", data))
+    .then((data) => this.onResponse(data))
     },
+    onResponse(data) {
+      console.log("received data from backend")
+      this.$emit("response", data)
+    }
   },
 };
 </script>

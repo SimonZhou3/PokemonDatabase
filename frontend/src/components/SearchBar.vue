@@ -21,14 +21,14 @@
         <div v-for="pokemon of findPokemons" :key="pokemon">
           <PokemonEntry
             :pokemon="pokemon"
-            v-if="this.query.length > 1"
+            v-show="this.query.length > 1"
             @querying="onQuery"
-            @received="onReceive(data)"
+            @response="onResponse"
           />
         </div>
       </div>
     </div>
-    <button class="debug" @click="test">Mock Complete</button>
+    <!-- <button class="debug" @click="test">Mock Complete</button> -->
   </div>
 </template>
 
@@ -65,8 +65,7 @@ export default {
     test() {
       this.loaded = true;
     },
-    onReceive(data) {
-      console.log("received data")
+    onResponse(data) {
       this.loaded = true
       this.$emit("received", data)
     },
@@ -278,7 +277,7 @@ input:focus {
   height: 100%;
   width: 100%;
   transform-origin: center;
-  transform: translateY(0%);
+  transform: translateY(-0.5%);
   clip-path: circle(10vh at center);
   
 }
