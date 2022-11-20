@@ -15,6 +15,7 @@ class Pokemon:
     async def getPokemonVersions(generic_id):
         SQL = f"SELECT version_id FROM pokemon_specific WHERE pokemon_generic_id=(%s)"
         query = await Database.execute(SQL,[generic_id])
+        print(query)
         return query
 
     def initPokemon(self):
@@ -41,6 +42,7 @@ class Pokemon:
         SQL = (f"SELECT name,height,weight,sprite,pokemon_specific_id,description "
         f"FROM pokemon_generic AS pg,pokemon_specific AS ps "
         f"WHERE pg.pokemon_generic_id =(%s) AND pg.pokemon_generic_id = ps.pokemon_generic_id AND ps.version_id =(%s)")
+        print([self.pokemon_generic_id,self.version_id])
         query = await Database.execute(SQL,[self.pokemon_generic_id,self.version_id])
         self.name = query[0][0]
         self.height = query[0][1]
