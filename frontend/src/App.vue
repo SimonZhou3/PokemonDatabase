@@ -62,11 +62,10 @@ export default {
         pokemonList.push(pokemon)
       }
       this.pokemonList = pokemonList
-      // console.log(this.pokemonList)
     },
     compileData(data) {
+      console.log(data)
       this.pokemonStats = data.data[0].stat
-      // console.log(data)
       this.pokemonTypes = data.data[0].type
     }
   },

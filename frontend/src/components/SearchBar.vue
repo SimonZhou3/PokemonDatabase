@@ -15,6 +15,9 @@
         <div class="ballCenter" id="outer" ref="ballCenterOuter">
           <div class="ballCenter" id="inner" ref="ballCenterInner"></div>
         </div>
+        <p v-if="showImage" class="image">
+          <img v-bind:src="this.sprite"/>
+        </p>
         <div class="ballBottom" ref="ballBot"></div>
       </div>
       <div class="searchResults" ref="searchResults">
@@ -48,6 +51,8 @@ export default {
       query: "",
       loading: false,
       loaded: false,
+      showImage: false,
+      sprite: null,
     };
   },
   computed: {
@@ -66,8 +71,9 @@ export default {
       this.loaded = true;
     },
     onResponse(data) {
-      this.loaded = true
-      this.$emit("received", data)
+      this.loaded = true;
+      this.$emit("received", data);
+      this.sprite = data.data[0].sprite;
     },
     showPokemon() {
       let pokeball = this.$refs.pokeball;
@@ -110,6 +116,7 @@ export default {
         ease: "expo",
         delay: 0.5,
       });
+      this.showImage = true;
       //TODO: display pokemon picture
     },
     stopAnimation() {
@@ -279,7 +286,6 @@ input:focus {
   transform-origin: center;
   transform: translateY(-0.5%);
   clip-path: circle(10vh at center);
-  
 }
 .ballTop {
   position: relative;
@@ -320,6 +326,15 @@ input:focus {
   width: 100%;
   top: -35%;
   z-index: -1;
+}
+.image {
+  position: relative;
+  transform-origin: center;
+  left: 5vh;
+  top: -10vh;
+  z-index: 100;
+  float:left;
+
 }
 .debug {
   position: absolute;
