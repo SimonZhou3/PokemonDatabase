@@ -330,7 +330,7 @@ input:focus {
 .image {
   position: relative;
   transform-origin: center;
-  left: 5vh;
+  left: 4.5vh;
   top: -10vh;
   z-index: 100;
   float:left;

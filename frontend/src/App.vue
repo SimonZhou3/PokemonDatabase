@@ -95,5 +95,6 @@ html {
   width: 100vw;
   height: 100vh;
   transition: background-color 1s;
+  overflow: hidden;
 }
 </style>

@@ -52,7 +52,7 @@ box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
     overflow: auto;
 }
 .dataContainer#version {
-    margin-top: 2vh;
+    margin-top: -5vh;
     width: 93%;
     height: 10vh;
 }
