@@ -1,8 +1,10 @@
 from db import Database
 from operator import itemgetter
+from models.trainedPokemon import TrainedPokemon
 class Trainer:
     name = None
     trainer_id = None
+    pokemon = []
 
     @staticmethod
     async def listTrainers():
@@ -28,6 +30,11 @@ class Trainer:
         query = await Database.execute(SQL,[self.trainer_id])
         self.name = query[0][0]
         self.gender = query[0][1]
+        print("Finish loading trainer data")
+        self.pokemon = await TrainedPokemon.listTrainedPokemon(self.trainer_id)
+        print("Finish loading trained pokemons")
+
+
 
     async def update(self,data):
         self.name = data.get('name') or self.name

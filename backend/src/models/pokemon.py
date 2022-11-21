@@ -33,7 +33,7 @@ class Pokemon:
     
 
     def __init__(self, pokemon_generic_id, version_id):
-        self.pokemon_generic_id = pokemon_generic_id
+        self.pokemon_generic_id = int(pokemon_generic_id)
         self.version_id = version_id
         self.initPokemon()
 
