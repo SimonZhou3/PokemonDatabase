@@ -12,12 +12,13 @@
 <script>
 import { gsap } from "gsap";
 export default {
-  props: ["data", "keyVersions", "selected"],
+  props: ["data", "keyVersions", "selected", "color"],
   data() {
     return {
       image: require("../assets/" +
         this.$props.data.name.replace(/\s/g, "") +
         ".png"),
+        accentColor: this.$props.color
     };
   },
   updated() {},
@@ -45,20 +46,16 @@ export default {
     // let name = this.$props.data.name.replace(/\s/g, "");
     // button.style.backgroundImage = "url('" + name + ".png')";
     if (this.data.version_id == this.$props.selected) {
-      button.style.border = "3px solid #000000";
+      button.style.border = "3px solid "+this.accentColor;
     }
   },
   computed: {
-    getImgPath() {
-      let images = require.context("../assets/", false, /\.png$/);
-      let name = this.$props.data.name.replace(/\s/g, "");
-      return images("./" + name + ".png");
-    },
   },
 };
 </script>
 
 <style scoped>
+
 .entry {
   margin-top: 15%;
   height: 12vh;
@@ -74,6 +71,6 @@ export default {
 }
 .entry:hover {
   cursor: pointer;
-  border: 2px solid #cf4444;
+  border: 2px solid v-bind(accentColor);
 }
 </style>

@@ -6,6 +6,7 @@
           :data="version"
           :keyVersions="this.$props.versions"
           :selected="this.$props.pokemonData.pokemon_version_id"
+          :color="this.$props.color"
           @queryVersion="onQueryVersion"
         />
       </div>
@@ -14,7 +15,7 @@
     <div class="entryContainer" id="move" ref="move">
       Moves
       <div v-for="move of this.moves" :key="move">
-        <dataEntry :data="move" />
+        <dataEntry :data="move" :color="this.$props.color"/>
       </div>
     </div>
     <div class="entryContainer" id="area" ref="area">Area</div>
@@ -28,7 +29,7 @@ import { gsap } from "gsap";
 import dataEntry from "./dataEntry.vue";
 import versionEntry from "./versionEntry.vue";
 export default {
-  props: ["pokemonData", "versions", "update"],
+  props: ["pokemonData", "versions", "update", "color"],
   data() {
     return {
       moves: [],
@@ -36,6 +37,7 @@ export default {
       items: [],
       allVersions: [],
       refresh: this.$props.update,
+      accentColor: this.$props.color
     };
   },
   components: {
@@ -172,12 +174,12 @@ export default {
 
 /* Handle */
 ::-webkit-scrollbar-thumb {
-  background: #cf4444;
+  background: v-bind(accentColor);
   border-radius: 5px;
 }
 
 /* Handle on hover */
 ::-webkit-scrollbar-thumb:hover {
-  background: rgb(255, 77, 77);
+  background: v-bind(accentColor);
 }
 </style>

@@ -6,9 +6,11 @@
 
 <script>
 export default {
-  props: ["data"],
+  props: ["data", "color"],
   data() {
-    return {};
+    return {
+        accentColor: this.$props.color,
+    };
   },
   updated() {},
   methods: {
@@ -32,6 +34,6 @@ export default {
 }
 .entry:hover {
     cursor: pointer;
-  background-color: #cf4444;
+  background-color: v-bind(accentColor);
 }
 </style>

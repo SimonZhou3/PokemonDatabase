@@ -1,7 +1,7 @@
 <template>
     <div class = "pane" ref="pane">
         <div v-for="stat of statList" :key="stat" class="bar">
-            <statBar :stat="stat"/>
+            <statBar :stat="stat" :color="this.$props.color"/>
         </div>
     </div>
 </template>
@@ -10,13 +10,13 @@
 import { gsap } from "gsap"
 import statBar from "./statBar.vue"
 export default {
-    props: ["stats"],
+    props: ["stats", "color"],
     components : {
         statBar,
     },
     data() {
         return {
-            statList: []
+            statList: [],
         }
     },
     mounted() {

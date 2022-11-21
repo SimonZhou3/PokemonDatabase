@@ -13,9 +13,10 @@
       :pokemonData="this.pokemonData"
       :versions="this.versionData"
       :update="this.update"
+      :color="this.typeColor[this.pokemonTypes[0].type]"
       @query="queryPokemonSpecificData"
     />
-    <StatPane v-if="this.show" :stats="this.pokemonStats" />
+    <StatPane v-if="this.show" :stats="this.pokemonStats" :color="this.typeColor[this.pokemonTypes[0].type]"/>
   </div>
 </template>
 

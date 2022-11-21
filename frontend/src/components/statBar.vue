@@ -12,11 +12,12 @@
 <script>
 import { gsap } from "gsap"
 export default {
-    props: ["stat"],
+    props: ["stat", "color"],
     data() {
         return {
             statName: null,
             statValue: 0,
+            accentColor: this.$props.color
         }
     },
     methods: {
@@ -85,7 +86,7 @@ export default {
     /* border: 1px solid purple; */
     height: 100%;
     width: 10%;
-    background-color: #cf4444;
+    background-color: v-bind(accentColor);
     border-radius: 1.25vh;
     color: #ffffff;
     z-index: 1;
