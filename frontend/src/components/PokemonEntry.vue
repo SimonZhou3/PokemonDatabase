@@ -13,13 +13,13 @@ export default {
   updated() {},
   methods: {
     queryPokemon() {
-      this.$emit("querying");
+      this.$emit("querying", this.$props.pokemon.pokemon_id);
       //send request to back end
-      fetch("http://127.0.0.1:5000/pokemon/" + this.$props.pokemon.pokemon_id, {
-        method: "GET",
-      })
-        .then((response) => response.json())
-        .then((data) => this.onResponse(data));
+      // fetch("http://127.0.0.1:5000/pokemon/" + this.$props.pokemon.pokemon_id, {
+      //   method: "GET",
+      // })
+      //   .then((response) => response.json())
+      //   .then((data) => this.onResponse(data));
     },
     async querySpecificPokemons(versions) {
       let filteredVersion = this.filterVersions(versions);

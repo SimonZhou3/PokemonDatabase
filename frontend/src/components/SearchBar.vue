@@ -16,7 +16,7 @@
           <div class="ballCenter" id="inner" ref="ballCenterInner"></div>
         </div>
         <p v-if="showImage" class="image">
-          <img v-bind:src="this.sprite"/>
+          <img v-bind:src="this.$props.sprite"/>
         </p>
         <div class="ballBottom" ref="ballBot"></div>
       </div>
@@ -26,7 +26,6 @@
             :pokemon="pokemon"
             v-show="this.query.length > 1"
             @querying="onQuery"
-            @response="onResponse"
           />
         </div>
       </div>
@@ -45,14 +44,13 @@ export default {
   components: {
     PokemonEntry,
   },
-  props: ["pokemonList"],
+  props: ["pokemonList", "sprite", "received"],
   data() {
     return {
       query: "",
       loading: false,
       loaded: false,
       showImage: false,
-      sprite: null,
     };
   },
   computed: {
@@ -67,14 +65,14 @@ export default {
     },
   },
   methods: {
-    test() {
-      this.loaded = true;
-    },
-    onResponse(genericPokemon, versions) {
-      this.loaded = true;
-      this.$emit("received", genericPokemon, versions);
-      this.sprite = genericPokemon.data[0].sprite;
-    },
+    // test() {
+    //   this.loaded = true;
+    // },
+    // onResponse() {
+    //   this.loaded = true;
+    //   // this.$emit("received", genericPokemon, versions);
+    //   // this.sprite = genericPokemon.data[0].sprite;
+    // },
     showPokemon() {
       let pokeball = this.$refs.pokeball;
       let ballTop = this.$refs.ballTop;
@@ -120,8 +118,8 @@ export default {
       //TODO: display pokemon picture
     },
     stopAnimation() {
-      if (this.loaded) {
-        console.log("stopping animation", this.loaded);
+      if (this.$props.received) {
+        console.log("stopping animation");
         let all = gsap.exportRoot();
         gsap.to(all, { timeScale: 0 });
         let pokeball = this.$refs.pokeball;
@@ -191,11 +189,12 @@ export default {
         }
       );
     },
-    onQuery() {
+    onQuery(pokemon_generic_id) {
       console.log("querying");
       this.loading = true;
       this.query = "";
       this.loadAnimation();
+      this.$emit("querying", pokemon_generic_id)
     },
     resize(height) {
       if (!this.loading) {

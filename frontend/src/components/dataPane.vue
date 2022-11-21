@@ -10,13 +10,13 @@
         />
       </div>
     </div>
-    <div class="dataContainer" id="move">
+    <div class="dataContainer" id="move" ref="move">
       <div v-for="move of this.moves" :key="move">
         <dataEntry :data="move" />
       </div>
     </div>
-    <div class="dataContainer" id="area">Area</div>
-    <div class="dataContainer" id="item">item</div>
+    <div class="dataContainer" id="area" ref="area">Area</div>
+    <div class="dataContainer" id="item" ref="item">item</div>
   </div>
 </template>
 
@@ -25,13 +25,14 @@ import { gsap } from "gsap";
 import dataEntry from "./dataEntry.vue";
 import versionEntry from "./versionEntry.vue";
 export default {
-  props: ["pokemonData", "versions"],
+  props: ["pokemonData", "versions", "update"],
   data() {
     return {
       moves: [],
       areas: [],
       items: [],
       allVersions: [],
+      refresh: this.$props.update,
     };
   },
   components: {
@@ -40,34 +41,74 @@ export default {
   },
   methods: {
     onQueryVersion(version_id) {
-      fetch(
-        "http://127.0.0.1:5000/pokemon/" +
-          this.$props.pokemonData.pokemon_generic_id +
-          "?version_id=" +
-          version_id,
-        {
-          method: "GET",
-        }
-      )
-        .then((response) => response.json())
-        .then((data) => this.onResponse(data));
+      this.toggleData(false);
+      console.log("switching to version" + version_id);
+      this.$emit(
+        "query",
+        this.$props.pokemonData.pokemon_generic_id,
+        version_id
+      );
+      //   fetch(
+      //     "http://127.0.0.1:5000/pokemon/" +
+      //       this.$props.pokemonData.pokemon_generic_id +
+      //       "?version_id=" +
+      //       version_id,
+      //     {
+      //       method: "GET",
+      //     }
+      //   )
+      //     .then((response) => response.json())
+      //     .then((data) => this.onResponse(data));
     },
     onResponse(data) {
-        console.log(data)
-    }
+      this.move = data.data[0].moves;
+
+      this.toggleData(true);
+      console.log(data);
+    },
+    toggleData(show) {
+      let opacity;
+      if (show) {
+        opacity = 1;
+      } else {
+        opacity = 0;
+      }
+      let move = this.$refs.move;
+      let area = this.$refs.area;
+      let item = this.$refs.item;
+      gsap.to(move, { autoAlpha: opacity, duration: 0.5, ease: "expo" });
+      gsap.to(area, {
+        autoAlpha: opacity,
+        duration: 0.5,
+        ease: "expo",
+        delay: 0.2,
+      });
+      gsap.to(item, {
+        autoAlpha: opacity,
+        duration: 0.5,
+        ease: "expo",
+        delay: 0.4,
+      });
+    },
   },
   mounted() {
-    console.log("showing data", this.$props.pokemonData, this.$props.versions);
     let pane = this.$refs.pane;
     pane.style.opacity = 1;
+    console.log("showing data", this.$props.pokemonData, this.$props.versions);
     this.moves = this.$props.pokemonData.moves;
     this.allVersions = this.$props.pokemonData.version_list;
-    // console.log(this.moves)
+    this.toggleData(true);
     gsap.fromTo(
       pane,
       { top: "50vh" },
       { top: "15vh", duration: 1, ease: "expo" }
     );
+  },
+  updated() {
+    console.log("showing data", this.$props.pokemonData, this.$props.versions);
+    this.moves = this.$props.pokemonData.moves;
+    this.allVersions = this.$props.pokemonData.version_list;
+    this.toggleData(true);
   },
 };
 </script>
@@ -95,6 +136,7 @@ export default {
   margin-right: 1%;
   overflow: auto;
   top: -3vh;
+  opacity: 1;
 }
 .dataContainer#version {
   top: -5%;

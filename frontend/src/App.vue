@@ -1,9 +1,22 @@
 <template>
-<div>
-  <SearchBar :pokemonList="this.pokemonList" @received="sortData" @completed="displayResults" />
-  <DataPane v-if="this.received" :pokemonData="this.pokemonData" :versions="this.versionData"/>
-  <StatPane v-if="this.received" :stats="this.pokemonStats"/>
-</div>
+  <div>
+    <SearchBar
+      :pokemonList="this.pokemonList"
+      :sprite="this.pokemonSprite"
+      :received="this.received"
+      @querying="queryPokemonGenericData"
+      @completed="displayResults"
+      ref="searchBar"
+    />
+    <DataPane
+      v-if="this.show"
+      :pokemonData="this.pokemonData"
+      :versions="this.versionData"
+      :update="this.update"
+      @query="queryPokemonSpecificData"
+    />
+    <StatPane v-if="this.show" :stats="this.pokemonStats" />
+  </div>
 </template>
 
 <script>
@@ -20,6 +33,7 @@ export default {
   data() {
     return {
       received: false,
+      show: false,
       pokemonData: null,
       typeColor: {
         normal: "#CC99A8",
@@ -44,41 +58,68 @@ export default {
         shadow: "#1F2024",
       },
       pokemonList: [],
+      pokemonSprite: null,
       pokemonStats: null,
       pokemonTypes: null,
       versionData: null,
+      update: 0,
     };
   },
   methods: {
     displayResults() {
       console.log("received query results");
-      this.received = true;
+      this.show = true;
+      this.update += 1;
       document.getElementById("app").style.backgroundColor =
-        this.typeColor[this.pokemonTypes[0].type];
+      this.typeColor[this.pokemonTypes[0].type];
     },
     filterResult(data) {
       // console.log(data)
-      let pokemonList = []
-      for (let pokemon of data['data']) {
-        pokemonList.push(pokemon)
+      let pokemonList = [];
+      for (let pokemon of data["data"]) {
+        pokemonList.push(pokemon);
       }
-      this.pokemonList = pokemonList
+      this.pokemonList = pokemonList;
     },
-    sortData(data, versions) {
+    sortData(data) {
       // console.log(data,versions)
-      this.pokemonStats = data.data[0].stat
-      this.pokemonTypes = data.data[0].type
-      this.pokemonData = data.data[0]
-      this.versionData = versions
-    }
+      this.pokemonStats = data.data[0].stat;
+      this.pokemonTypes = data.data[0].type;
+      this.pokemonData = data.data[0];
+      this.pokemonSprite = data.data[0].sprite;
+      this.update += 1;
+    },
+    queryPokemonGenericData(pokemon_generic_id) {
+      fetch("http://127.0.0.1:5000/pokemon/" + pokemon_generic_id, {
+        method: "GET",
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          this.received = true;
+          this.sortData(data);
+        });
+    },
+    queryPokemonSpecificData(pokemon_generic_id, version_id) {
+      fetch(
+        "http://127.0.0.1:5000/pokemon/" +
+          pokemon_generic_id +
+          "?version_id=" +
+          version_id,
+        {
+          method: "GET",
+        }
+      )
+        .then((response) => response.json())
+        .then((data) => this.sortData(data));
+    },
   },
   mounted() {
-    console.log("mounted")
+    console.log("mounted");
     fetch("http://127.0.0.1:5000/pokemon", {
       method: "GET",
-    }
-    ).then((response) => response.json())
-    .then((data) => this.filterResult(data))
+    })
+      .then((response) => response.json())
+      .then((data) => this.filterResult(data));
   },
 };
 </script>
