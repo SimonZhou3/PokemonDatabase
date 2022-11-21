@@ -183,9 +183,6 @@ CREATE FUNCTION check_pokemon_type() RETURNS trigger AS $check_pokemon_type$
         SELECT type_id into t1_type_id FROM pokemon_type WHERE pokemon_generic_id = NEW.pokemon_generic_id OFFSET 0;
         SELECT type_id into t2_type_id FROM pokemon_type WHERE pokemon_generic_id = NEW.pokemon_generic_id OFFSET 1;
 
-        raise notice 'Count type: %', type_size;
-        raise notice 'Value: %', t1_type_id;
-        raise notice 'Value: %', t2_type_id;
         IF type_size = 2 THEN
             RAISE EXCEPTION 'Unable to insert more than 2 types for a Pokemon';
         END IF;
