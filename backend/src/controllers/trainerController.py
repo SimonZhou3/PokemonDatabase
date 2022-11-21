@@ -19,7 +19,8 @@ class TrainerController:
             {
                'trainer_id': trainer.trainer_id,
                'gender': trainer.gender,
-               'name': trainer.name
+               'name': trainer.name,
+               'pokemon': trainer.pokemon
             }]}
 
 
@@ -42,9 +43,15 @@ class TrainerController:
             return None
 
     @staticmethod
-    async def get(pokemon_id):
-        print("Get Trainer Called")
+    async def addPokemon(trainer_id, data):
         return None
+
+    @staticmethod
+    async def get(trainer_id):
+        print("Get Trainer Called")
+        trainer = Trainer(trainer_id)
+        await trainer.load()
+        return TrainerController.trainerFormat(trainer)
 
     
   

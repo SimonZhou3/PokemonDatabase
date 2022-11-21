@@ -3,6 +3,7 @@ from controllers.pokemonController import PokemonController
 from controllers.itemController import ItemController
 from controllers.moveController import MoveController
 from controllers.trainerController import TrainerController
+from controllers.regionController import RegionController
 
 from flask import request
 
@@ -61,6 +62,11 @@ def routes(app):
         return await TrainerController.list()
 
     #Trainer CREATE
+    @app.route("/trainer/<trainer_id>", methods=['GET'])
+    async def trainerGet(trainer_id):
+        return await TrainerController.get(trainer_id)
+
+    #Trainer CREATE
     @app.route("/trainer", methods=['POST'])
     async def trainerCreate():
         return await TrainerController.create(request.json)
@@ -75,12 +81,17 @@ def routes(app):
     async def trainerDelete(trainer_id):
         return await TrainerController.delete(trainer_id)
 
-    #Region GET
+    #Region LIST
     @app.route("/region", methods=['GET'])
-    async def regionGet():
-        return None
+    async def regionList():
+        return await RegionController.list()
 
-    #Pokemon statistics
+    #Region GET // CONTAINS GROUP SQL
+    @app.route("/region/<region_id>", methods=['GET'])
+    async def regionGet(region_id):
+        return await RegionController.get(region_id)
+
+    #Pokemon statistics MAY REMOVE 
     @app.route("/stats/region/<region_id>/pokemon_count", methods=['GET'])
-    async def region(trainer_id):
+    async def regionPokemonCount(region_id):
         return None
