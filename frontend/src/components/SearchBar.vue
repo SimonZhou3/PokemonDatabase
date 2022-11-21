@@ -328,10 +328,11 @@ input:focus {
   z-index: -1;
 }
 .image {
+  border: 1px solid red;
   position: relative;
   transform-origin: center;
-  left: 4.5vh;
-  top: -10vh;
+  left: 5.3vh;
+  top: -8vh;
   z-index: 100;
   float:left;
 

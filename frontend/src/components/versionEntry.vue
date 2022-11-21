@@ -1,22 +1,43 @@
 <template>
-  <button class="entry" ref="entry" @click="queryVersion"
-  v-bind:style='{ backgroundImage : `url(${image})` }'>
+  <button
+    class="entry"
+    ref="entry"
+    @click="queryVersion"
+    v-bind:style="{ backgroundImage: `url(${image})` }"
+  >
     <!-- <img :src="getImgPath"/> -->
   </button>
 </template>
 
 <script>
+import { gsap } from "gsap";
 export default {
   props: ["data", "keyVersions", "selected"],
   data() {
     return {
-        image : require("../assets/" + this.$props.data.name.replace(/\s/g, "")+ ".png"),
+      image: require("../assets/" +
+        this.$props.data.name.replace(/\s/g, "") +
+        ".png"),
     };
   },
   updated() {},
   methods: {
     queryVersion() {
       this.$emit("queryVersion", this.$props.data.version_id);
+      this.loadAnimation();
+    },
+    loadAnimation() {
+      if (this.data.version_id != this.$props.selected) {
+        let icon = this.$refs.entry;
+        gsap.to(icon, { y: -20, duration: 0.5, ease: "expo",delay:0.5 });
+        gsap.to(icon, {
+          y: 0,
+          duration: 0.5,
+          ease: "bounce",
+          delay: 1,
+          onComplete: this.loadAnimation,
+        });
+      }
     },
   },
   mounted() {
@@ -38,12 +59,8 @@ export default {
 </script>
 
 <style scoped>
-.versionEntryContainer {
-  height: 12vh;
-  width: 18vw;
-  float: left;
-}
 .entry {
+  margin-top: 15%;
   height: 12vh;
   width: 18vw;
   float: left;
