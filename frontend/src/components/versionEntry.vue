@@ -1,6 +1,9 @@
 <template>
-  <button class="entry" ref="entry" @click="queryVersion"
-  :style="{'background-image':versionImg}">
+  <button
+    class="entry"
+    ref="entry"
+    @click="queryVersion"
+  >
     <!-- <img :src="getImgPath"/> -->
   </button>
 </template>
@@ -10,43 +13,47 @@ export default {
   props: ["data", "keyVersions", "selected"],
   data() {
     return {
-        versionImg: null,
     };
   },
   updated() {},
   methods: {
     queryVersion() {
-        this.$emit("queryVersion", this.$props.data.version_id)
+      this.$emit("queryVersion", this.$props.data.version_id);
     },
   },
   mounted() {
     let name = this.$props.data.name.replace(/\s/g, '');
-    let button = this.$refs.entry
-    button.style.backgroundImage = "url('" + name + ".png')"
+    let button = this.$refs.entry;
+    button.style.backgroundImage = "url('" + name + ".png')";
     if (this.data.version_id == this.$props.selected) {
-        button.style.border = "3px solid #000000"
+      button.style.border = "3px solid #000000";
     }
   },
   computed: {
     getImgPath() {
-        let images = require.context('../assets/', false, /\.png$/)
-        let name = this.$props.data.name.replace(/\s/g, '');
-        return images('./' + name + ".png")
-    }
-  }
+      let images = require.context("../assets/", false, /\.png$/);
+      let name = this.$props.data.name.replace(/\s/g, "");
+      return images("./" + name + ".png");
+    },
+  },
 };
 </script>
 
 <style scoped>
+.versionEntryContainer {
+  height: 12vh;
+  width: 18vw;
+  float: left;
+}
 .entry {
-  height: 9vh;
+  height: 12vh;
+  width: 18vw;
+  float: left;
   background-color: #ffffff00;
   margin-right: 0%;
-  width: 10vw;
-  border-radius: 2.5vh;
   transition: border-color 0.3s;
   border: 1px solid green;
-  display: inline;
+  border-radius: 2.5vw;
   background-image: url("../assets/blue.png");
   background-size: 100% 100%;
 }

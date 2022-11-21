@@ -20,7 +20,7 @@
         </p>
         <div class="ballBottom" ref="ballBot"></div>
       </div>
-      <div class="searchResults" ref="searchResults">
+      <div class="searchResults" ref="searchResults" v-if="this.query.length > 0">
         <div v-for="pokemon of findPokemons" :key="pokemon">
           <PokemonEntry
             :pokemon="pokemon"
@@ -74,7 +74,8 @@ export default {
     //   // this.sprite = genericPokemon.data[0].sprite;
     // },
     showPokemon() {
-      let pokeball = this.$refs.pokeball;
+      let barContainer = this.$refs.barContainer
+      // let pokeball = this.$refs.pokeball;
       let ballTop = this.$refs.ballTop;
       let ballMid = this.$refs.ballMid;
       let ballCenterOuter = this.$refs.ballCenterOuter;
@@ -108,8 +109,8 @@ export default {
       });
       gsap.to(ballBot, { scale: 10, duration: 0.2, delay: 0.4 });
 
-      gsap.to(pokeball, {
-        top: "-35vh",
+      gsap.to(barContainer, {
+        top: "5vh",
         duration: 1,
         ease: "expo",
         delay: 0.5,

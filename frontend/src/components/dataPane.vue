@@ -1,6 +1,6 @@
 <template>
   <div class="pane" ref="pane">
-    <div class="dataContainer" id="version">
+    <div class="versionContainer" id="version">
       <div v-for="version of this.allVersions" :key="version">
         <versionEntry
           :data="version"
@@ -10,13 +10,16 @@
         />
       </div>
     </div>
-    <div class="dataContainer" id="move" ref="move">
+    <div class="dataContainer">
+    <div class="entryContainer" id="move" ref="move">
+      Moves
       <div v-for="move of this.moves" :key="move">
         <dataEntry :data="move" />
       </div>
     </div>
-    <div class="dataContainer" id="area" ref="area">Area</div>
-    <div class="dataContainer" id="item" ref="item">item</div>
+    <div class="entryContainer" id="area" ref="area">Area</div>
+    <div class="entryContainer" id="item" ref="item">item</div>
+    </div>
   </div>
 </template>
 
@@ -48,24 +51,12 @@ export default {
         this.$props.pokemonData.pokemon_generic_id,
         version_id
       );
-      //   fetch(
-      //     "http://127.0.0.1:5000/pokemon/" +
-      //       this.$props.pokemonData.pokemon_generic_id +
-      //       "?version_id=" +
-      //       version_id,
-      //     {
-      //       method: "GET",
-      //     }
-      //   )
-      //     .then((response) => response.json())
-      //     .then((data) => this.onResponse(data));
     },
-    onResponse(data) {
-      this.move = data.data[0].moves;
-
-      this.toggleData(true);
-      console.log(data);
-    },
+    // onResponse(data) {
+    //   this.move = data.data[0].moves;
+    //   this.toggleData(true);
+    //   console.log(data);
+    // },
     toggleData(show) {
       let opacity;
       if (show) {
@@ -124,29 +115,46 @@ export default {
   opacity: 0;
   transition: opacity 1s;
   box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+  border: 1px solid rgb(0, 129, 54);
+
   /* filter: drop-shadow(0px 0px 6px #ebebeb) */
 }
 .dataContainer {
-  position: relative;
-  border: 1px solid red;
-  left: 0%;
-  width: 30%;
-  height: 50vh;
-  display: inline-block;
-  margin-right: 1%;
-  overflow: auto;
-  top: -3vh;
-  opacity: 1;
+    position: relative;
+    top: 25%;
+    border: 1px solid blue;
+    height: 80%;
+    width: 100%;
 }
-.dataContainer#version {
-  top: -5%;
+.entryContainer {
+    position: absolute;
+  border: 1px solid red;
+  width: 30%;
+  height: 90%;
+  overflow: auto;
+}
+.entryContainer#move {
+    left: 2%;
+}
+.entryContainer#area {
+    left: 35%
+}
+.entryContainer#item {
+    left: 68%
+}
+
+.versionContainer {
+    position: absolute;
+    margin-top: 2.5%;
+  border: 1px solid red;
+  border-radius: 2.5vh;
   width: 99.9%;
-  height: 10vh;
-  overflow-x: auto;
-  overflow-y: hidden;
-  white-space: nowrap;
+  height: 20%;
   display: flex;
-  margin-bottom: 0.5%;
+  margin-left: auto;
+  margin-right: auto;
+  overflow-y: hidden;
+  overflow-x: auto;
 }
 /* width */
 ::-webkit-scrollbar {
