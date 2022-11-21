@@ -24,7 +24,7 @@ class PokemonController:
     @staticmethod
     def pokemonFormat(pokemon,versionIdList):
         return { "data": [
-            {
+            {   "pokemon_generic_id": pokemon.pokemon_generic_id,
                 "pokemon_specific_id": pokemon.pokemon_specific_id,
                 "pokemon_version_id": pokemon.version_id,
                 "version_list": PokemonController.versionIdFormat(versionIdList),
