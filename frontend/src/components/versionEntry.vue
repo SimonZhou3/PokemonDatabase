@@ -7,7 +7,7 @@
 
 <script>
 export default {
-  props: ["data"],
+  props: ["data", "keyVersions", "selected"],
   data() {
     return {
         versionImg: null,
@@ -16,13 +16,16 @@ export default {
   updated() {},
   methods: {
     queryVersion() {
-      console.log("querying " + this.$props.data.name);
+        this.$emit("queryVersion", this.$props.data.version_id)
     },
   },
   mounted() {
     let name = this.$props.data.name.replace(/\s/g, '');
     let button = this.$refs.entry
     button.style.backgroundImage = "url('" + name + ".png')"
+    if (this.data.version_id == this.$props.selected) {
+        button.style.border = "3px solid #000000"
+    }
   },
   computed: {
     getImgPath() {
