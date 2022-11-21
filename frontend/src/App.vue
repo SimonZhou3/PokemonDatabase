@@ -1,7 +1,7 @@
 <template>
 <div>
-  <SearchBar :pokemonList="this.pokemonList" @received="compileData" @completed="displayResults" />
-  <DataPane v-if="this.received" />
+  <SearchBar :pokemonList="this.pokemonList" @received="sortData" @completed="displayResults" />
+  <DataPane v-if="this.received" :pokemonData="this.pokemonData" :versions="this.versionData"/>
   <StatPane v-if="this.received" :stats="this.pokemonStats"/>
 </div>
 </template>
@@ -46,6 +46,7 @@ export default {
       pokemonList: [],
       pokemonStats: null,
       pokemonTypes: null,
+      versionData: null,
     };
   },
   methods: {
@@ -55,7 +56,7 @@ export default {
       document.getElementById("app").style.backgroundColor =
         this.typeColor[this.pokemonTypes[0].type];
     },
-    sortResult(data) {
+    filterResult(data) {
       // console.log(data)
       let pokemonList = []
       for (let pokemon of data['data']) {
@@ -63,10 +64,12 @@ export default {
       }
       this.pokemonList = pokemonList
     },
-    compileData(data) {
-      console.log(data)
+    sortData(data, versions) {
+      // console.log(data,versions)
       this.pokemonStats = data.data[0].stat
       this.pokemonTypes = data.data[0].type
+      this.pokemonData = data.data[0]
+      this.versionData = versions
     }
   },
   mounted() {
@@ -75,7 +78,7 @@ export default {
       method: "GET",
     }
     ).then((response) => response.json())
-    .then((data) => this.sortResult(data))
+    .then((data) => this.filterResult(data))
   },
 };
 </script>

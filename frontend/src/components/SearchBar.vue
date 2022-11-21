@@ -70,10 +70,10 @@ export default {
     test() {
       this.loaded = true;
     },
-    onResponse(data) {
+    onResponse(genericPokemon, versions) {
       this.loaded = true;
-      this.$emit("received", data);
-      this.sprite = data.data[0].sprite;
+      this.$emit("received", genericPokemon, versions);
+      this.sprite = genericPokemon.data[0].sprite;
     },
     showPokemon() {
       let pokeball = this.$refs.pokeball;
