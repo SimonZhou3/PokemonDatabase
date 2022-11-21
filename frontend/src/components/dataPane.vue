@@ -115,20 +115,20 @@ export default {
   opacity: 0;
   transition: opacity 1s;
   box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
-  border: 1px solid rgb(0, 129, 54);
+  /* border: 1px solid rgb(0, 129, 54); */
 
   /* filter: drop-shadow(0px 0px 6px #ebebeb) */
 }
 .dataContainer {
     position: relative;
     top: 25%;
-    border: 1px solid blue;
+    /* border: 1px solid blue; */
     height: 80%;
     width: 100%;
 }
 .entryContainer {
     position: absolute;
-  border: 1px solid red;
+  /* border: 1px solid red; */
   width: 30%;
   height: 90%;
   overflow: auto;
@@ -146,7 +146,7 @@ export default {
 .versionContainer {
     position: absolute;
     margin-top: 2.5%;
-  border: 1px solid red;
+  /* border: 1px solid red; */
   border-radius: 2.5vh;
   width: 99.9%;
   height: 20%;

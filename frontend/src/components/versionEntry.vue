@@ -1,9 +1,6 @@
 <template>
-  <button
-    class="entry"
-    ref="entry"
-    @click="queryVersion"
-  >
+  <button class="entry" ref="entry" @click="queryVersion"
+  v-bind:style='{ backgroundImage : `url(${image})` }'>
     <!-- <img :src="getImgPath"/> -->
   </button>
 </template>
@@ -13,6 +10,7 @@ export default {
   props: ["data", "keyVersions", "selected"],
   data() {
     return {
+        image : require("../assets/" + this.$props.data.name.replace(/\s/g, "")+ ".png"),
     };
   },
   updated() {},
@@ -22,9 +20,9 @@ export default {
     },
   },
   mounted() {
-    let name = this.$props.data.name.replace(/\s/g, '');
     let button = this.$refs.entry;
-    button.style.backgroundImage = "url('" + name + ".png')";
+    // let name = this.$props.data.name.replace(/\s/g, "");
+    // button.style.backgroundImage = "url('" + name + ".png')";
     if (this.data.version_id == this.$props.selected) {
       button.style.border = "3px solid #000000";
     }
@@ -52,7 +50,7 @@ export default {
   background-color: #ffffff00;
   margin-right: 0%;
   transition: border-color 0.3s;
-  border: 1px solid green;
+  border: 0px solid rgb(255, 255, 255);
   border-radius: 2.5vw;
   background-image: url("../assets/blue.png");
   background-size: 100% 100%;
