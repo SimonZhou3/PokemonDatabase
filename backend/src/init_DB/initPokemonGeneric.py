@@ -48,7 +48,7 @@ def init(cur, pb):
                 print('(GENERIC IS ADDED TO DATABASE)')
             # insert into child tables
             global pokemon_statIndex
-            # insertPokemonStatTable(cur,pb,pokemon.stats, pokemon_index, pokemon_statIndex)
+                insertPokemonStatTable(cur,pb,pokemon.stats, pokemon_index, 0)
             pokemon_statIndex += 1
 
             global pokemon_version_specificIndex
