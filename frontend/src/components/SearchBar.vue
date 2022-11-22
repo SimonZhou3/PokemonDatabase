@@ -15,12 +15,16 @@
         <div class="ballCenter" id="outer" ref="ballCenterOuter">
           <div class="ballCenter" id="inner" ref="ballCenterInner"></div>
         </div>
-        <p v-if="showImage" class="image">
-          <img v-bind:src="this.$props.sprite"/>
+        <p v-if="showImage" class="image" ref="sprite">
+          <img v-bind:src="this.$props.sprite" />
         </p>
         <div class="ballBottom" ref="ballBot"></div>
       </div>
-      <div class="searchResults" ref="searchResults" v-if="this.query.length > 0">
+      <div
+        class="searchResults"
+        ref="searchResults"
+        v-if="this.query.length > 0"
+      >
         <div v-for="pokemon of findPokemons" :key="pokemon">
           <PokemonEntry
             :pokemon="pokemon"
@@ -73,14 +77,19 @@ export default {
     //   // this.$emit("received", genericPokemon, versions);
     //   // this.sprite = genericPokemon.data[0].sprite;
     // },
+    toggleSprite() {
+      let sprite = this.$refs.sprite;
+      gsap.fromTo(sprite, {y: 20}, {y: 0, duration: 0.5, ease: "expo"})
+    },
     showPokemon() {
-      let barContainer = this.$refs.barContainer
+      let barContainer = this.$refs.barContainer;
       // let pokeball = this.$refs.pokeball;
       let ballTop = this.$refs.ballTop;
       let ballMid = this.$refs.ballMid;
       let ballCenterOuter = this.$refs.ballCenterOuter;
       let ballCenterInner = this.$refs.ballCenterInner;
       let ballBot = this.$refs.ballBot;
+
       gsap.to(ballCenterInner, {
         scale: 0,
         duration: 0.2,
@@ -105,8 +114,11 @@ export default {
         delay: 0.4,
         onComplete: () => {
           this.$emit("completed");
+          this.showImage = true;
+          this.toggleSprite
         },
       });
+
       gsap.to(ballBot, { scale: 10, duration: 0.2, delay: 0.4 });
 
       gsap.to(barContainer, {
@@ -115,7 +127,6 @@ export default {
         ease: "expo",
         delay: 0.5,
       });
-      this.showImage = true;
       //TODO: display pokemon picture
     },
     stopAnimation() {
@@ -123,8 +134,8 @@ export default {
         console.log("stopping animation");
         let all = gsap.exportRoot();
         gsap.to(all, { timeScale: 0 });
-        let pokeball = this.$refs.pokeball;
-        gsap.to(pokeball, {
+        let barContainer = this.$refs.barContainer;
+        gsap.to(barContainer, {
           rotate: 0,
           duration: 0.5,
           ease: "elastic",
@@ -134,11 +145,11 @@ export default {
     },
     waitForResults() {
       console.log("waiting for query to complete");
-      this.$refs.barContainer.style.backgroundColor = "#00000000";
-      let pokeball = this.$refs.pokeball;
-      pokeball.style.transformOrigin = "bottom";
-      gsap.to(pokeball, { rotation: 20, duration: 0.2, ease: "expo" });
-      gsap.to(pokeball, {
+      // this.$refs.barContainer.style.backgroundColor = "#00000000";
+      let barContainer = this.$refs.barContainer;
+      barContainer.style.transformOrigin = "bottom";
+      gsap.to(barContainer, { rotation: 20, duration: 0.2, ease: "expo" });
+      gsap.to(barContainer, {
         rotation: 0,
         duration: 1,
         ease: "elastic",
@@ -195,7 +206,7 @@ export default {
       this.loading = true;
       this.query = "";
       this.loadAnimation();
-      this.$emit("querying", pokemon_generic_id)
+      this.$emit("querying", pokemon_generic_id);
     },
     resize(height) {
       if (!this.loading) {
@@ -232,6 +243,7 @@ export default {
   margin-right: auto;
   border-radius: 5vh;
   z-index: 1;
+  overflow: hidden;
 }
 .search {
   position: relative;
@@ -285,7 +297,6 @@ input:focus {
   width: 100%;
   transform-origin: center;
   transform: translateY(-0.5%);
-  clip-path: circle(10vh at center);
 }
 .ballTop {
   position: relative;
@@ -302,21 +313,23 @@ input:focus {
   top: -4%;
 }
 .ballCenter {
-  position: relative;
+  position: absolute;
   background-color: #000000;
   height: 30%;
   width: 30%;
   border-radius: 50%;
   left: 35%;
-  top: -25%;
+  display: inline-block;
+  top: 35%;
   transform-origin: center;
 }
 .ballCenter#inner {
-  position: relative;
+  position: absolute;
   background-color: #ffffff;
   height: 60%;
   width: 60%;
-  left: 20%;
+  left: 20.5%;
+  display: inline-block;
   top: 20%;
 }
 .ballBottom {
@@ -331,11 +344,12 @@ input:focus {
   border: 1px solid red;
   position: relative;
   transform-origin: center;
-  left: 5.3vh;
-  top: -8vh;
+  left: 0vh;
+  top: -9.5vh;
   z-index: 100;
-  float:left;
-
+  float: none;
+  opacity: 1;
+  transition: opacity 1s;
 }
 .debug {
   position: absolute;
