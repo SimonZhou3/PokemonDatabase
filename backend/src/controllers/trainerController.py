@@ -1,4 +1,5 @@
 from models.trainer import Trainer
+from models.trainedPokemon import TrainedPokemon
 from operator import itemgetter
 from flask import request,jsonify
 class TrainerController:
@@ -44,7 +45,14 @@ class TrainerController:
 
     @staticmethod
     async def addPokemon(trainer_id, data):
-        return None
+        await TrainedPokemon.create(trainer_id,data)
+        return jsonify(success=True)
+
+    @staticmethod
+    async def removePokemon(trained_pokemon_id):
+        trainedPokemon = TrainedPokemon(trained_pokemon_id)
+        await trainedPokemon.delete()
+        return jsonify(success=True)
 
     @staticmethod
     async def get(trainer_id):

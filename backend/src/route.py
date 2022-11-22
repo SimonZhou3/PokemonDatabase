@@ -76,6 +76,16 @@ def routes(app):
     async def trainerUpdate(trainer_id):
         return await TrainerController.update(trainer_id,request.json)
 
+    #Trainer Add pokemon 
+    @app.route("/trainer/<trainer_id>/pokemon", methods=['POST'])
+    async def trainerAddPokemon(trainer_id):
+        return await TrainerController.addPokemon(trainer_id,request.json)
+
+    #Trainer Add pokemon 
+    @app.route("/trainer/<trainer_id>/pokemon/<trained_pokemon_id>", methods=['DELETE'])
+    async def trainerRemovePokemon(trainer_id,trained_pokemon_id):
+        return await TrainerController.removePokemon(trained_pokemon_id)
+
     #Trainer Delete
     @app.route("/trainer/<trainer_id>", methods=['DELETE'])
     async def trainerDelete(trainer_id):
