@@ -45,10 +45,9 @@ def init(cur, pb):
                 cur.execute(
                     "INSERT INTO " + table + " (" + " name, height, weight, sprite) VALUES (%s, %s, %s, %s)",
                     (pokemon.name, pokemon.height, pokemon.weight, pokemon.sprites.front_default,))
-                print('(GENERIC IS ADDED TO DATABASE)')
             # insert into child tables
             global pokemon_statIndex
-                insertPokemonStatTable(cur,pb,pokemon.stats, pokemon_index, 0)
+            insertPokemonStatTable(cur,pb,pokemon.stats, pokemon_index, 0)
             pokemon_statIndex += 1
 
             global pokemon_version_specificIndex
@@ -59,13 +58,11 @@ def init(cur, pb):
                     pokemon_version_specificIndex += 1
             else:
                 if  650 <= pokemon_index <= 721:
-                    print("X AND Y POKEMONM")
                     insertPokemonSpecificTable(cur, pb, 'x', pokemon.species.flavor_text_entries, pokemon_index, pokemon_index)
                     insertPokemonSpecificTable(cur, pb, 'y', pokemon.species.flavor_text_entries, pokemon_index, pokemon_index)
                     pokemon_version_specificIndex += 2
 
                 elif  722 <= pokemon_index <= 809:
-                    print("SUN MOON POKEMON")
                     insertPokemonSpecificTable(cur, pb, 'sun', pokemon.species.flavor_text_entries, pokemon_index, pokemon_index)
                     insertPokemonSpecificTable(cur, pb, 'moon', pokemon.species.flavor_text_entries, pokemon_index, pokemon_index)
                     insertPokemonSpecificTable(cur, pb, 'ultra sun', pokemon.species.flavor_text_entries, pokemon_index, pokemon_index)
@@ -73,7 +70,6 @@ def init(cur, pb):
                     pokemon_version_specificIndex += 4
 
                 elif 810 <= pokemon_index <= 905:
-                    print("SWORD SHIELD POKEMON")
                     insertPokemonSpecificTable(cur, pb, 'sword', pokemon.species.flavor_text_entries, pokemon_index, pokemon_index)
                     insertPokemonSpecificTable(cur, pb, 'shield', pokemon.species.flavor_text_entries, pokemon_index, pokemon_index)
                     pokemon_version_specificIndex += 2
@@ -81,7 +77,6 @@ def init(cur, pb):
             global pokemon_moveIndex
             for poke_move in pokemon.moves:
                 for poke_move_version in poke_move.version_group_details:
-                    print("(TESTING WHAT THIS IS) -- ",  poke_move_version)
                     retval = insertPokemonMoveTable(cur,pb, poke_move.move, poke_move_version, pokemon_index, pokemon_moveIndex)
                     pokemon_moveIndex = retval
 
@@ -103,7 +98,6 @@ def init(cur, pb):
                     pokemon_itemIndex += 1
 
             pokemon_index += 1
-
         else:
             break
 
