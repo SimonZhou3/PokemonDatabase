@@ -1,7 +1,11 @@
 # project_n7z5j_r0b7x_x7g3b
 
-# Backend Setup
+# References
+> Our database fetched data from https://pokeapi.co/ 
+> 
 
+
+# Project Setup
 ## Requirements
 - Flask must be installed (https://flask.palletsprojects.com/en/2.2.x/)
 - Python must be installed (https://www.python.org/downloads/)
