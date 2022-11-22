@@ -35,7 +35,8 @@ class PokemonController:
                 "stat": pokemon.stat.getStats(),
                 "type": pokemon.type.getTypes(),
                 "moves": pokemon.moves,
-                "items": pokemon.items
+                "items": pokemon.items,
+                "areas": pokemon.areas
             }]}
 
 

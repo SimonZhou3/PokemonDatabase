@@ -3,6 +3,7 @@ from controllers.moveController import MoveController
 from controllers.itemController import ItemController
 from models.type import Type
 from models.stat import Stat
+from models.area import Area
 class Pokemon:
 
     @staticmethod
@@ -30,6 +31,7 @@ class Pokemon:
         self.stat = None
         self.description = None
         self.type = None
+        self.areas = []
     
 
     def __init__(self, pokemon_generic_id, version_id):
@@ -67,5 +69,7 @@ class Pokemon:
         self.items = await ItemController.list(self.pokemon_specific_id)
         self.items = self.items['data']
     
+        # Get area
+        self.areas = await Area.listPokemonArea(self.pokemon_specific_id)
 
     
