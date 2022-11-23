@@ -2,6 +2,8 @@ from models.trainer import Trainer
 from models.trainedPokemon import TrainedPokemon
 from operator import itemgetter
 from flask import request,jsonify
+import json
+
 class TrainerController:
     @staticmethod
     def listTrainerFormat(trainers):
@@ -61,8 +63,6 @@ class TrainerController:
         await trainer.load()
         return TrainerController.trainerFormat(trainer)
 
-    
-  
 
     @staticmethod
     async def update(trainer_id,data):
@@ -80,3 +80,21 @@ class TrainerController:
         trainer = Trainer(trainer_id)
         await trainer.delete()
         return jsonify(sucess=True)
+
+
+    @staticmethod
+    async def getHighestStats(range, operator):
+        result = await TrainedPokemon.getLeaderboard(range, operator)
+        jsonArray = []
+
+        for trainer_data in result:
+            jsonObject = {
+                'trainer_id': trainer_data[0],
+                'trainer_name': trainer_data[1],
+                'Pokemon Count': trainer_data[2]
+            }
+            jsonArray.append(jsonObject)
+
+        return {
+            "data": jsonArray
+        }

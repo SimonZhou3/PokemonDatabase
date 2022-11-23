@@ -32,7 +32,7 @@ class Pokemon:
         self.description = None
         self.type = None
         self.areas = []
-    
+
 
     def __init__(self, pokemon_generic_id, version_id):
         self.pokemon_generic_id = int(pokemon_generic_id)
@@ -60,7 +60,7 @@ class Pokemon:
         # Get Type
         self.type = Type(self.pokemon_generic_id)
         await self.type.load()
-        
+
         # Get moves
         self.moves = await MoveController.list(self.pokemon_specific_id)
         self.moves = self.moves['data']
@@ -68,8 +68,21 @@ class Pokemon:
         # Get items
         self.items = await ItemController.list(self.pokemon_specific_id)
         self.items = self.items['data']
-    
+
         # Get area
         self.areas = await Area.listPokemonArea(self.pokemon_specific_id)
 
-    
+
+    async def findPokemonThatAllTrainer(gender):
+        if gender is not None:
+            SQL = f"SELECT DISTINCT pg.pokemon_generic_id, pg.name FROM pokemon_specific ps "\
+                  f"INNER JOIN pokemon_generic pg ON pg.pokemon_generic_id = ps.pokemon_generic_id "\
+                  f"WHERE NOT EXISTS((SELECT t.trainer_id FROM trainer t WHERE t.gender = {gender}) EXCEPT "\
+                  f"(SELECT t.trainer_id FROM trained_pokemon tp INNER JOIN trainer t ON t.trainer_id = tp.trainer_id WHERE ps.pokemon_specific_id = tp.pokemon_specific_id)) "
+        else:
+            SQL = f"SELECT DISTINCT pg.pokemon_generic_id, pg.name FROM pokemon_specific ps " \
+                  f"INNER JOIN pokemon_generic pg ON pg.pokemon_generic_id = ps.pokemon_generic_id " \
+                  f"WHERE NOT EXISTS((SELECT t.trainer_id FROM trainer t) EXCEPT " \
+                  f"(SELECT t.trainer_id FROM trained_pokemon tp INNER JOIN trainer t ON t.trainer_id = tp.trainer_id WHERE ps.pokemon_specific_id = tp.pokemon_specific_id)) "
+        query = await Database.execute(SQL, [])
+        return query
