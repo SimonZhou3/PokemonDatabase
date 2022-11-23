@@ -69,13 +69,15 @@ class PokemonController:
     async def findPokemonThatAllTrainer(gender):
         result = await Pokemon.findPokemonThatAllTrainer(gender);
         jsonArray = []
-        for i in result:
+        for pokemon_data in result:
             jsonObject = {
-                "pokemon_id": i[0],
-                "name": i[1]
+                "pokemon_id": pokemon_data[0],
+                "name": pokemon_data[1]
             }
             jsonArray.append(jsonObject)
-        return jsonArray
+        return  {
+        "data": jsonArray
+        }
 
 
 
