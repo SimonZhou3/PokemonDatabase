@@ -56,3 +56,14 @@ class TrainedPokemon:
     async def delete(self):
         SQL = f"DELETE FROM trained_pokemon WHERE trained_pokemon_id=(%s) RETURNING true"
         await Database.execute(SQL,[self.trained_pokemon_id])
+
+
+    async def getLeaderboard(range, operator):
+        SQL = f"SELECT tr.trainer_id, tr.name, COUNT(*) FROM trained_pokemon tp INNER JOIN trainer AS tr ON tp.trainer_id = tr.trainer_id "\
+              f"INNER JOIN pokemon_specific AS ps ON ps.pokemon_specific_id = tp.pokemon_specific_id "\
+              f"INNER JOIN pokemon_generic pg ON pg.pokemon_generic_id = ps.pokemon_generic_id "\
+              f"INNER JOIN pokemon_stat pst ON pst.pokemon_generic_id = pg.pokemon_generic_id "\
+              f"GROUP BY tr.trainer_id, tr.name HAVING COUNT(*) {operator} {range} ORDER BY COUNT(*) DESC, tr.name"
+
+        query = await Database.execute(SQL, [])
+        return query

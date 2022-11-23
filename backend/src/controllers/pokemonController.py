@@ -65,6 +65,20 @@ class PokemonController:
 
 
 
+    @staticmethod
+    async def findPokemonThatAllTrainer(gender):
+        result = await Pokemon.findPokemonThatAllTrainer(gender);
+        jsonArray = []
+        for pokemon_data in result:
+            jsonObject = {
+                "pokemon_id": pokemon_data[0],
+                "name": pokemon_data[1]
+            }
+            jsonArray.append(jsonObject)
+        return  {
+        "data": jsonArray
+        }
+
 
 
     # @staticmethod

@@ -11,13 +11,13 @@ from flask import request
 def routes(app):
     @app.route("/")
     def home():
-        return "<p>Welcome to the backend pokemon server</p>" 
-    
+        return "<p>Welcome to the backend pokemon server</p>"
+
     # Location LIST
     @app.route("/location", methods=['GET'])
     async def locationList():
         return await LocationController.list();
-    
+
     # Location POST
     @app.route("/location", methods=['POST'])
     async def locationCreate():
@@ -76,12 +76,12 @@ def routes(app):
     async def trainerUpdate(trainer_id):
         return await TrainerController.update(trainer_id,request.json)
 
-    #Trainer Add pokemon 
+    #Trainer Add pokemon
     @app.route("/trainer/<trainer_id>/pokemon", methods=['POST'])
     async def trainerAddPokemon(trainer_id):
         return await TrainerController.addPokemon(trainer_id,request.json)
 
-    #Trainer Add pokemon 
+    #Trainer Add pokemon
     @app.route("/trainer/<trainer_id>/pokemon/<trained_pokemon_id>", methods=['DELETE'])
     async def trainerRemovePokemon(trainer_id,trained_pokemon_id):
         return await TrainerController.removePokemon(trained_pokemon_id)
@@ -101,7 +101,22 @@ def routes(app):
     async def regionGet(region_id):
         return await RegionController.get(region_id)
 
-    #Pokemon statistics MAY REMOVE 
+    #Pokemon statistics MAY REMOVE
     @app.route("/stats/region/<region_id>/pokemon_count", methods=['GET'])
     async def regionPokemonCount(region_id):
         return None
+
+    # Find the count of each trained pokemon by trainer.
+    # Note -- operator takes: >, <, >=, <=, <>
+    @app.route("/trainer/leaderboard", methods=['GET'])
+    async def getLeaderboard():
+        filter_range = request.args.get('range')
+        operator = request.args.get('operator')
+        return await TrainerController.getHighestStats(filter_range,operator)
+
+    # Using division this route finds a pokemon that all trainers has. User can specify Gender or not.
+    @app.route("/trainer/all")
+    async def getAllTrainerByFilters():
+        gender = request.args.get('gender')
+        print(gender)
+        return await PokemonController.findPokemonThatAllTrainer(gender)
