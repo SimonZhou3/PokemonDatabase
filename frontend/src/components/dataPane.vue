@@ -12,14 +12,19 @@
       </div>
     </div>
     <div class="dataContainer">
-    <div class="entryContainer" id="move" ref="move">
-      Moves
-      <div v-for="move of this.moves" :key="move">
-        <dataEntry :data="move" :color="this.$props.color"/>
+      <div class="entryContainer" id="move" ref="move">
+        Moves
+        <div v-for="move of this.moves" :key="move">
+          <dataEntry :data="move" :color="this.$props.color" :type="'Move'" />
+        </div>
       </div>
-    </div>
-    <div class="entryContainer" id="area" ref="area">Area</div>
-    <div class="entryContainer" id="item" ref="item">item</div>
+      <div class="entryContainer" id="area" ref="area">
+        Area
+        <div v-for="area of this.areas" :key="area">
+          <dataEntry :data="area" :color="this.$props.color" :type="'Area'" />
+        </div>
+      </div>
+      <div class="entryContainer" id="item" ref="item">item</div>
     </div>
   </div>
 </template>
@@ -37,7 +42,7 @@ export default {
       items: [],
       allVersions: [],
       refresh: this.$props.update,
-      accentColor: this.$props.color
+      accentColor: this.$props.color,
     };
   },
   components: {
@@ -87,9 +92,10 @@ export default {
   mounted() {
     let pane = this.$refs.pane;
     pane.style.opacity = 1;
-    console.log("showing data", this.$props.pokemonData, this.$props.versions);
     this.moves = this.$props.pokemonData.moves;
+    this.areas = this.$props.pokemonData.areas;
     this.allVersions = this.$props.pokemonData.version_list;
+    console.log("showing data", this.$props.versions, this.moves, this.area);
     this.toggleData(true);
     gsap.fromTo(
       pane,
@@ -98,9 +104,10 @@ export default {
     );
   },
   updated() {
-    console.log("showing data", this.$props.pokemonData, this.$props.versions);
     this.moves = this.$props.pokemonData.moves;
+    this.areas = this.$props.pokemonData.areas;
     this.allVersions = this.$props.pokemonData.version_list;
+    console.log("showing data", this.$props.versions, this.moves, this.area);
     this.toggleData(true);
   },
 };
@@ -123,32 +130,32 @@ export default {
   /* filter: drop-shadow(0px 0px 6px #ebebeb) */
 }
 .dataContainer {
-    position: relative;
-    top: 27%;
-    /* border: 1px solid blue; */
-    height: 80%;
-    width: 100%;
+  position: relative;
+  top: 27%;
+  /* border: 1px solid blue; */
+  height: 80%;
+  width: 100%;
 }
 .entryContainer {
-    position: absolute;
-  /* border: 1px solid red; */
+  position: absolute;
+  border: 1px solid red;
   width: 30%;
-  height: 80%;
+  height: 90%;
   overflow: auto;
 }
 .entryContainer#move {
-    left: 2%;
+  left: 2%;
 }
 .entryContainer#area {
-    left: 35%
+  left: 35%;
 }
 .entryContainer#item {
-    left: 68%
+  left: 68%;
 }
 
 .versionContainer {
-    position: absolute;
-    margin-top: 0%;
+  position: absolute;
+  margin-top: 0%;
   /* border: 1px solid red; */
   /* border-radius: 2.5vh; */
   width: 100%;
@@ -156,7 +163,7 @@ export default {
   display: flex;
   margin-left: auto;
   margin-right: auto;
-  overflow-y:visible;
+  overflow-y: visible;
   overflow-x: auto;
 }
 /* width */

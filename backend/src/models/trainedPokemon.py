@@ -1,4 +1,5 @@
 from db import Database
+from operator import itemgetter
 
 class TrainedPokemon:
     trained_pokemon_id = None
@@ -29,5 +30,29 @@ class TrainedPokemon:
         print(query)
         return TrainedPokemon.listTrainedPokemonFormat(query)
 
-    def __init__(self, trainer_id):
-        self.trainer_id = trainer_id
+    @staticmethod
+    async def create(trainer_id,data):
+        pokemon_specific_id,nickname,level = itemgetter('pokemon_specific_id','nickname','level')(data)
+        SQL = (f"INSERT INTO trained_pokemon (pokemon_specific_id,trainer_id,nickname,level) "
+        f"VALUES (%s,%s,%s,%s) RETURNING trained_pokemon_id")
+        query = await Database.execute(SQL,[pokemon_specific_id,trainer_id,nickname,level])
+        return query[0][0]
+
+
+    def __init__(self, trained_pokemon_id):
+        self.trained_pokemon_id = trained_pokemon_id
+    
+
+    async def load(self):
+        SQL = f"SELECT pokemon_specific_id,trainer_id,nickname,level FROM trained_pokemon WHERE trained_pokemon_id=(%s)"
+        query = await Database.execute(SQL,[self.trained_pokemon_id])
+        self.pokemon_specific_id = query[0][0]
+        self.trainer_id = query[0][1]
+        self.nickname = query[0][2]
+        self.level = query[0][3]
+        print("Finish loading trained pokemon data")
+        return 
+
+    async def delete(self):
+        SQL = f"DELETE FROM trained_pokemon WHERE trained_pokemon_id=(%s) RETURNING true"
+        await Database.execute(SQL,[self.trained_pokemon_id])

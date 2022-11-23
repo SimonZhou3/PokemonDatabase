@@ -15,9 +15,14 @@
         <div class="ballCenter" id="outer" ref="ballCenterOuter">
           <div class="ballCenter" id="inner" ref="ballCenterInner"></div>
         </div>
-        <p v-if="showImage" class="image" ref="sprite">
-          <img v-bind:src="this.$props.sprite" />
-        </p>
+        <div
+          v-if="showImage"
+          class="image"
+          ref="sprite"
+          v-bind:style="{ backgroundImage: `url(${this.$props.sprite})` }"
+        >
+          <!-- <img v-bind:src="this.$props.sprite" /> -->
+        </div>
         <div class="ballBottom" ref="ballBot"></div>
       </div>
       <div
@@ -55,6 +60,7 @@ export default {
       loading: false,
       loaded: false,
       showImage: false,
+      pokemonSprite: this.$props.sprite,
     };
   },
   computed: {
@@ -79,7 +85,7 @@ export default {
     // },
     toggleSprite() {
       let sprite = this.$refs.sprite;
-      gsap.fromTo(sprite, {y: 20}, {y: 0, duration: 0.5, ease: "expo"})
+      gsap.fromTo(sprite, { y: 20 }, { y: 0, duration: 0.5, ease: "expo" });
     },
     showPokemon() {
       let barContainer = this.$refs.barContainer;
@@ -115,7 +121,7 @@ export default {
         onComplete: () => {
           this.$emit("completed");
           this.showImage = true;
-          this.toggleSprite
+          this.toggleSprite;
         },
       });
 
@@ -341,15 +347,21 @@ input:focus {
   z-index: -1;
 }
 .image {
-  border: 1px solid red;
+  /* border: 1px solid red; */
+  /* border-radius: 2.5vh; */
   position: relative;
-  transform-origin: center;
+
   left: 0vh;
-  top: -9.5vh;
+  top: -12vh;
+  height: 100%;
+  width: 100%;
+  display: inline-block;
   z-index: 100;
-  float: none;
   opacity: 1;
   transition: opacity 1s;
+  /* background-color: rgb(17, 71, 117); */
+  background-size: cover;
+  /* background-image: v-bind(pokemonSprite); */
 }
 .debug {
   position: absolute;

@@ -16,16 +16,17 @@ def init(cur, pb):
     item_index = 1
     for item_id in item_list:
         #insert into pokemon table
-        item = pb.APIResource(api_name, item_id['name']);
-        descriptions = []
+        item = pb.APIResource(api_name, item_id['name'])
+        descriptions = ""
         for desc in item.flavor_text_entries:
             if desc.language.name == "en":
-                descriptions.append(desc.text)
-        print("TUPLE(ITEM): ", item.name, item.cost, item.category.name, descriptions[-1])
+                descriptions = desc.text
+        print ("DEBUGGING: ", descriptions)
+        print("TUPLE(ITEM): ", item.name, item.cost, item.category.name, descriptions)
         if populate_table:
             cur.execute(
                 "INSERT INTO " +  table + " (name, cost, category, description, sprite) VALUES (%s, %s, %s, %s, %s)",
-                (item.name, item.cost, item.category.name, item.flavor_text_entries[0].text, item.sprites.default))
+                (item.name, item.cost, item.category.name, descriptions, item.sprites.default))
 
         #insert into child tables
         item_index+=1

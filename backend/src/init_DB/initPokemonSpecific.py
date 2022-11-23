@@ -16,7 +16,10 @@ def insert(cur, pb, version, descs, pokemon_id, id):
     #populate this table
     if populate_table:
         #get version_id
-        versionString = version.name.replace("-", " ")
+        if (pokemon_id >= 650):
+            versionString = version
+        else:
+            versionString = version.name.replace("-", " ")
         print("(DEBUGGING) -- " + versionString)
         cur.execute(
             "SELECT version_id FROM version WHERE name = '" + versionString +"'"
@@ -25,7 +28,7 @@ def insert(cur, pb, version, descs, pokemon_id, id):
 
         description = "No Description"
         for desc in descs:
-            if desc.version.name == version.name:
+            if desc.version.name == versionString.replace(" ", "-"):
                 if desc.language.name == "en":
                     description = desc.flavor_text
                     break

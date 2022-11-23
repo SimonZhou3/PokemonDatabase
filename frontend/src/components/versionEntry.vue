@@ -59,7 +59,7 @@ export default {
 .entry {
   margin-top: 15%;
   height: 12vh;
-  width: 18vw;
+  width: 10vw;
   float: left;
   background-color: #ffffff00;
   margin-right: 0%;

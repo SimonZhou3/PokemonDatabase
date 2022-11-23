@@ -73,7 +73,7 @@ export default {
   },
   methods: {
     displayResults() {
-      console.log("received query results");
+      console.log("received query results", this.pokemonData);
       this.show = true;
       this.update += 1;
       let mainColor = this.typeColor[this.pokemonTypes[0].type].main
