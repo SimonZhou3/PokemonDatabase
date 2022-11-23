@@ -250,6 +250,7 @@ export default {
   border-radius: 5vh;
   z-index: 1;
   overflow: hidden;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
 }
 .search {
   position: relative;

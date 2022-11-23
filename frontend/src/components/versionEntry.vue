@@ -65,7 +65,7 @@ export default {
   margin-right: 0%;
   transition: border-color 0.3s;
   border: 0px solid rgb(255, 255, 255);
-  border-radius: 2.5vw;
+  border-radius: 2.5vh;
   background-image: url("../assets/blue.png");
   background-size: 100% 100%;
 }
