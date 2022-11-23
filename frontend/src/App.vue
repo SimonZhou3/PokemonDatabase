@@ -21,7 +21,13 @@
       :stats="this.pokemonStats"
       :color="this.typeColor[this.pokemonTypes[0].type].accent"
     />
-    <DescPane v-if="this.show" :types="this.pokemonTypes" :name="this.pokemonName" :description="this.pokemonDesc" />
+    <DescPane
+      v-if="this.show"
+      :types="this.pokemonTypes"
+      :name="this.pokemonName"
+      :description="this.pokemonDesc"
+      :colors="this.typeColor"
+    />
   </div>
 </template>
 
@@ -73,6 +79,7 @@ export default {
       pokemonName: null,
       pokemonDesc: null,
       versionData: null,
+      pokemonColors: null,
       update: 0,
     };
   },
@@ -109,7 +116,7 @@ export default {
       this.pokemonData = data.data[0];
       this.pokemonSprite = data.data[0].sprite;
       this.pokemonDesc = data.data[0].description;
-      this.pokemonName = data.data[0].name
+      this.pokemonName = data.data[0].name;
       this.update += 1;
     },
     queryPokemonGenericData(pokemon_generic_id) {

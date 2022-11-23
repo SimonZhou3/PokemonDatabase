@@ -2,7 +2,13 @@
   <div class="pane" ref="pane">
     <div class="block" id="name" ref="name">{{this.$props.name}}</div>
     <div class="block" id="types" ref="types">
-        <div v-for="type of this.$props.types" :key=type class="typeIcon">{{type.type}}
+        <div v-for="type of this.$props.types" :key=type class="typeIcon"
+        v-bind:style="{
+            backgroundImage: `linear-gradient(to right, ` +
+            this.$props.colors[type.type].main + ', ' +
+            this.$props.colors[type.type].accent + ')'
+            }"
+        >{{type.type}}
         </div>
     </div>
     <div class="block" id="desc" ref="desc">{{this.$props.description}}</div>
@@ -12,7 +18,7 @@
 <script>
 import {gsap} from "gsap"
 export default {
-  props: ["types", "name", "description"],
+  props: ["types", "name", "description", "colors"],
   data() {
     return {};
   },
@@ -60,9 +66,17 @@ export default {
     overflow:auto;
 }
 .typeIcon{
+    position: relative;
+    top: 20%;
     width: 30%;
-    height: 100%;
+    height: 60%;
     border: 1px solid blue;
+    border-radius: 2.5vh;
+    display: inline-block;
+    line-height: normal;
+    vertical-align: middle;
+    text-align: center;
+    color: #ffffff;
 }
 /* width */
 ::-webkit-scrollbar {
