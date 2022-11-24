@@ -22,7 +22,7 @@ class Stat:
 
 
     async def load(self):
-        SQL = (f"SELECT hp,attack,defence,special_attack,special_defence,speed "
+        SQL = (f"SELECT *"
         f"FROM pokemon_stat "
         f"WHERE pokemon_stat.pokemon_generic_id= (%s) LIMIT 1")
         stats = await Database.execute(SQL,[self.pokemon_generic_id])
