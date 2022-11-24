@@ -1,6 +1,7 @@
 import {createRouter, createWebHistory} from 'vue-router'
 
 import searchPokemon from '../views/pokemonSearch'
+import searchTrainer from '../views/trainerSearch'
 
 const routes = [
     {
@@ -8,6 +9,11 @@ const routes = [
         name: 'Pokemon',
         component: searchPokemon
     },
+    {
+        path: "/trainer",
+        name: 'trainer',
+        component: searchTrainer
+    }
 ]
 
 

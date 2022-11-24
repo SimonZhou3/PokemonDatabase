@@ -6,14 +6,14 @@
   <label for="menu-icon"></label>
   <nav class="nav">
     <ul class="pt-5">
-      <router-link to="/">
+      <router-link to="/" @click="leaveNav">
         <li>
-        <a>Pokemon</a>
+          <a class="link-text">Pokemon</a>
         </li>
       </router-link>
-      <router-link to="/trainer">
+      <router-link to="/trainer" @click="leaveNav">
         <li>
-          <a>Trainer</a>
+          <a class="link-text">Trainer</a>
         </li>
       </router-link>
     </ul>
@@ -21,13 +21,27 @@
 
 </template>
 
+<script>
+export default {
+  methods: {
+    leaveNav() {
+      const exit = document.getElementById('menu-icon')
+      exit.click();
+    },
+  }
+}
+
+</script>
+
+
 <style>
-
-
-
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800;900&display=swap');
 
-body{
+.link-text {
+  color: whitesmoke !important;
+}
+
+body {
   font-family: 'Montserrat', sans-serif;
   font-weight: 300;
   font-size: 15px;
@@ -42,7 +56,8 @@ body{
   height: 100vh;
   width: 100%;
 }
-.section-center{
+
+.section-center {
   position: absolute;
   top: 50%;
   left: 0;
@@ -54,7 +69,8 @@ body{
   text-align: center;
   transform: translateY(-50%);
 }
-h1{
+
+h1 {
   font-family: 'Montserrat', sans-serif;
   font-weight: 800;
   font-size: 7vw;
@@ -69,12 +85,13 @@ h1{
 }
 
 [type="checkbox"]:checked,
-[type="checkbox"]:not(:checked){
+[type="checkbox"]:not(:checked) {
   position: absolute;
   left: -9999px;
 }
+
 .menu-icon:checked + label,
-.menu-icon:not(:checked) + label{
+.menu-icon:not(:checked) + label {
   position: fixed;
   top: 63px;
   right: 75px;
@@ -86,8 +103,9 @@ h1{
   cursor: pointer;
   z-index: 10;
 }
+
 .menu-icon:checked + label:before,
-.menu-icon:not(:checked) + label:before{
+.menu-icon:not(:checked) + label:before {
   position: absolute;
   content: '';
   display: block;
@@ -104,8 +122,9 @@ h1{
   background-color 200ms ease,
   transform 200ms cubic-bezier(0.23, 1, 0.32, 1);
 }
+
 .menu-icon:checked + label:after,
-.menu-icon:not(:checked) + label:after{
+.menu-icon:not(:checked) + label:after {
   position: absolute;
   content: '';
   display: block;
@@ -121,7 +140,8 @@ h1{
   margin-top 100ms ease,
   transform 200ms cubic-bezier(0.23, 1, 0.32, 1);
 }
-.menu-icon:checked + label:before{
+
+.menu-icon:checked + label:before {
   top: 10px;
   transform: rotate(45deg);
   height: 2px;
@@ -133,7 +153,8 @@ h1{
   background-color 200ms 500ms ease,
   transform 200ms 1700ms cubic-bezier(0.23, 1, 0.32, 1);
 }
-.menu-icon:checked + label:after{
+
+.menu-icon:checked + label:after {
   width: 30px;
   margin-top: 0;
   right: 0;
@@ -144,7 +165,7 @@ h1{
   transform 200ms 1700ms cubic-bezier(0.23, 1, 0.32, 1);
 }
 
-.nav{
+.nav {
   position: fixed;
   top: 33px;
   right: 50px;
@@ -155,7 +176,7 @@ h1{
   margin: 0;
   z-index: 9;
   overflow: hidden;
-  box-shadow: 0 8px 30px 0 rgba(0,0,0,0.3);
+  box-shadow: 0 8px 30px 0 rgba(0, 0, 0, 0.3);
   background-color: #353746;
   animation: border-transform 7s linear infinite;
   transition: top 350ms 1100ms cubic-bezier(0.23, 1, 0.32, 1),
@@ -164,14 +185,29 @@ h1{
   width 650ms 400ms cubic-bezier(0.23, 1, 0.32, 1),
   height 650ms 400ms cubic-bezier(0.23, 1, 0.32, 1);
 }
-@keyframes border-transform{
-  0%,100% { border-radius: 63% 37% 54% 46% / 55% 48% 52% 45%; }
-  14% { border-radius: 40% 60% 54% 46% / 49% 60% 40% 51%; }
-  28% { border-radius: 54% 46% 38% 62% / 49% 70% 30% 51%; }
-  42% { border-radius: 61% 39% 55% 45% / 61% 38% 62% 39%; }
-  56% { border-radius: 61% 39% 67% 33% / 70% 50% 50% 30%; }
-  70% { border-radius: 50% 50% 34% 66% / 56% 68% 32% 44%; }
-  84% { border-radius: 46% 54% 50% 50% / 35% 61% 39% 65%; }
+
+@keyframes border-transform {
+  0%, 100% {
+    border-radius: 63% 37% 54% 46% / 55% 48% 52% 45%;
+  }
+  14% {
+    border-radius: 40% 60% 54% 46% / 49% 60% 40% 51%;
+  }
+  28% {
+    border-radius: 54% 46% 38% 62% / 49% 70% 30% 51%;
+  }
+  42% {
+    border-radius: 61% 39% 55% 45% / 61% 38% 62% 39%;
+  }
+  56% {
+    border-radius: 61% 39% 67% 33% / 70% 50% 50% 30%;
+  }
+  70% {
+    border-radius: 50% 50% 34% 66% / 56% 68% 32% 44%;
+  }
+  84% {
+    border-radius: 46% 54% 50% 50% / 35% 61% 39% 65%;
+  }
 }
 
 .menu-icon:checked ~ .nav {
@@ -188,7 +224,7 @@ h1{
   height 750ms 1000ms cubic-bezier(0.23, 1, 0.32, 1);
 }
 
-.nav ul{
+.nav ul {
   position: absolute;
   top: 50%;
   left: 0;
@@ -201,7 +237,8 @@ h1{
   transform: translateY(-50%);
   list-style: none;
 }
-.nav ul li{
+
+.nav ul li {
   position: relative;
   display: block;
   width: 100%;
@@ -215,19 +252,24 @@ h1{
   transform: translateY(30px);
   transition: all 250ms linear;
 }
-.nav ul li:nth-child(1){
+
+.nav ul li:nth-child(1) {
   transition-delay: 200ms;
 }
-.nav ul li:nth-child(2){
+
+.nav ul li:nth-child(2) {
   transition-delay: 150ms;
 }
-.nav ul li:nth-child(3){
+
+.nav ul li:nth-child(3) {
   transition-delay: 100ms;
 }
-.nav ul li:nth-child(4){
+
+.nav ul li:nth-child(4) {
   transition-delay: 50ms;
 }
-.nav ul li a{
+
+.nav ul li a {
   font-family: 'Montserrat', sans-serif;
   font-size: 9vh;
   text-transform: uppercase;
@@ -238,11 +280,13 @@ h1{
   color: #ececee;
   transition: all 250ms linear;
 }
-.nav ul li a:hover{
+
+.nav ul li a:hover {
   text-decoration: none;
   color: #ffeba7;
 }
-.nav ul li a:after{
+
+.nav ul li a:after {
   display: block;
   position: absolute;
   top: 50%;
@@ -255,12 +299,13 @@ h1{
   opacity: 0.8;
   transition: width 250ms linear;
 }
-.nav ul li a:hover:after{
+
+.nav ul li a:hover:after {
   width: 100%;
 }
 
 
-.menu-icon:checked ~ .nav  ul li {
+.menu-icon:checked ~ .nav ul li {
   pointer-events: auto;
   visibility: visible;
   opacity: 1;
@@ -268,16 +313,20 @@ h1{
   transition: opacity 350ms ease,
   transform 250ms ease;
 }
-.menu-icon:checked ~ .nav ul li:nth-child(1){
+
+.menu-icon:checked ~ .nav ul li:nth-child(1) {
   transition-delay: 1400ms;
 }
-.menu-icon:checked ~ .nav ul li:nth-child(2){
+
+.menu-icon:checked ~ .nav ul li:nth-child(2) {
   transition-delay: 1480ms;
 }
-.menu-icon:checked ~ .nav ul li:nth-child(3){
+
+.menu-icon:checked ~ .nav ul li:nth-child(3) {
   transition-delay: 1560ms;
 }
-.menu-icon:checked ~ .nav ul li:nth-child(4){
+
+.menu-icon:checked ~ .nav ul li:nth-child(4) {
   transition-delay: 1640ms;
 }
 
@@ -289,6 +338,7 @@ h1{
   z-index: 11;
   transition: all 250ms linear;
 }
+
 .logo img {
   height: 26px;
   width: auto;
@@ -297,16 +347,19 @@ h1{
 
 @media screen and (max-width: 991px) {
   .menu-icon:checked + label,
-  .menu-icon:not(:checked) + label{
+  .menu-icon:not(:checked) + label {
     right: 55px;
   }
+
   .logo {
     left: 30px;
   }
-  .nav{
+
+  .nav {
     right: 30px;
   }
-  h1{
+
+  h1 {
     font-size: 9vw;
     -webkit-text-stroke: 2px transparent;
     text-stroke: 2px transparent;
@@ -314,7 +367,8 @@ h1{
     text-fill-color: #ffeba7;
     color: #ffeba7;
   }
-  .nav ul li a{
+
+  .nav ul li a {
     font-size: 8vh;
   }
 }
