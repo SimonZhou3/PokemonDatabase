@@ -119,6 +119,11 @@ def routes(app):
         operator = request.args.get('operator')
         return await TrainerController.getHighestStats(filter_range,operator)
 
+
+    @app.route("/trainer/<trainer_id>/pokemonCount", methods=['GET'])
+    async def getTrainerPokemonCount(trainer_id):
+        return await TrainerController.getPokemonCount(trainer_id)
+
     # Using division this route finds a pokemon that all trainers has. User can specify Gender or not.
     @app.route("/trainer/all")
     async def getAllTrainerByFilters():

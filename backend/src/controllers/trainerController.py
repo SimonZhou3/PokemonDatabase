@@ -26,6 +26,18 @@ class TrainerController:
                'pokemon': trainer.pokemon
             }]}
 
+    @staticmethod
+    def pokemonCountFormat(pokemonCount):
+        arr=[]
+        for pokemon in pokemonCount:
+            vals = {}
+            vals['pokemon_specific_id']=pokemon[0]
+            vals['count']=pokemon[2]
+            vals['name']=pokemon[1]
+            arr.append(vals)
+        return arr
+
+
 
     @staticmethod
     async def list():
@@ -112,3 +124,10 @@ class TrainerController:
         return {
             "data": jsonArray
         }
+
+    @staticmethod
+    async def getPokemonCount(trainer_id):
+        trainer = Trainer(trainer_id)
+        await trainer.load()
+        result = await trainer.getPokemonOwnedCount()
+        return TrainerController.pokemonCountFormat(result)

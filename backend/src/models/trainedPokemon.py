@@ -71,3 +71,4 @@ class TrainedPokemon:
 
         query = await Database.execute(SQL, [])
         return query
+
