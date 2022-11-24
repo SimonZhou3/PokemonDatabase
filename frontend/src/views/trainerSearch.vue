@@ -1,4 +1,5 @@
 <template>
+<div>
   <div>
     <SearchBar
         :trainerList="this.trainerList"
@@ -15,6 +16,7 @@
       :update="this.update"
       @query="queryTrainerData"
   />
+</div>
 </template>
 
 <script>
@@ -47,7 +49,6 @@ export default {
       this.show = true;
       this.update += 1;
     },
-
 
     filterResult(data) {
       let trainerList = [];
