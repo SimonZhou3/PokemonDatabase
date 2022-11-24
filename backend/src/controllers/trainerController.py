@@ -98,3 +98,4 @@ class TrainerController:
         return {
             "data": jsonArray
         }
+
