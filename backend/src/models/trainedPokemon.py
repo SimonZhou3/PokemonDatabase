@@ -13,11 +13,14 @@ class TrainedPokemon:
         arr=[]
         for pokemon in pokemons:
             vals = {}
-            vals['trained_pokemon_id']=pokemon[0]
-            vals['pokemon_specific_id']=pokemon[1]
-            vals['trainer_id']=pokemon[2]
-            vals['nickname']=pokemon[3]
-            vals['level']=pokemon[4]
+            vals['trainer_id'] = pokemon[0]
+            vals['trained_pokemon_id']=pokemon[1]
+            vals['pokemon_specific_id']=pokemon[2]
+            vals['name'] = pokemon[3]
+            vals['nickname']=pokemon[4]
+            vals['level']=pokemon[5]
+            vals['sprite']=pokemon[6]
+            vals['version']=pokemon[7]
             arr.append(vals)
         print(arr)
         return arr
@@ -25,9 +28,12 @@ class TrainedPokemon:
 
     @staticmethod
     async def listTrainedPokemon(trainer_id):
-        SQL = f"SELECT * FROM trained_pokemon WHERE trainer_id = (%s)"
+        SQL = f"SELECT tp.trainer_id, tp.trained_pokemon_id, ps.pokemon_specific_id,pg.name, tp.nickname, tp.level, pg.sprite, v.name " \
+              f"FROM trained_pokemon tp INNER JOIN pokemon_specific ps ON ps.pokemon_specific_id = tp.pokemon_specific_id " \
+              f"INNER JOIN pokemon_generic pg ON pg.pokemon_generic_id = ps.pokemon_generic_id " \
+              f"INNER JOIN version v ON v.version_id = ps.version_id "\
+              f"WHERE tp.trainer_id = (%s) "
         query = await Database.execute(SQL,[trainer_id])
-        print(query)
         return TrainedPokemon.listTrainedPokemonFormat(query)
 
     @staticmethod
