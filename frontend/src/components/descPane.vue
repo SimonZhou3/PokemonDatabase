@@ -18,7 +18,15 @@
 <script>
 import {gsap} from "gsap"
 export default {
-  props: ["types", "name", "description", "colors"],
+  props: ["types", "name", "description", "colors", "toggle"],
+  watch: {
+    toggle: function(value) {
+      if(value) {
+        let pane = this.$refs.pane
+        gsap.to(pane, {left: "100vw", duration: 0.5, ease: "expo"})
+      }
+    }
+  },
   data() {
     return {};
   },
@@ -47,8 +55,10 @@ export default {
   transition: opacity 1s;
   box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
   font-size: 30px;
+  overflow: hidden;
   /* filter: drop-shadow(0px 0px 3px #ebebeb) */
 }
+
 .block {
     margin-left: auto;
     margin-right: auto;

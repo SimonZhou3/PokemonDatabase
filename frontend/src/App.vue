@@ -6,6 +6,8 @@
       :received="this.received"
       @querying="queryPokemonGenericData"
       @completed="displayResults"
+      @reset="togglePanes"
+      @resetComplete="onReset"
       ref="searchBar"
     />
     <DataPane
@@ -14,12 +16,14 @@
       :versions="this.versionData"
       :update="this.update"
       :color="this.typeColor[this.pokemonTypes[0].type].accent"
+      :toggle="this.reset"
       @query="queryPokemonSpecificData"
     />
     <StatPane
       v-if="this.show"
       :stats="this.pokemonStats"
       :color="this.typeColor[this.pokemonTypes[0].type].accent"
+      :toggle="this.reset"
     />
     <DescPane
       v-if="this.show"
@@ -27,6 +31,7 @@
       :name="this.pokemonName"
       :description="this.pokemonDesc"
       :colors="this.typeColor"
+      :toggle="this.reset"
     />
   </div>
 </template>
@@ -80,10 +85,34 @@ export default {
       pokemonDesc: null,
       versionData: null,
       pokemonColors: null,
+      reset: false,
       update: 0,
     };
   },
   methods: {
+    togglePanes() {
+      console.log("hidding all panes");
+      this.reset = true;
+      let app = document.getElementById("app");
+      gsap.to(app, {
+        backgroundImage:
+          "linear-gradient(#1b1e28, #1b1e28)",
+      });
+
+      // this.update++;
+      // let data = this.$refs.dataPane
+      // let stats = this.$refs.statPane
+      // // let desc = this.$refs.DescPane
+
+      // gsap.fromTo(data, {top: "0vh"}, {top: "100vh", duration: 1, ease: "expo"})
+      // gsap.to(stats, {left: "-50vw", duration: 1, ease: "expo"})
+    },
+    onReset() {
+      window.location.reload()
+      // this.received = false;
+      // this.show = false;
+      // this.reset = false;
+    },
     displayResults() {
       console.log("received query results", this.pokemonData);
       this.show = true;
@@ -98,6 +127,9 @@ export default {
         backgroundImage:
           "linear-gradient(" + mainColor + ",  " + accentColor + ")",
       });
+
+      // let reset = this.$refs.reset;
+      // gsap.fromTo(reset, {y: 0} , {y: 10, duration: 0.5, ease: "expo"})
       // document.getElementById("app").style.backgroundImage
       //   = "linear-gradient(" + mainColor + ", " + accentColor + ")"
     },
@@ -170,5 +202,12 @@ html {
   height: 100vh;
   transition: background-image 1s;
   overflow: hidden;
+}
+.dataPane {
+  position: relative;
+  top: 0vh;
+}
+.statPane {
+  position: relative;
 }
 </style>

@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="barContainer" ref="barContainer">
+    <div class="barContainer" ref="barContainer" @click="reset">
       <input
         class="search"
         ref="search"
@@ -9,6 +9,7 @@
         placeholder="Search Pokemon"
         v-if="!loading"
       />
+      <!-- <div class="reset" ref="reset" v-if="this.loaded"></div> -->
       <div class="pokeball" ref="pokeball" v-show="this.loading">
         <div class="ballTop" ref="ballTop"></div>
         <div class="ballMid" ref="ballMid"></div>
@@ -83,9 +84,38 @@ export default {
     //   // this.$emit("received", genericPokemon, versions);
     //   // this.sprite = genericPokemon.data[0].sprite;
     // },
+    reset() {
+      if (this.loaded) {
+        console.log("resetting to original state");
+        let sprite = this.$refs.sprite;
+        gsap.to(sprite, { scale: 0, duration: 0.5, ease: "back.in" });
+        this.$emit("reset");
+        let barContainer = this.$refs.barContainer;
+        barContainer.style.transformOrigin = "center";
+        gsap.to(barContainer, { top: "45vh", duration: 1, ease: "expo" });
+        gsap.to(barContainer, {
+          height: "10vh",
+          duration: 0.5,
+          ease: "expo",
+          delay: 0.3,
+        });
+        gsap.to(barContainer, {
+          width: "65vw",
+          duration: 0.5,
+          ease: "expo",
+          delay: 0.5,
+          onComplete: () => {
+            this.loading = false;
+            this.loaded = false;
+            this.$emit("resetComplete")
+          },
+        });
+      }
+    },
+    enableReset() {},
     toggleSprite() {
       let sprite = this.$refs.sprite;
-      gsap.fromTo(sprite, { y: 20 }, { y: 0, duration: 0.5, ease: "expo" });
+      gsap.fromTo(sprite, { scale: 0 }, { y: 1, duration: 0.5, ease: "expo" });
     },
     showPokemon() {
       let barContainer = this.$refs.barContainer;
@@ -132,6 +162,10 @@ export default {
         duration: 1,
         ease: "expo",
         delay: 0.5,
+        onComplete: () => {
+          this.loaded = true;
+          this.enableReset();
+        },
       });
       //TODO: display pokemon picture
     },
@@ -172,6 +206,8 @@ export default {
       let input = this.$refs.search;
       let ballTop = this.$refs.ballTop;
       let ballMid = this.$refs.ballMid;
+      ballMid.style.top = "-4%";
+
       let ballCenterOuter = this.$refs.ballCenterOuter;
       let ballCenterInner = this.$refs.ballCenterInner;
       input.style.opacity = 0;
@@ -250,7 +286,22 @@ export default {
   border-radius: 5vh;
   z-index: 1;
   overflow: hidden;
-    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+}
+.barContainer:hover {
+  /* background-color: #cf4444; */
+  cursor: pointer;
+}
+.reset {
+  width: 100%;
+  height: 100%;
+  background-color: aquamarine;
+  float: left;
+  z-index: 101;
+}
+.reset:hover {
+  background-color: #cf4444;
+  cursor: pointer;
 }
 .search {
   position: relative;
@@ -264,6 +315,7 @@ export default {
   text-align: center;
   font-size: 4vh;
 }
+
 input:focus {
   outline: none;
 }
