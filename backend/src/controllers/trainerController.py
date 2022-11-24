@@ -26,6 +26,18 @@ class TrainerController:
                'pokemon': trainer.pokemon
             }]}
 
+    @staticmethod
+    def pokemonCountFormat(pokemonCount):
+        arr=[]
+        for pokemon in pokemonCount:
+            vals = {}
+            vals['pokemon_specific_id']=pokemon[0]
+            vals['count']=pokemon[2]
+            vals['name']=pokemon[1]
+            arr.append(vals)
+        return arr
+
+
 
     @staticmethod
     async def list():
@@ -48,6 +60,20 @@ class TrainerController:
     @staticmethod
     async def addPokemon(trainer_id, data):
         await TrainedPokemon.create(trainer_id,data)
+        return jsonify(success=True)
+
+    @staticmethod
+    async def updatePokemon(trainer_id,trained_pokemon_id,data):
+        trainedPokemon = TrainedPokemon(trained_pokemon_id)
+        await trainedPokemon.load()
+        try:
+            nickname,level = itemgetter('nickname', 'level')(data)
+            trainedPokemon.nickname = nickname
+            trainedPokemon.level = level
+            await trainedPokemon.update()
+        except:
+            return jsonify(success=False)
+
         return jsonify(success=True)
 
     @staticmethod
@@ -98,3 +124,10 @@ class TrainerController:
         return {
             "data": jsonArray
         }
+
+    @staticmethod
+    async def getPokemonCount(trainer_id):
+        trainer = Trainer(trainer_id)
+        await trainer.load()
+        result = await trainer.getPokemonOwnedCount()
+        return TrainerController.pokemonCountFormat(result)

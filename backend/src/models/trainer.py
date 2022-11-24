@@ -46,4 +46,11 @@ class Trainer:
         SQL = f"DELETE FROM trainer WHERE trainer_id=(%s) RETURNING true"
         await Database.execute(SQL,[self.trainer_id])
 
-    
+    async def getPokemonOwnedCount(self):
+        SQL = (f"SELECT tp.pokemon_specific_id, pg.name, COUNT(tp.pokemon_specific_id) FROM trained_pokemon tp "
+        f"INNER JOIN trainer AS tr ON tp.trainer_id = tr.trainer_id "
+        f"INNER JOIN pokemon_specific AS ps ON tp.pokemon_specific_id = ps.pokemon_specific_id "
+        f"INNER JOIN pokemon_generic AS pg ON pg.pokemon_generic_id = ps.pokemon_generic_id "
+        f"WHERE tr.trainer_id = (%s) GROUP BY tp.pokemon_specific_id, pg.name")
+        query = await Database.execute(SQL, [self.trainer_id])
+        return query

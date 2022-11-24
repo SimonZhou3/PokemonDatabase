@@ -43,8 +43,8 @@ class Pokemon:
     async def load(self):
         # Get general data
         SQL = (f"SELECT name,height,weight,sprite,pokemon_specific_id,description "
-        f"FROM pokemon_generic AS pg,pokemon_specific AS ps "
-        f"WHERE pg.pokemon_generic_id =(%s) AND pg.pokemon_generic_id = ps.pokemon_generic_id AND ps.version_id =(%s)")
+        f"FROM pokemon_generic AS pg INNER JOIN pokemon_specific AS ps ON ps.pokemon_generic_id = pg.pokemon_generic_id  "
+        f"WHERE pg.pokemon_generic_id =(%s) AND ps.version_id =(%s)")
         print([self.pokemon_generic_id,self.version_id])
         query = await Database.execute(SQL,[self.pokemon_generic_id,self.version_id])
         self.name = query[0][0]
