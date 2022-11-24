@@ -51,6 +51,20 @@ class TrainerController:
         return jsonify(success=True)
 
     @staticmethod
+    async def updatePokemon(trainer_id,trained_pokemon_id,data):
+        trainedPokemon = TrainedPokemon(trained_pokemon_id)
+        await trainedPokemon.load()
+        try:
+            nickname,level = itemgetter('nickname', 'level')(data)
+            trainedPokemon.nickname = nickname
+            trainedPokemon.level = level
+            await trainedPokemon.update()
+        except:
+            return jsonify(success=False)
+
+        return jsonify(success=True)
+
+    @staticmethod
     async def removePokemon(trained_pokemon_id):
         trainedPokemon = TrainedPokemon(trained_pokemon_id)
         await trainedPokemon.delete()

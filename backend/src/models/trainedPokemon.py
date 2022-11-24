@@ -53,6 +53,10 @@ class TrainedPokemon:
         print("Finish loading trained pokemon data")
         return 
 
+    async def update(self):
+        SQL = f"UPDATE trained_pokemon SET nickname=(%s), level=(%s) WHERE trained_pokemon_id=(%s) RETURNING true"
+        await Database.execute(SQL,[self.nickname,self.level,self.trained_pokemon_id])
+
     async def delete(self):
         SQL = f"DELETE FROM trained_pokemon WHERE trained_pokemon_id=(%s) RETURNING true"
         await Database.execute(SQL,[self.trained_pokemon_id])
