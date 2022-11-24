@@ -5,10 +5,6 @@
   <router-view/>
 </template>
 
-
-
-
-
 <script>
 import TrainerNavBar from "@/views/trainerNavBar";
 export default {

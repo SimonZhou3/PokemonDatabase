@@ -49,6 +49,8 @@
         </div>
         <div class="modal-body">
           <form>
+            <input type="hidden" value="" id="update-pokemon-id"/>
+            <input type="hidden" value="" id="update-trainer-id"/>
             <div class="mb-3">
               <label for="pokemon-name" class="form-label">Name</label>
               <input class="form-control" id="pokemon-name" disabled>
@@ -128,7 +130,15 @@ export default {
     },
 
     updatePokemon() {
-      console.log("THIS HSOULD WORK BUT FOR NOW")
+      console.log('enter update')
+      const update_pokemon_id = document.getElementById('update-pokemon-id').value;
+      const update_trainer_id = document.getElementById('update-trainer-id').value;
+      console.log("p_id: " + update_pokemon_id)
+      console.log("tr_id: " + update_trainer_id)
+      // fetch("http://127.0.0.1:5000/trainer/" + update_trainer_id + "/pokemon/" + update_pokemon_id, {
+      //   method: "PUT"
+      // })
+
     },
 
     deletePokemon() {
@@ -148,9 +158,7 @@ export default {
             break;
           }
         }
-        console.log("INDEX: " + index)
         this.$data.pokemon.splice(index,1)
-        console.log('BEFORE FORCE RENDER')
         console.log(this.$data.pokemon)
         this.forceRerender();
       })
@@ -170,11 +178,15 @@ export default {
       const pokemon_version_field = document.getElementById('version-name')
       const nickname_field = document.getElementById('nickname')
       const level_field = document.getElementById('level')
+      const update_pokemon_id = document.getElementById('update-pokemon-id');
+      const update_trainer_id = document.getElementById('update-trainer-id');
       console.log(editedPokemon)
       pokemon_name_field.value = editedPokemon.name;
       pokemon_version_field.value = editedPokemon.version;
       nickname_field.value = editedPokemon.nickname;
       level_field.value = editedPokemon.level;
+      update_pokemon_id.value = editedPokemon.trained_pokemon_id;
+      update_trainer_id.value = editedPokemon.trainer_id;
     },
     toggleData(show) {
       let opacity;
