@@ -139,8 +139,11 @@ export default {
         method: "DELETE"
       }).then(() => {
         let index = -1;
-        for (let i = 0; i < this.pokemon; i++) {
-          if (this.pokemon[i].pokemon_trained_id === Number(delete_pokemon_id)) {
+        console.log('delete index id: ' + delete_pokemon_id)
+        for (let i = 0; i < this.pokemon.length; i++) {
+          console.log("test: " + this.pokemon[i].trained_pokemon_id)
+          console.log("LOOKING FOR: " + delete_pokemon_id)
+          if (this.pokemon[i].trained_pokemon_id === Number(delete_pokemon_id)) {
             index = i;
             break;
           }
