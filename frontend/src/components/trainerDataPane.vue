@@ -11,7 +11,7 @@
         </h2>
       </div>
       <div>
-        <TrainerStat></TrainerStat>
+        <TrainerStat :trainer_id="this.$props.trainerData.trainer_id"></TrainerStat>
       </div>
       <table class="table table-bordered table-striped table-dark" v-if="renderComponent">
         <thead>
