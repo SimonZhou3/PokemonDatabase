@@ -1,7 +1,7 @@
 <template>
   <div background="#212529">
     <van-collapse background="#212529" v-model="activeNames">
-      <van-collapse-item background="#212529" padding="0" title="Trainer Stats" name="1">
+      <van-collapse-item background="#212529" padding="0" title="Trainer Stats" name="1" togg>
         <table class="table table-bordered table-striped table-dark">
           <thead>
             <tr>
@@ -29,7 +29,7 @@ export default {
     trainer_id: String,
   },
   setup() {
-    const activeNames = ref(["1"]);
+    const activeNames = ref(["0"]);
     return { activeNames };
   },
   data() {
