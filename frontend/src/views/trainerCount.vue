@@ -1,8 +1,9 @@
 <template>
+  <h1 class="purples">Leaderboards</h1>
   <div class="d-flex justify-content-center pad-query">
-    <form>
-      <input type="number" min=0 id="filter-range" value="0"/>
-      <select id="operator">
+    <form class="d-flex">
+      <input class="form-control me-3" type="number" min=0 id="filter-range" value="0"/>
+      <select class="form-control me-3" id="operator">
         <option value=">"> GREATER</option>
         <option value=">="> GREATER OR EQUAL</option>
         <option value="<"> LESS THAN</option>
@@ -11,7 +12,7 @@
         <option value="<>"> NOT</option>
       </select>
     </form>
-    <button class="btn btn-primary" v-on:click="fetchLeaderboardByFilters"> Submit Query</button>
+    <button class="btn btn-outline-primary" v-on:click="fetchLeaderboardByFilters">Submit</button>
   </div>
 
   <table class="table table-danger">
@@ -30,15 +31,16 @@
     </tr>
     </tbody>
   </table>
-  <div class="d-flex justify-content-center pad-top">
+  <h2 class="pad-top mint">Find Common Pokemons</h2>
+  <div class="d-flex justify-content-center">
     <form>
-      <select id="gender">
+      <select class="form-control" id="gender">
         <option value="">All</option>
         <option value="Male">Male</option>
         <option value="Female">Female</option>
       </select>
       </form>
-    <button class="btn btn-primary" v-on:click="fetchPokemonByGender">Find Common Pokemon</button>
+    <button class="btn btn-outline-primary" v-on:click="fetchPokemonByGender">Find Common Pokemon</button>
     </div>
     <table class="table table-danger">
         <thead>
@@ -128,11 +130,31 @@ export default {
 </script>
 
 <style>
-
+/* REFERENCE -- https://codepen.io/cssgrid/pen/BaYKdeM*/
 .pad-query {
   padding-bottom: 7vh;
 }
 .pad-top {
   padding-top: 10vh;
 }
+@font-face {
+  font-family: 'Rocher';
+  src: url(https://assets.codepen.io/9632/RocherColorGX.woff2);
+}
+
+.grays {
+  font-family: Rocher;
+  base-palette: 9;
+}
+
+.purples {
+  font-family: Rocher;
+  base-palette: 6;
+}
+
+.mint {
+  font-family: Rocher;
+  base-palette: 7;
+}
+
 </style>

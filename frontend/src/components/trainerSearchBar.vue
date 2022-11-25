@@ -1,5 +1,15 @@
 <template>
   <div>
+    <button v-if="!showImage" class="btn btn-outline-info" data-bs-toggle="modal" data-bs-target="#addTrainerModal">
+      <i class="bi bi-plus-square-fill">
+        Add Trainer
+      </i>
+    </button>
+    <button v-if="!showImage" class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#deleteTrainerModal">
+      <i class="bi bi-x">
+        Delete Trainer
+      </i>
+    </button>
     <div class="barContainer" ref="barContainer">
       <input
           class="search"
@@ -21,7 +31,6 @@
             ref="sprite"
             v-bind:style="{ backgroundImage: `url(${this.$props.sprite})` }"
         >
-          <!-- <img v-bind:src="this.$props.sprite" /> -->
         </div>
         <div class="ballBottom" ref="ballBot"></div>
       </div>
@@ -39,20 +48,88 @@
         </div>
       </div>
     </div>
-    <!-- <button class="debug" @click="test">Mock Complete</button> -->
+  </div>
+
+<!-- Add Trainer Modal -->
+  <div class="modal fade" id="addTrainerModal" tabindex="-1" aria-labelledby="addTrainerModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="editModalLabel">Add Trainer</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <form>
+            <div class="mb-3">
+              <label class="form-label">Name</label>
+              <input class="form-control" id="trainer-name" />
+            </div>
+            <div class="mb-3">
+              <label class="form-label">Gender</label>
+              <select class="form-control" id="gender">
+                <option value="Male">Male</option>
+                <option value="Female">Female</option>
+              </select>
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <button type="submit" class="btn btn-primary" v-on:click="addTrainer" data-bs-dismiss="modal">
+            Save Changes
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+<!--  Delete Trainer Modal-->
+  <div class="modal fade" id="deleteTrainerModal" tabindex="-1" aria-labelledby="addTrainerModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="deleteTrainer">Delete a Trainer</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <form>
+            <div class="mb-3">
+              <label class="form-label">Trainer</label>
+              <select class="form-control" id="trainer-id">
+                <option
+                    v-for="trainer in this.$props.trainerList"
+                    v-bind:key="trainer.trainer_id"
+                    :value="trainer.trainer_id"
+                >
+                  {{trainer.trainer_id}} -- {{trainer.name }}
+                </option>
+              </select>
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <button type="submit" class="btn btn-outline-danger" v-on:click="deleteTrainerFromLocal" data-bs-dismiss="modal">
+            Delete
+          </button>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
 <script>
 import { gsap } from "gsap";
 import TrainerEntry from './trainerEntry';
+import "bootstrap";
+import "bootstrap/dist/css/bootstrap.min.css";
+import {nextTick} from "vue";
 
 export default {
   name: "SearchBar",
   components: {
     TrainerEntry,
   },
-  props: ["trainerList", "received", "sprite"],
+  props: ["trainerList", "received", "sprite","queryTrainer","deleteTrainer"],
   data() {
     return {
       query: "",
@@ -65,6 +142,7 @@ export default {
   computed: {
     findTrainers() {
       let filteredList = [];
+      console.log(this.$props.trainerList)
       for (let trainer of this.$props.trainerList) {
         if (trainer.name.toLowerCase().startsWith(this.query.toLowerCase())) {
           filteredList.push(trainer);
@@ -74,6 +152,39 @@ export default {
     },
   },
   methods: {
+    async forceRerender() {
+      this.renderComponent = false;
+      await nextTick();
+      this.renderComponent = true;
+      console.log("rerendered...");
+    },
+
+    async deleteTrainerFromLocal() {
+      console.log('enter delete Trainer')
+      const trainerID = document.getElementById('trainer-id').value;
+      let t = await this.$props.deleteTrainer(trainerID);
+      console.log(t)
+      let index = 100000;
+      for (let i = 0; i < this.$props.trainerList.length; i++) {
+        if (this.$props.trainerList[i].trainer_id === Number(trainerID)) {
+          index = i
+          break;
+        }
+      }
+      console.log("INDEX NUMBER: " + index)
+      this.$props.trainerList.splice(index,1);
+      this.forceRerender()
+    },
+
+    async addTrainer() {
+      console.log('enter add Trainer')
+      const trainerName = document.getElementById('trainer-name').value;
+      const gender = document.getElementById('gender').value;
+      let t = await this.$props.queryTrainer(trainerName, gender);
+      console.log(t)
+      this.$props.trainerList.push(t)
+      this.forceRerender()
+    },
 
     toggleSprite() {
       let sprite = this.$refs.sprite;
@@ -213,7 +324,10 @@ export default {
       }
     },
   },
-  mounted() {},
+  mounted() {
+    console.log('PROPS:')
+    console.log(this.$props.trainerList)
+  },
   updated() {
     if (this.query.length > 1) {
       //limit height of container

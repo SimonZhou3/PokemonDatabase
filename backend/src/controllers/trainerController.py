@@ -131,7 +131,7 @@ class TrainerController:
             jsonObject = {
                 'trainer_id': trainer_data[0],
                 'trainer_name': trainer_data[1],
-                'Pokemon Count': trainer_data[2]
+                'pokemon_count': trainer_data[2]
             }
             jsonArray.append(jsonObject)
 
