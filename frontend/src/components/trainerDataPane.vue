@@ -219,8 +219,6 @@ export default {
             "Content-Type": "application/json"
           }
         }).then((response) => response.json()).then((data) => {
-          // TODO -- FROM DATA GRAB TRAINED_POKEMON_ID :)
-          console.log(data)
           let insertedPokemon = {
             level: Number(level),
             name: pokemon_name,
@@ -228,7 +226,8 @@ export default {
             pokemon_specific_id: pokemon_specific_id,
             sprite: sprite,
             version: version_name,
-            trainer_id: this.trainer_id
+            trainer_id: this.trainer_id,
+            trained_pokemon_id: data["data"][0]["trained_pokemon_id"]
           }
             console.log(insertedPokemon)
             this.$data.pokemon.push(insertedPokemon)
