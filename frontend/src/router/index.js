@@ -2,6 +2,7 @@ import {createRouter, createWebHistory} from 'vue-router'
 
 import searchPokemon from '../views/pokemonSearch'
 import searchTrainer from '../views/trainerSearch'
+import trainerCount from '../views/trainerCount'
 
 const routes = [
     {
@@ -13,6 +14,11 @@ const routes = [
         path: "/trainer",
         name: 'trainer',
         component: searchTrainer
+    },
+    {
+        path: "/trainer/leaderboard",
+        name: 'board',
+        component: trainerCount
     }
 ]
 
