@@ -5,7 +5,7 @@
         Add Trainer
       </i>
     </button>
-    <button v-if="!showImage" class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#deleteTrainerModal">
+    <button v-if="!showImage" class="btn btn-outline-danger spread-button" data-bs-toggle="modal" data-bs-target="#deleteTrainerModal">
       <i class="bi bi-x">
         Delete Trainer
       </i>
@@ -473,5 +473,9 @@ input:focus {
   position: absolute;
   left: 0%;
   top: 0%;
+}
+
+.spread-button {
+  margin-left: 2rem;
 }
 </style>

@@ -93,11 +93,11 @@ class Pokemon:
             SQL = f"SELECT DISTINCT pg.pokemon_generic_id, pg.name, pg.sprite FROM pokemon_specific ps "\
                   f"INNER JOIN pokemon_generic pg ON pg.pokemon_generic_id = ps.pokemon_generic_id "\
                   f"WHERE NOT EXISTS((SELECT t.trainer_id FROM trainer t WHERE t.gender = {gender}) EXCEPT "\
-                  f"(SELECT t.trainer_id FROM trained_pokemon tp INNER JOIN trainer t ON t.trainer_id = tp.trainer_id WHERE ps.pokemon_specific_id = tp.pokemon_specific_id)) "
+                  f"(SELECT t.trainer_id FROM trained_pokemon tp INNER JOIN trainer t ON t.trainer_id = tp.trainer_id WHERE ps.pokemon_specific_id = tp.pokemon_specific_id)) ORDER BY pg.pokemon_generic_id ASC"
         else:
             SQL = f"SELECT DISTINCT pg.pokemon_generic_id, pg.name, pg.sprite FROM pokemon_specific ps " \
                   f"INNER JOIN pokemon_generic pg ON pg.pokemon_generic_id = ps.pokemon_generic_id " \
                   f"WHERE NOT EXISTS((SELECT t.trainer_id FROM trainer t) EXCEPT " \
-                  f"(SELECT t.trainer_id FROM trained_pokemon tp INNER JOIN trainer t ON t.trainer_id = tp.trainer_id WHERE ps.pokemon_specific_id = tp.pokemon_specific_id)) "
+                  f"(SELECT t.trainer_id FROM trained_pokemon tp INNER JOIN trainer t ON t.trainer_id = tp.trainer_id WHERE ps.pokemon_specific_id = tp.pokemon_specific_id)) ORDER BY pg.pokemon_generic_id ASC"
         query = await Database.execute(SQL, [])
         return query
