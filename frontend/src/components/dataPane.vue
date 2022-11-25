@@ -34,7 +34,15 @@ import { gsap } from "gsap";
 import dataEntry from "./dataEntry.vue";
 import versionEntry from "./versionEntry.vue";
 export default {
-  props: ["pokemonData", "versions", "update", "color"],
+  props: ["pokemonData", "versions", "update", "color", "toggle"],
+  watch : {
+    toggle: function(value) {
+      if (value) {
+        let pane = this.$refs.pane
+        gsap.to(pane, {top: "100vh", duration: 0.5, ease: "expo"})
+      }
+    }
+  },
   data() {
     return {
       moves: [],
