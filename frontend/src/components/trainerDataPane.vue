@@ -9,6 +9,9 @@
           {{ this.name }}
         </h2>
       </div>
+      <div>
+        <TrainerStat></TrainerStat>
+      </div>
       <table class="table table-bordered table-striped table-dark" v-if="renderComponent">
         <thead>
           <tr>
@@ -205,6 +208,7 @@ import { gsap } from "gsap";
 import "bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { nextTick } from "vue";
+import TrainerStat from "./trainerStat.vue";
 
 export default {
   props: ["trainerData", "allPokemon"],
