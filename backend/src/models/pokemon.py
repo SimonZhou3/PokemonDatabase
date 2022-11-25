@@ -90,12 +90,12 @@ class Pokemon:
 
     async def findPokemonThatAllTrainer(gender):
         if gender is not None:
-            SQL = f"SELECT DISTINCT pg.pokemon_generic_id, pg.name FROM pokemon_specific ps "\
+            SQL = f"SELECT DISTINCT pg.pokemon_generic_id, pg.name, pg.sprite FROM pokemon_specific ps "\
                   f"INNER JOIN pokemon_generic pg ON pg.pokemon_generic_id = ps.pokemon_generic_id "\
                   f"WHERE NOT EXISTS((SELECT t.trainer_id FROM trainer t WHERE t.gender = {gender}) EXCEPT "\
                   f"(SELECT t.trainer_id FROM trained_pokemon tp INNER JOIN trainer t ON t.trainer_id = tp.trainer_id WHERE ps.pokemon_specific_id = tp.pokemon_specific_id)) "
         else:
-            SQL = f"SELECT DISTINCT pg.pokemon_generic_id, pg.name FROM pokemon_specific ps " \
+            SQL = f"SELECT DISTINCT pg.pokemon_generic_id, pg.name, pg.sprite FROM pokemon_specific ps " \
                   f"INNER JOIN pokemon_generic pg ON pg.pokemon_generic_id = ps.pokemon_generic_id " \
                   f"WHERE NOT EXISTS((SELECT t.trainer_id FROM trainer t) EXCEPT " \
                   f"(SELECT t.trainer_id FROM trained_pokemon tp INNER JOIN trainer t ON t.trainer_id = tp.trainer_id WHERE ps.pokemon_specific_id = tp.pokemon_specific_id)) "

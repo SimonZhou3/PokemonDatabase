@@ -1,4 +1,5 @@
 <template>
+<div>
   <div class="pane" ref="pane">
     <div class="d-grid h-100 pane-background">
       <button class="btn btn-outline-light" data-bs-toggle="modal" data-bs-target="#addModal">
@@ -200,6 +201,7 @@
         </div>
       </div>
     </div>
+  </div>
   </div>
 </template>
 

@@ -5,6 +5,8 @@
         :trainerList="this.trainerList"
         :sprite = "this.trainerSprite"
         :received="this.received"
+        :queryTrainer="this.queryTrainer"
+        :deleteTrainer="this.deleteTrainer"
         @querying="queryTrainerData"
         @completed="displayResults"
         ref="searchBar"
@@ -24,6 +26,7 @@
 
 import SearchBar from "../components/trainerSearchBar.vue";
 import TrainerDataPane from "@/components/trainerDataPane";
+import {nextTick} from "vue";
 
 export default {
   name: "App",
@@ -45,6 +48,39 @@ export default {
     };
   },
   methods: {
+
+    async forceRerender() {
+      this.renderComponent = false;
+      await nextTick();
+      this.renderComponent = true;
+      console.log("rerendered...");
+      console.log(this.trainerList)
+    },
+
+    async deleteTrainer(trainer_id) {
+      console.log('Enter Trainer-Delete Trainer')
+      let response = await fetch('http://127.0.0.1:5000/trainer/'+trainer_id, {
+        method: "DELETE"
+      })
+      response = await response.json();
+      return response;
+    },
+
+    async queryTrainer(trainerName, gender) {
+      console.log('Enter Trainer-Search Query Trainer')
+      let response = await fetch('http://127.0.0.1:5000/trainer', {
+        method: "POST",
+        body: JSON.stringify({
+          name: trainerName,
+          gender: gender
+        }),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      })
+      response = await response.json();
+      return response["data"][0];
+    },
 
     displayResults() {
       console.log("received query results", this.pokemonData);

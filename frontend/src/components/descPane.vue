@@ -28,15 +28,18 @@ export default {
     }
   },
   data() {
-    return {};
+    return {
+      accentColor : this.$props.colors[this.$props.types[0].type]["accent"]
+    };
   },
   mounted() {
     let pane = this.$refs.pane;
+    console.log(this.accentColor)
     pane.style.opacity = 1;
     gsap.fromTo(
       pane,
       { left: "125vw" },
-      { left: "68vw", duration: 1, ease: "expo", delay: 0.3 }
+      { left: "70vw", duration: 1, ease: "expo", delay: 0.3 }
     );
   },
 };
@@ -44,10 +47,10 @@ export default {
 
 <style scoped>
 .pane {
-  position: relative;
+  position: absolute;
   width: 25vw;
   height: 25vh;
-  top: -108.5vh;
+  top: 5vh;
   background-color: #ffffff;
   border-radius: 5vh;
   padding: 1%;
@@ -65,7 +68,7 @@ export default {
     margin-bottom: 1%;
     width: 90%;
     height: 20%;
-    border: 1px solid red
+    /* border: 1px solid red */
 }
 .block#name {
     height: 10%;
@@ -79,14 +82,16 @@ export default {
     position: relative;
     top: 20%;
     width: 30%;
-    height: 60%;
-    border: 1px solid blue;
+    height: 80%;
+    /* border: 1px solid blue; */
     border-radius: 2.5vh;
     display: inline-block;
     line-height: normal;
     vertical-align: middle;
     text-align: center;
     color: #ffffff;
+    margin-left: 2%;
+      box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
 }
 /* width */
 ::-webkit-scrollbar {
@@ -100,12 +105,12 @@ export default {
 
 /* Handle */
 ::-webkit-scrollbar-thumb {
-  background: #cf4444;
+  background: v-bind(accentColor);
   border-radius: 2.5px;
 }
 
 /* Handle on hover */
 ::-webkit-scrollbar-thumb:hover {
-  background: rgb(255, 77, 77);
+  background: v-bind(accentColor);
 }
 </style>

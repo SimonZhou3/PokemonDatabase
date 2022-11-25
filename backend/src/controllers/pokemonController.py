@@ -93,7 +93,8 @@ class PokemonController:
         for pokemon_data in result:
             jsonObject = {
                 "pokemon_id": pokemon_data[0],
-                "name": pokemon_data[1]
+                "name": pokemon_data[1],
+                "sprite": pokemon_data[2]
             }
             jsonArray.append(jsonObject)
         return  {

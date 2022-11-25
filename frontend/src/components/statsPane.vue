@@ -52,10 +52,10 @@ export default {
 
 <style scoped>
 .pane {
-  position: relative;
+  position: absolute;
   width: 25vw;
   height: 25vh;
-  top: -80vh;
+  top: 5vh;
   background-color: #ffffff;
   border-radius: 5vh;
   padding: 1%;

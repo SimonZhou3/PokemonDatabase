@@ -1,5 +1,5 @@
 <template>
-   <div>
+  <div>
     <SearchBar
       :pokemonList="this.pokemonList"
       :sprite="this.pokemonSprite"
@@ -18,6 +18,7 @@
       :color="this.typeColor[this.pokemonTypes[0].type].accent"
       :toggle="this.reset"
       @query="queryPokemonSpecificData"
+      @queryData="queryMoveAreaItem"
     />
     <StatPane
       v-if="this.show"
@@ -95,8 +96,7 @@ export default {
       this.reset = true;
       let app = document.getElementById("app");
       gsap.to(app, {
-        backgroundImage:
-          "linear-gradient(#1b1e28, #1b1e28)",
+        backgroundImage: "linear-gradient(#1b1e28, #1b1e28)",
       });
 
       // this.update++;
@@ -108,7 +108,7 @@ export default {
       // gsap.to(stats, {left: "-50vw", duration: 1, ease: "expo"})
     },
     onReset() {
-      window.location.reload()
+      window.location.reload();
       // this.received = false;
       // this.show = false;
       // this.reset = false;
@@ -117,11 +117,18 @@ export default {
       console.log("received query results", this.pokemonData);
       this.show = true;
       this.update += 1;
-      let mainColor = this.typeColor[this.pokemonTypes[0].type].main;
-      let accentColor = this.typeColor[this.pokemonTypes[0].type].accent;
+      let mainColor;
+      let accentColor;
+      if (this.pokemonTypes.length > 1) {
+        mainColor = this.typeColor[this.pokemonTypes[0].type].main;
+        accentColor = this.typeColor[this.pokemonTypes[1].type].accent;
+      } else {
+        mainColor = this.typeColor[this.pokemonTypes[0].type].main;
+        accentColor = this.typeColor[this.pokemonTypes[0].type].accent;
+      }
       // document.getElementById("app").style.backgroundColor =
       // this.typeColor[this.pokemonTypes[0].type].main;
-      console.log(mainColor, accentColor);
+      // console.log(mainColor, accentColor);
       let app = document.getElementById("app");
       gsap.to(app, {
         backgroundImage:
@@ -174,6 +181,16 @@ export default {
         .then((response) => response.json())
         .then((data) => this.sortData(data));
     },
+    queryMoveAreaItem(data, type) {
+      console.log(data, type);
+      if (type == "Move") {
+        fetch("http://127.0.0.1:5000/move/" + data.move_id, {
+          method: "GET",
+        })
+          .then((response) => response.json())
+          .then((data) => console.log(data));
+      }
+    },
   },
   mounted() {
     console.log("mounted");
@@ -192,7 +209,7 @@ html {
   margin: 0;
 }
 #app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
+  font-family: "Noto Sans Symbols", sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
