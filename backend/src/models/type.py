@@ -13,7 +13,7 @@ class Type:
             vals['type']=type[0]
             vals['slot']=type[1]
             self.types.append(vals)
-            return
+        return
 
     async def load(self):
         SQL = (f"SELECT name,slot "
