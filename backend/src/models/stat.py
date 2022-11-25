@@ -13,12 +13,12 @@ class Stat:
 
 
     def formatStats(self,stats):
-        self.hp = stats[0]
-        self.attack = stats[1]
-        self.defence = stats[2]
-        self.specialAttack = stats[3]
-        self.specialDefence = stats[4]
-        self.speed = stats[5]
+        self.hp = stats[2]
+        self.attack = stats[3]
+        self.defence = stats[4]
+        self.specialAttack = stats[5]
+        self.specialDefence = stats[6]
+        self.speed = stats[7]
 
 
     async def load(self):
