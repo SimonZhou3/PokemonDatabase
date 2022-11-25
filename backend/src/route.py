@@ -33,6 +33,12 @@ def routes(app):
     async def pokemonGet(pokemon_id):
         return await PokemonController.get(pokemon_id)
 
+
+    # Pokemon GET Area count per region
+    @app.route("/pokemon/<pokemon_id>/regionCount", methods=['GET'])
+    async def pokemonGetRegionCount(pokemon_id):
+        return await PokemonController.findPokemonRegionCount(pokemon_id)
+
     # Item LIST
     @app.route("/item", methods=['GET'])
     async def itemList():
