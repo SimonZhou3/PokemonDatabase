@@ -20,6 +20,22 @@ class Pokemon:
         print(query)
         return query
 
+    @staticmethod
+    async def getPokemonAreaCountPerRegion(generic_id):
+        innerSQL = (f"SELECT ps.pokemon_specific_id, ps.version_id, COUNT(*) AS areaCount "
+        f"FROM pokemon_specific as ps "
+        f"INNER JOIN pokemon_area as pa ON ps.pokemon_specific_id = pa.pokemon_specific_id "
+        f"INNER JOIN pokemon_generic as pg ON pg.pokemon_generic_id = ps.pokemon_generic_id "
+        f"WHERE pg.pokemon_generic_id=(%s) GROUP BY ps.pokemon_specific_id, ps.version_id")
+
+        SQL = (f"SELECT r.region_id, r.name, SUM(ps.areaCount) "
+        f"FROM ({innerSQL}) AS ps, version AS v, version_group AS vg, region AS r "
+        f"WHERE vg.version_group_id = v.version_group_id AND ps.version_id = v.version_id AND r.generation_id = vg.generation_id "
+        f"GROUP BY r.region_id")
+        query = await Database.execute(SQL,[generic_id])
+        print(query)
+        return query
+
     def initPokemon(self):
         self.versionIdList = []
         self.moves = []
@@ -45,7 +61,6 @@ class Pokemon:
         SQL = (f"SELECT name,height,weight,sprite,pokemon_specific_id,description "
         f"FROM pokemon_generic AS pg INNER JOIN pokemon_specific AS ps ON ps.pokemon_generic_id = pg.pokemon_generic_id  "
         f"WHERE pg.pokemon_generic_id =(%s) AND ps.version_id =(%s)")
-        print([self.pokemon_generic_id,self.version_id])
         query = await Database.execute(SQL,[self.pokemon_generic_id,self.version_id])
         self.name = query[0][0]
         self.height = query[0][1]

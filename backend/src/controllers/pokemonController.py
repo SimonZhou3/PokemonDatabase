@@ -20,6 +20,27 @@ class PokemonController:
             vals['name']=version[1]
             arr.append(vals)
         return arr      
+    
+
+    @staticmethod
+    def pokemonRegionCountFormat(regions):
+        arr=[]
+        for region in regions:
+            vals = {}
+            vals['region_id']=region[0]
+            vals['name']=region[1]
+            vals['area_count']=int(region[2])
+            arr.append(vals)
+        return arr
+
+    def versionIdFormat(versionIdList):
+        arr = []
+        for version in versionIdList:
+            vals = {}
+            vals['version_id']=version[0]
+            vals['name']=version[1]
+            arr.append(vals)
+        return arr  
         
     @staticmethod
     def pokemonFormat(pokemon,versionIdList):
@@ -79,8 +100,12 @@ class PokemonController:
         "data": jsonArray
         }
 
-
-
+    
+    # Find the total areas that the pokemon is in all areas regardless of version in each region
+    @staticmethod
+    async def findPokemonRegionCount(pokemon_id):
+        result = await Pokemon.getPokemonAreaCountPerRegion(pokemon_id)
+        return PokemonController.pokemonRegionCountFormat(result)
     # @staticmethod
     # async def create(data):
     #     try:
