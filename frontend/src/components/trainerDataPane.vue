@@ -210,7 +210,7 @@ import { gsap } from "gsap";
 import "bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { nextTick } from "vue";
-// import TrainerStat from "./trainerStat.vue";
+import TrainerStat from "./trainerStat.vue";
 
 export default {
   props: ["trainerData", "allPokemon"],
@@ -225,7 +225,7 @@ export default {
     };
   },
   components: {
-    // TrainerStat,
+    TrainerStat,
   },
   methods: {
     readDataAndAddTrainedPokemon() {
