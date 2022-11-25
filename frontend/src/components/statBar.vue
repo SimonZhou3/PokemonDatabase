@@ -69,7 +69,7 @@ export default {
 }
 
 .name {
-  border: 1px solid blue;
+  /* border: 1px solid blue; */
   width: 10%;
   height: 2.5vh;
   margin-left: 0%;
@@ -81,14 +81,14 @@ export default {
 }
 .barContainer {
   position: relative;
-  border: 1px solid green;
+  /* border: 1px solid green; */
   width: 90%;
   height: 75%;
   left: 12%;
   top: 5%;
 }
 .bar {
-  border: 1px solid purple;
+  /* border: 1px solid purple; */
   height: 100%;
   width: 10%;
   background-color: v-bind(accentColor);
@@ -99,16 +99,16 @@ export default {
 }
 .value {
   position: absolute;
-  border: 1px solid orange;
+  /* border: 1px solid orange; */
   height: 75%;
   width: 10%;
   text-align: left;
   position: relative;
-
   left: -10%;
   float: left;
   z-index: 2;
   color: #ffffff;
   font-weight: bold;
+  font-size: 1vh;
 }
 </style>

@@ -132,7 +132,7 @@ export default {
   background-color: v-bind(accentColor);
 }
 .dataContainer {
-  border: 1px solid green;
+  /* border: 1px solid green; */
   width: 90%;
   border-radius: 2.5vh;
   display: flex;
@@ -140,7 +140,7 @@ export default {
   transition: height 1s;
 }
 .dataEntry {
-  border: 1px solid red;
+  /* border: 1px solid red; */
   width: 100%;
   height: 30vh;
 }

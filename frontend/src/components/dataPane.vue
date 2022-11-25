@@ -13,36 +13,42 @@
     </div>
     <div class="dataContainer">
       <div class="entryContainer" id="move" ref="move">
-      <div class="name">Moves</div>
-        <div v-for="move of this.moves" :key="move">
-          <dataEntry
-            :data="move"
-            :color="this.$props.color"
-            :type="'Move'"
-            @queryData="onQueryData"
-          />
+        <div class="name">Moves</div>
+        <div class="entries">
+          <div v-for="move of this.moves" :key="move">
+            <dataEntry
+              :data="move"
+              :color="this.$props.color"
+              :type="'Move'"
+              @queryData="onQueryData"
+            />
+          </div>
         </div>
       </div>
       <div class="entryContainer" id="area" ref="area">
-        Area
-        <div v-for="area of this.areas" :key="area">
-          <dataEntry
-            :data="area"
-            :color="this.$props.color"
-            :type="'Area'"
-            @queryData="onQueryData"
-          />
+        <div class="name">Areas</div>
+        <div class="entries">
+          <div v-for="area of this.areas" :key="area">
+            <dataEntry
+              :data="area"
+              :color="this.$props.color"
+              :type="'Area'"
+              @queryData="onQueryData"
+            />
+          </div>
         </div>
       </div>
       <div class="entryContainer" id="item" ref="item">
-        item
-        <div v-for="item of this.items" :key="item">
-          <data-entry
-            :data="item"
-            :color="this.$props.color"
-            :type="'Item'"
-            @queryData="onQueryData"
-          />
+        <div class="name">Items</div>
+        <div class="entries">
+          <div v-for="item of this.items" :key="item">
+            <data-entry
+              :data="item"
+              :color="this.$props.color"
+              :type="'Item'"
+              @queryData="onQueryData"
+            />
+          </div>
         </div>
       </div>
     </div>
@@ -125,7 +131,7 @@ export default {
     pane.style.opacity = 1;
     this.moves = this.$props.pokemonData.moves;
     this.areas = this.$props.pokemonData.areas;
-    this.items = this.$props.pokemonData.items
+    this.items = this.$props.pokemonData.items;
     this.allVersions = this.$props.pokemonData.version_list;
     console.log("showing data", this.$props.versions, this.moves, this.area);
     this.toggleData(true);
@@ -168,12 +174,22 @@ export default {
   height: 80%;
   width: 100%;
 }
+.name {
+  /* border: 1px solid black; */
+  background-color: v-bind(accentColor);
+  color: #ffffff;
+  font-weight: bold;
+  font-size: 30px;
+  margin-bottom: 0%;
+}
 .entryContainer {
   position: absolute;
-  border: 1px solid red;
+  /* border: 1px solid red; */
   width: 30%;
   height: 90%;
-  overflow: auto;
+  border-radius: 2.5vh;
+  overflow: hidden;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
 }
 .entryContainer#move {
   left: 2%;
@@ -184,7 +200,12 @@ export default {
 .entryContainer#item {
   left: 68%;
 }
-
+.entries {
+  /* border: 1px solid purple; */
+  width: 100%;
+  height: 92%;
+  overflow: auto;
+}
 .versionContainer {
   position: absolute;
   margin-top: 0%;

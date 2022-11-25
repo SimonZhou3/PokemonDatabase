@@ -21,7 +21,7 @@ export default {
 
 <style scoped>
 .itemContainer {
-    border: 1px solid orange;
+    /* border: 1px solid orange; */
     width: 90%;
     display:flex;
     flex-direction: column;
@@ -29,6 +29,6 @@ export default {
     margin-right: auto;
 }
 .itemData{
-    border: 1px solid blue;
+    /* border: 1px solid blue; */
 }
 </style>
