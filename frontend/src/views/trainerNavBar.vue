@@ -16,6 +16,11 @@
           <a class="link-text">Trainer</a>
         </li>
       </router-link>
+      <router-link to="/trainer/leaderboard" @click="leaveNav">
+        <li>
+          <a class="link-text">Leaderboards</a>
+        </li>
+      </router-link>
     </ul>
   </nav>
 
