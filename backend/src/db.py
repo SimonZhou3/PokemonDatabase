@@ -1,4 +1,5 @@
 import psycopg
+from psycopg_pool import AsyncConnectionPool
 import os
 from os.path import join, dirname
 from dotenv import load_dotenv
@@ -13,13 +14,26 @@ PORT = os.environ.get('PORT')
 HOST = os.environ.get('HOST')
 SSLMODE = os.environ.get('SSLMODE')
 
+POOL = None
+
 class Database:
+    @staticmethod 
+    async def getPool():
+        global POOL
+        if (POOL is None):
+            POOL = AsyncConnectionPool(F"dbname={DBNAME} user={USER} password={PASSWORD} port={PORT} host={HOST} sslmode = {SSLMODE}")
+            return POOL
+
+        else:
+            return POOL
+
 
     @staticmethod
     async def execute(SQL,params):
-        async with await psycopg.AsyncConnection.connect(F"dbname={DBNAME} user={USER} password={PASSWORD} port={PORT} host={HOST} sslmode = {SSLMODE}") as aconn:
-            async with aconn.cursor() as cur:
-                await cur.execute(SQL,params)
-                return await cur.fetchall()
+                pool = await Database.getPool()
+                async with pool.connection() as aconn:
+                    async with aconn.cursor() as cur:
+                        await cur.execute(SQL,params)
+                        return await cur.fetchall()
 
                 
