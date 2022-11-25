@@ -1,18 +1,18 @@
 <template>
   <div background="#212529">
     <van-collapse background="#212529" v-model="activeNames">
-      <van-collapse-item background="#212529" padding="0" title="Trainer Stats" name="1">
-        <table class="table table-bordered table-striped table-dark">
+      <van-collapse-item background="#212529" padding="0" title="Pokemon Area Count Location By Region" name="1">
+        <table class="table table-bordered table-striped">
           <thead>
             <tr>
-              <th scope="col">Name</th>
-              <th>Count</th>
+              <th scope="col">Region Name</th>
+              <th>Area Count</th>
             </tr>
           </thead>
           <tbody>
-            <tr v-for="pokemon of this.trainerStats" :key="pokemon">
-              <th scope="row">{{ pokemon.name }}</th>
-              <td>{{ pokemon.count }}</td>
+            <tr v-for="region of this.pokemonStats" :key="region">
+              <th scope="row">{{ region.name }}</th>
+              <td>{{ region.area_count }}</td>
             </tr>
           </tbody>
         </table>
@@ -26,7 +26,7 @@ import { ref } from "vue";
 
 export default {
   props: {
-    trainer_id: String,
+    pokemon_id: String,
   },
   setup() {
     const activeNames = ref(["1"]);
@@ -34,14 +34,14 @@ export default {
   },
   data() {
     return {
-      trainerStats: [{ name: "default", count: 20, pokemon_specific_id: 1 }],
+      pokemonStats: [],
     };
   },
   methods: {
     fetchdata: async function () {
       console.log(this.trainer_id);
-      console.log("Fetching stats");
-      const URL = `http://127.0.0.1:5000/trainer/${this.trainer_id}/pokemonCount`;
+      console.log("Fetching pokemon stats");
+      const URL = `http://127.0.0.1:5000/pokemon/${this.pokemon_id}/regionCount`;
 
       let data = await fetch(URL, {
         method: "GET",
@@ -51,8 +51,7 @@ export default {
     },
   },
   async beforeMount() {
-    this.trainerStats = await this.fetchdata();
-    console.log(this.trainerStats);
+    this.pokemonStats = await this.fetchdata();
   },
 };
 </script>
@@ -69,7 +68,7 @@ export default {
   border-radius: 5vh;
   opacity: 0;
   transition: opacity 1s;
-  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+  box-shadow: rgba(243, 239, 239, 0.24) 0px 3px 8px;
   overflow-y: scroll;
   -ms-overflow-y: scroll;
 }
@@ -156,12 +155,12 @@ export default {
   padding-bottom: 4vh;
   background-clip: content-box;
   box-shadow: #212529;
-  background-color: #212529;
+  background-color: #ffffff;
 }
 
 .pane-background {
   background-clip: content-box;
-  box-shadow: #212529;
-  background-color: #212529;
+  box-shadow: #ffffff;
+  background-color: #ffffff;
 }
 </style>
