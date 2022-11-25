@@ -13,6 +13,7 @@
   <TrainerDataPane
       v-if="this.show"
       :trainerData="this.trainerData"
+      :allPokemon = "this.allPokemon"
       :update="this.update"
       @query="queryTrainerData"
   />
@@ -39,11 +40,12 @@ export default {
       trainerName: null,
       trainerGender: null,
       trainerSprite: null,
-      trainerPokemon: [],
+      allPokemon: [],
       update: 0,
     };
   },
   methods: {
+
     displayResults() {
       console.log("received query results", this.pokemonData);
       this.show = true;
@@ -85,6 +87,15 @@ export default {
     })
         .then((response) => response.json())
         .then((data) => this.filterResult(data));
+
+    console.log("Pokemon mounted")
+    fetch("http://127.0.0.1:5000/pokemon", {
+      method: "GET",
+    })
+        .then((response) => response.json())
+        .then((data) => {
+          this.allPokemon = data["data"];
+        });
   }
 };
 
