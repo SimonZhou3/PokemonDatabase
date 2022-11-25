@@ -15,16 +15,36 @@
       <div class="entryContainer" id="move" ref="move">
         Moves
         <div v-for="move of this.moves" :key="move">
-          <dataEntry :data="move" :color="this.$props.color" :type="'Move'" />
+          <dataEntry
+            :data="move"
+            :color="this.$props.color"
+            :type="'Move'"
+            @queryData="onQueryData"
+          />
         </div>
       </div>
       <div class="entryContainer" id="area" ref="area">
         Area
         <div v-for="area of this.areas" :key="area">
-          <dataEntry :data="area" :color="this.$props.color" :type="'Area'" />
+          <dataEntry
+            :data="area"
+            :color="this.$props.color"
+            :type="'Area'"
+            @queryData="onQueryData"
+          />
         </div>
       </div>
-      <div class="entryContainer" id="item" ref="item">item</div>
+      <div class="entryContainer" id="item" ref="item">
+        item
+        <div v-for="item of this.items" :key="item">
+          <data-entry
+            :data="item"
+            :color="this.$props.color"
+            :type="'Item'"
+            @queryData="onQueryData"
+          />
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -35,13 +55,13 @@ import dataEntry from "./dataEntry.vue";
 import versionEntry from "./versionEntry.vue";
 export default {
   props: ["pokemonData", "versions", "update", "color", "toggle"],
-  watch : {
-    toggle: function(value) {
+  watch: {
+    toggle: function (value) {
       if (value) {
-        let pane = this.$refs.pane
-        gsap.to(pane, {top: "100vh", duration: 0.5, ease: "expo"})
+        let pane = this.$refs.pane;
+        gsap.to(pane, { top: "100vh", duration: 0.5, ease: "expo" });
       }
-    }
+    },
   },
   data() {
     return {
@@ -96,12 +116,16 @@ export default {
         delay: 0.4,
       });
     },
+    onQueryData(data, type) {
+      this.$emit("queryData", data, type);
+    },
   },
   mounted() {
     let pane = this.$refs.pane;
     pane.style.opacity = 1;
     this.moves = this.$props.pokemonData.moves;
     this.areas = this.$props.pokemonData.areas;
+    this.items = this.$props.pokemonData.items
     this.allVersions = this.$props.pokemonData.version_list;
     console.log("showing data", this.$props.versions, this.moves, this.area);
     this.toggleData(true);

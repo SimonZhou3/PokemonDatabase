@@ -18,6 +18,7 @@
       :color="this.typeColor[this.pokemonTypes[0].type].accent"
       :toggle="this.reset"
       @query="queryPokemonSpecificData"
+      @queryData="queryMoveAreaItem"
     />
     <StatPane
       v-if="this.show"
@@ -173,6 +174,18 @@ export default {
       )
         .then((response) => response.json())
         .then((data) => this.sortData(data));
+    },
+    queryMoveAreaItem(data, type) {
+      console.log(data, type)
+      if (type == "Move") {
+        fetch(
+          "http://127.0.0.1:5000/move/" + data.move_id,
+          {
+            method: "GET"
+          }
+        ).then((response) => response.json())
+        .then((data) => console.log(data))
+      }
     },
   },
   mounted() {

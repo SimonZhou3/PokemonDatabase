@@ -4,37 +4,48 @@
       <h2 class="name-title">
         {{ this.name }}
       </h2>
+      <div>
+        <TrainerStat></TrainerStat>
+      </div>
       <table class="table table-bordered table-striped table-dark" v-if="renderComponent">
         <thead>
-        <tr>
-          <th scope="col">Name</th>
-          <th>Version</th>
-          <th>Nickname</th>
-          <th>Level</th>
-          <th>Sprite</th>
-          <th>Operations</th>
-        </tr>
+          <tr>
+            <th scope="col">Name</th>
+            <th>Version</th>
+            <th>Nickname</th>
+            <th>Level</th>
+            <th>Sprite</th>
+            <th>Operations</th>
+          </tr>
         </thead>
         <tbody>
-        <tr v-for="pokemon of this.pokemon" :key="pokemon">
-          <th scope="row">{{ pokemon.name }}</th>
-          <td>{{ pokemon.version }}</td>
-          <td>{{ pokemon.nickname != null ? pokemon.nickname : '--' }}</td>
-          <td>{{ pokemon.level }}</td>
-          <td><img :src=pokemon.sprite alt="pokemon_sprite"/></td>
-          <td>
-            <div class="d-flex justify-content-evenly">
-              <button class="btn btn-outline-light" data-bs-toggle="modal" data-bs-target="#editModal"
-                      v-on:click="editForm(pokemon.trained_pokemon_id)">
-                <i class="bi bi-pencil-fill"> Edit</i>
-              </button>
-              <button class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#deleteModal"
-                      v-on:click="deleteForm(pokemon.trained_pokemon_id, pokemon.trainer_id)">
-                <i class="bi bi-trash"> Delete</i>
-              </button>
-            </div>
-          </td>
-        </tr>
+          <tr v-for="pokemon of this.pokemon" :key="pokemon">
+            <th scope="row">{{ pokemon.name }}</th>
+            <td>{{ pokemon.version }}</td>
+            <td>{{ pokemon.nickname != null ? pokemon.nickname : "--" }}</td>
+            <td>{{ pokemon.level }}</td>
+            <td><img :src="pokemon.sprite" alt="pokemon_sprite" /></td>
+            <td>
+              <div class="d-flex justify-content-evenly">
+                <button
+                  class="btn btn-outline-light"
+                  data-bs-toggle="modal"
+                  data-bs-target="#editModal"
+                  v-on:click="editForm(pokemon.trained_pokemon_id)"
+                >
+                  <i class="bi bi-pencil-fill"> Edit</i>
+                </button>
+                <button
+                  class="btn btn-outline-danger"
+                  data-bs-toggle="modal"
+                  data-bs-target="#deleteModal"
+                  v-on:click="deleteForm(pokemon.trained_pokemon_id, pokemon.trainer_id)"
+                >
+                  <i class="bi bi-trash"> Delete</i>
+                </button>
+              </div>
+            </td>
+          </tr>
         </tbody>
       </table>
     </div>
@@ -49,29 +60,31 @@
         </div>
         <div class="modal-body">
           <form>
-            <input type="hidden" value="" id="update-pokemon-id"/>
-            <input type="hidden" value="" id="update-trainer-id"/>
+            <input type="hidden" value="" id="update-pokemon-id" />
+            <input type="hidden" value="" id="update-trainer-id" />
             <div class="mb-3">
               <label for="pokemon-name" class="form-label">Name</label>
-              <input class="form-control" id="pokemon-name" disabled>
+              <input class="form-control" id="pokemon-name" disabled />
             </div>
             <div class="mb-3">
               <label for="version-name" class="form-label">Version</label>
-              <input type="form-control" class="form-control" id="version-name" disabled>
+              <input type="form-control" class="form-control" id="version-name" disabled />
             </div>
             <div class="mb-3">
               <label for="nickname" class="form-label">Nickname</label>
-              <input class="form-control" id="nickname">
+              <input class="form-control" id="nickname" />
             </div>
             <div class="mb-3">
               <label for="level" class="form-label">Level</label>
-              <input type="number" class="form-control" id="level" min="1" max="100" required>
+              <input type="number" class="form-control" id="level" min="1" max="100" required />
             </div>
           </form>
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-          <button type="submit" class="btn btn-primary" v-on:click="updatePokemon()" data-bs-dismiss="modal">Save Changes </button>
+          <button type="submit" class="btn btn-primary" v-on:click="updatePokemon()" data-bs-dismiss="modal">
+            Save Changes
+          </button>
         </div>
       </div>
     </div>
@@ -86,26 +99,27 @@
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
-          <input type="hidden" value="" id="delete-pokemon-id"/>
-          <input type="hidden" value="" id="trainer-id"/>
+          <input type="hidden" value="" id="delete-pokemon-id" />
+          <input type="hidden" value="" id="trainer-id" />
           Are you sure you want to delete {{ this.pokemon.name }}?
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-          <button type="button" class="btn btn-primary" v-on:click="deletePokemon()" data-bs-dismiss="modal">Delete
+          <button type="button" class="btn btn-primary" v-on:click="deletePokemon()" data-bs-dismiss="modal">
+            Delete
           </button>
         </div>
       </div>
     </div>
   </div>
-
 </template>
 
 <script>
-import {gsap} from "gsap";
-import 'bootstrap';
-import 'bootstrap/dist/css/bootstrap.min.css';
-import {nextTick} from "vue";
+import { gsap } from "gsap";
+import "bootstrap";
+import "bootstrap/dist/css/bootstrap.min.css";
+import { nextTick } from "vue";
+import TrainerStat from "./trainerStat.vue";
 
 export default {
   props: ["trainerData"],
@@ -118,69 +132,69 @@ export default {
       renderComponent: true,
     };
   },
-  components: {},
+  components: {
+    TrainerStat,
+  },
   methods: {
-
     async forceRerender() {
       this.renderComponent = false;
       await nextTick();
       this.renderComponent = true;
-      console.log("rerendered...")
-      console.log(this.$data.pokemon)
+      console.log("rerendered...");
+      console.log(this.$data.pokemon);
     },
 
     updatePokemon() {
-      console.log('enter update')
-      const update_pokemon_id = document.getElementById('update-pokemon-id').value;
-      const update_trainer_id = document.getElementById('update-trainer-id').value;
-      console.log("p_id: " + update_pokemon_id)
-      console.log("tr_id: " + update_trainer_id)
+      console.log("enter update");
+      const update_pokemon_id = document.getElementById("update-pokemon-id").value;
+      const update_trainer_id = document.getElementById("update-trainer-id").value;
+      console.log("p_id: " + update_pokemon_id);
+      console.log("tr_id: " + update_trainer_id);
       // fetch("http://127.0.0.1:5000/trainer/" + update_trainer_id + "/pokemon/" + update_pokemon_id, {
       //   method: "PUT"
       // })
-
     },
 
     deletePokemon() {
-      console.log('enter delete')
-      const delete_pokemon_id = document.getElementById('delete-pokemon-id').value;
-      const trainer_id = document.getElementById('trainer-id').value;
+      console.log("enter delete");
+      const delete_pokemon_id = document.getElementById("delete-pokemon-id").value;
+      const trainer_id = document.getElementById("trainer-id").value;
       fetch("http://127.0.0.1:5000/trainer/" + trainer_id + "/pokemon/" + delete_pokemon_id, {
-        method: "DELETE"
+        method: "DELETE",
       }).then(() => {
         let index = -1;
-        console.log('delete index id: ' + delete_pokemon_id)
+        console.log("delete index id: " + delete_pokemon_id);
         for (let i = 0; i < this.pokemon.length; i++) {
-          console.log("test: " + this.pokemon[i].trained_pokemon_id)
-          console.log("LOOKING FOR: " + delete_pokemon_id)
+          console.log("test: " + this.pokemon[i].trained_pokemon_id);
+          console.log("LOOKING FOR: " + delete_pokemon_id);
           if (this.pokemon[i].trained_pokemon_id === Number(delete_pokemon_id)) {
             index = i;
             break;
           }
         }
-        this.$data.pokemon.splice(index,1)
-        console.log(this.$data.pokemon)
+        this.$data.pokemon.splice(index, 1);
+        console.log(this.$data.pokemon);
         this.forceRerender();
-      })
+      });
     },
     deleteForm(trained_pokmeon_id, trainer_id) {
-      const delete_id_field = document.getElementById('delete-pokemon-id')
-      const trainer_id_field = document.getElementById('trainer-id')
+      const delete_id_field = document.getElementById("delete-pokemon-id");
+      const trainer_id_field = document.getElementById("trainer-id");
       delete_id_field.value = trained_pokmeon_id;
       trainer_id_field.value = trainer_id;
     },
     editForm(trained_pokemon_id) {
       console.log(trained_pokemon_id);
-      let editedPokemon = this.pokemon.find(pokemon => {
-        return pokemon.trained_pokemon_id === trained_pokemon_id
+      let editedPokemon = this.pokemon.find((pokemon) => {
+        return pokemon.trained_pokemon_id === trained_pokemon_id;
       });
-      const pokemon_name_field = document.getElementById('pokemon-name')
-      const pokemon_version_field = document.getElementById('version-name')
-      const nickname_field = document.getElementById('nickname')
-      const level_field = document.getElementById('level')
-      const update_pokemon_id = document.getElementById('update-pokemon-id');
-      const update_trainer_id = document.getElementById('update-trainer-id');
-      console.log(editedPokemon)
+      const pokemon_name_field = document.getElementById("pokemon-name");
+      const pokemon_version_field = document.getElementById("version-name");
+      const nickname_field = document.getElementById("nickname");
+      const level_field = document.getElementById("level");
+      const update_pokemon_id = document.getElementById("update-pokemon-id");
+      const update_trainer_id = document.getElementById("update-trainer-id");
+      console.log(editedPokemon);
       pokemon_name_field.value = editedPokemon.name;
       pokemon_version_field.value = editedPokemon.version;
       nickname_field.value = editedPokemon.nickname;
@@ -199,23 +213,19 @@ export default {
     },
   },
   mounted() {
-    console.log("mounted")
+    console.log("mounted");
     let pane = this.$refs.pane;
     pane.style.opacity = 1;
 
     this.name = this.$props.trainerData.name;
     this.gender = this.$props.trainerData.gender;
     this.pokemon = this.$props.trainerData.pokemon;
-    console.log(this.pokemon)
+    console.log(this.pokemon);
     this.trainer_id = this.$props.trainerData.trainer_id;
 
-    console.log(this.pokemon)
+    console.log(this.pokemon);
     this.toggleData(true);
-    gsap.fromTo(
-        pane,
-        {top: "50vh"},
-        {top: "10vh", bottom: "10vh", duration: 1, ease: "expo"}
-    );
+    gsap.fromTo(pane, { top: "50vh" }, { top: "10vh", bottom: "10vh", duration: 1, ease: "expo" });
   },
   updated() {
     this.name = this.$props.trainerData.name;
@@ -225,7 +235,6 @@ export default {
   },
 };
 </script>
-
 
 <style scoped>
 @import url("https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css");
@@ -312,7 +321,7 @@ export default {
 }
 
 .name-title {
-  font-family: 'Montserrat', sans-serif;
+  font-family: "Montserrat", sans-serif;
   font-weight: 900;
   font-size: 4vw;
   line-height: 0;

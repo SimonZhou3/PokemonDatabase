@@ -17,6 +17,17 @@ class TrainerController:
         return arr
 
     @staticmethod
+    def trainedPokemonFormat(pokemon):
+        return { "data": [
+            {
+               'trained_pokemon_id': pokemon.trained_pokemon_id,
+               'trainer_id': pokemon.trainer_id,
+               'pokemon_specific_id': pokemon.pokemon_specific_id,
+               'nickname': pokemon.nickname,
+               'level': pokemon.level
+            }]}
+
+    @staticmethod
     def trainerFormat(trainer):
         return { "data": [
             {
@@ -59,8 +70,11 @@ class TrainerController:
 
     @staticmethod
     async def addPokemon(trainer_id, data):
-        await TrainedPokemon.create(trainer_id,data)
-        return jsonify(success=True)
+        id = await TrainedPokemon.create(trainer_id,data)
+        pokemon = TrainedPokemon(id)
+        await pokemon.load()
+
+        return TrainerController.trainedPokemonFormat(pokemon)
 
     @staticmethod
     async def updatePokemon(trainer_id,trained_pokemon_id,data):
