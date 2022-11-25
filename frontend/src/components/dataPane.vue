@@ -13,7 +13,7 @@
     </div>
     <div class="dataContainer">
       <div class="entryContainer" id="move" ref="move">
-        Moves
+      <div class="name">Moves</div>
         <div v-for="move of this.moves" :key="move">
           <dataEntry
             :data="move"
@@ -131,8 +131,8 @@ export default {
     this.toggleData(true);
     gsap.fromTo(
       pane,
-      { top: "50vh" },
-      { top: "15vh", duration: 1, ease: "expo" }
+      { top: "100vh" },
+      { top: "35vh", duration: 1, ease: "expo" }
     );
   },
   updated() {
@@ -147,7 +147,7 @@ export default {
 
 <style scoped>
 .pane {
-  position: relative;
+  position: absolute;
   width: 90vw;
   height: 65vh;
   left: 5vw;

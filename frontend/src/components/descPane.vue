@@ -36,7 +36,7 @@ export default {
     gsap.fromTo(
       pane,
       { left: "125vw" },
-      { left: "68vw", duration: 1, ease: "expo", delay: 0.3 }
+      { left: "70vw", duration: 1, ease: "expo", delay: 0.3 }
     );
   },
 };
@@ -44,10 +44,10 @@ export default {
 
 <style scoped>
 .pane {
-  position: relative;
+  position: absolute;
   width: 25vw;
   height: 25vh;
-  top: -108.5vh;
+  top: 5vh;
   background-color: #ffffff;
   border-radius: 5vh;
   padding: 1%;
@@ -79,7 +79,7 @@ export default {
     position: relative;
     top: 20%;
     width: 30%;
-    height: 60%;
+    height: 80%;
     border: 1px solid blue;
     border-radius: 2.5vh;
     display: inline-block;
@@ -87,6 +87,8 @@ export default {
     vertical-align: middle;
     text-align: center;
     color: #ffffff;
+    margin-left: 2%;
+      box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
 }
 /* width */
 ::-webkit-scrollbar {

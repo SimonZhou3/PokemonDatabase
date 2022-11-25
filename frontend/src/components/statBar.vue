@@ -95,20 +95,20 @@ export default {
   border-radius: 1.25vh;
   color: #ffffff;
   z-index: 1;
+    box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
 }
 .value {
-    position: absolute;
+  position: absolute;
   border: 1px solid orange;
   height: 75%;
   width: 10%;
   text-align: left;
   position: relative;
-  /* text-align: center; */
+
   left: -10%;
   float: left;
   z-index: 2;
   color: #ffffff;
-  margin-top: 0.75%;
   font-weight: bold;
 }
 </style>

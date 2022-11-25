@@ -1,4 +1,5 @@
 <template>
+<div>
   <div class="pane" ref="pane">
     <div class="d-grid h-100 pane-background">
       <button class="btn btn-outline-light" data-bs-toggle="modal" data-bs-target="#addModal">
@@ -8,6 +9,9 @@
         <h2 class="name-title justify-content-center">
           {{ this.name }}
         </h2>
+      </div>
+      <div>
+        <TrainerStat></TrainerStat>
       </div>
       <table class="table table-bordered table-striped table-dark" v-if="renderComponent">
         <thead>
@@ -198,6 +202,7 @@
       </div>
     </div>
   </div>
+  </div>
 </template>
 
 <script>
@@ -205,6 +210,7 @@ import { gsap } from "gsap";
 import "bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { nextTick } from "vue";
+import TrainerStat from "./trainerStat.vue";
 
 export default {
   props: ["trainerData", "allPokemon"],

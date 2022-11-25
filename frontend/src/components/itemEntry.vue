@@ -1,18 +1,14 @@
 <template>
-    <div class="moveContainer" ref="moveContainer">
-        <div class="moveData" id="desc"> {{this.$props.moveData.type_id}}</div>
-        <div class="moveData" id="accuracy">accuracy: {{this.$props.moveData.accuracy}}</div>
-        <div class="moveData" id="damageClass">damage_class: {{this.$props.moveData.damage_class}}</div>
-        <div class="moveData" id="effectChance">effect_chance: {{this.$props.moveData.effect_chance}}</div>
-        <div class="moveData" id="power">power: {{this.$props.moveData.power}}</div>
-        <div class="moveData" id="pp">pp: {{this.$props.moveData.pp}}</div>
-        <div class="moveData" id="priority">priority: {{this.$props.moveData.priority}}</div>
+    <div class="itemContainer" ref="itemContainer">
+        <div class="itemData" id="desc"> {{this.$props.itemData.description}}</div>
+        <div class="itemData" id="category"><b>category:</b> {{this.$props.itemData.category}}</div>
+        <div class="itemData" id="cost"><b>cost:</b> {{this.$props.itemData.cost}}</div>
     </div>
 </template>
 
 <script>
 export default {
-    props:["moveData"],
+    props:["itemData"],
     data() {
         return {
         }
@@ -24,7 +20,7 @@ export default {
 </script>
 
 <style scoped>
-.moveContainer {
+.itemContainer {
     border: 1px solid orange;
     width: 90%;
     display:flex;
@@ -32,7 +28,7 @@ export default {
     margin-left: auto;
     margin-right: auto;
 }
-.moveData{
+.itemData{
     border: 1px solid blue;
 }
 </style>

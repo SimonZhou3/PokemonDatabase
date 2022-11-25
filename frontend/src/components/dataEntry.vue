@@ -6,16 +6,21 @@
     <div class="moveEntryContainer">
       <moveEntry :moveData="this.moveData" v-if="this.showMove" />
     </div>
+    <div class="entryContainer">
+      <itemEntry :itemData="this.itemData" v-if="this.showItem" />
+    </div>
   </div>
 </template>
 
 <script>
-// import { gsap } from "gsap";
+import { gsap } from "gsap";
 import moveEntry from "./moveEntry.vue";
+import itemEntry from "./itemEntry.vue";
 export default {
   props: ["data", "color", "type"],
   components: {
     moveEntry,
+    itemEntry,
   },
   data() {
     return {
@@ -64,6 +69,11 @@ export default {
           break;
       }
       this.received = true;
+      let container = this.$refs.dataContainer;
+      let entry = this.$refs.entry
+      container.style.color = "#ffffff"
+      entry.style.color="#ffffff"
+      gsap.to(container, { backgroundColor: this.accentColor});
       console.log(data);
       // let dataContainer = this.$refs.dataContainer;
       // gsap.to(dataContainer, { height: "40vh", duration: 0.5, ease: "expo" });
@@ -91,6 +101,10 @@ export default {
         this.showMove = false;
         this.showArea = false;
         this.showItem = false;
+        let container = this.$refs.dataContainer;
+        gsap.to(container, { backgroundColor: "#ffffff" });
+              let entry = this.$refs.entry
+      entry.style.color="#000000"
       }
       // this.$emit("queryData", this.$props.data, this.$props.type)
     },
@@ -102,6 +116,7 @@ export default {
 .entry {
   height: 5vh;
   background-color: #ffffff00;
+  margin-top: 1vh;
   margin-bottom: 1vh;
   margin-left: auto;
   margin-right: auto;
@@ -110,6 +125,7 @@ export default {
   border: 0;
   transition: background-color 0.3s;
   font-weight: bold;
+  font-size: 30px;
 }
 .entry:hover {
   cursor: pointer;
