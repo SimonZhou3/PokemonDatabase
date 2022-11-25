@@ -5,7 +5,7 @@
         {{ this.name }}
       </h2>
       <div>
-        <h2>Pokemon Stats</h2>
+        <TrainerStat></TrainerStat>
       </div>
       <table class="table table-bordered table-striped table-dark" v-if="renderComponent">
         <thead>
@@ -119,6 +119,7 @@ import { gsap } from "gsap";
 import "bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { nextTick } from "vue";
+import TrainerStat from "./trainerStat.vue";
 
 export default {
   props: ["trainerData"],
@@ -131,7 +132,9 @@ export default {
       renderComponent: true,
     };
   },
-  components: {},
+  components: {
+    TrainerStat,
+  },
   methods: {
     async forceRerender() {
       this.renderComponent = false;
