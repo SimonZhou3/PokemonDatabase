@@ -12,6 +12,9 @@
       </div>
     </div>
     <div class="dataContainer">
+      <div>
+        <PokemonStat :pokemon_id="this.$props.pokemonData.pokemon_generic_id"> </PokemonStat>
+      </div>
       <div class="entryContainer" id="move" ref="move">
         Moves
         <div v-for="move of this.moves" :key="move">
@@ -33,15 +36,16 @@
 import { gsap } from "gsap";
 import dataEntry from "./dataEntry.vue";
 import versionEntry from "./versionEntry.vue";
+import PokemonStat from "./pokemonStat.vue";
 export default {
   props: ["pokemonData", "versions", "update", "color", "toggle"],
-  watch : {
-    toggle: function(value) {
+  watch: {
+    toggle: function (value) {
       if (value) {
-        let pane = this.$refs.pane
-        gsap.to(pane, {top: "100vh", duration: 0.5, ease: "expo"})
+        let pane = this.$refs.pane;
+        gsap.to(pane, { top: "100vh", duration: 0.5, ease: "expo" });
       }
-    }
+    },
   },
   data() {
     return {
@@ -56,16 +60,13 @@ export default {
   components: {
     dataEntry,
     versionEntry,
+    PokemonStat,
   },
   methods: {
     onQueryVersion(version_id) {
       this.toggleData(false);
       console.log("switching to version" + version_id);
-      this.$emit(
-        "query",
-        this.$props.pokemonData.pokemon_generic_id,
-        version_id
-      );
+      this.$emit("query", this.$props.pokemonData.pokemon_generic_id, version_id);
     },
     // onResponse(data) {
     //   this.move = data.data[0].moves;
@@ -105,11 +106,7 @@ export default {
     this.allVersions = this.$props.pokemonData.version_list;
     console.log("showing data", this.$props.versions, this.moves, this.area);
     this.toggleData(true);
-    gsap.fromTo(
-      pane,
-      { top: "50vh" },
-      { top: "15vh", duration: 1, ease: "expo" }
-    );
+    gsap.fromTo(pane, { top: "50vh" }, { top: "15vh", duration: 1, ease: "expo" });
   },
   updated() {
     this.moves = this.$props.pokemonData.moves;
