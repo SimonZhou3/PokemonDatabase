@@ -13,21 +13,48 @@
     </div>
     <div class="dataContainer">
       <div>
-        <PokemonStat :pokemon_id="this.$props.pokemonData.pokemon_generic_id"> </PokemonStat>
+        <PokemonStat :pokemon_id="this.$props.pokemonData.pokemon_generic_id">
+        </PokemonStat>
       </div>
       <div class="entryContainer" id="move" ref="move">
-        Moves
-        <div v-for="move of this.moves" :key="move">
-          <dataEntry :data="move" :color="this.$props.color" :type="'Move'" />
+        <div class="name">Moves</div>
+        <div class="entries">
+          <div v-for="move of this.moves" :key="move">
+            <dataEntry
+              :data="move"
+              :color="this.$props.color"
+              :type="'Move'"
+              @queryData="onQueryData"
+            />
+          </div>
         </div>
       </div>
       <div class="entryContainer" id="area" ref="area">
-        Area
-        <div v-for="area of this.areas" :key="area">
-          <dataEntry :data="area" :color="this.$props.color" :type="'Area'" />
+        <div class="name">Areas</div>
+        <div class="entries">
+          <div v-for="area of this.areas" :key="area">
+            <dataEntry
+              :data="area"
+              :color="this.$props.color"
+              :type="'Area'"
+              @queryData="onQueryData"
+            />
+          </div>
         </div>
       </div>
-      <div class="entryContainer" id="item" ref="item">item</div>
+      <div class="entryContainer" id="item" ref="item">
+        <div class="name">Items</div>
+        <div class="entries">
+          <div v-for="item of this.items" :key="item">
+            <data-entry
+              :data="item"
+              :color="this.$props.color"
+              :type="'Item'"
+              @queryData="onQueryData"
+            />
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -60,13 +87,17 @@ export default {
   components: {
     dataEntry,
     versionEntry,
-    PokemonStat,
+    PokemonStat
   },
   methods: {
     onQueryVersion(version_id) {
       this.toggleData(false);
       console.log("switching to version" + version_id);
-      this.$emit("query", this.$props.pokemonData.pokemon_generic_id, version_id);
+      this.$emit(
+        "query",
+        this.$props.pokemonData.pokemon_generic_id,
+        version_id
+      );
     },
     // onResponse(data) {
     //   this.move = data.data[0].moves;
@@ -97,22 +128,30 @@ export default {
         delay: 0.4,
       });
     },
+    onQueryData(data, type) {
+      this.$emit("queryData", data, type);
+    },
   },
   mounted() {
     let pane = this.$refs.pane;
     pane.style.opacity = 1;
     this.moves = this.$props.pokemonData.moves;
     this.areas = this.$props.pokemonData.areas;
+    this.items = this.$props.pokemonData.items;
     this.allVersions = this.$props.pokemonData.version_list;
-    console.log("showing data", this.$props.versions, this.moves, this.area);
+    console.log("showing data");
     this.toggleData(true);
-    gsap.fromTo(pane, { top: "50vh" }, { top: "15vh", duration: 1, ease: "expo" });
+    gsap.fromTo(
+      pane,
+      { top: "100vh" },
+      { top: "35vh", duration: 1, ease: "expo" }
+    );
   },
   updated() {
     this.moves = this.$props.pokemonData.moves;
     this.areas = this.$props.pokemonData.areas;
     this.allVersions = this.$props.pokemonData.version_list;
-    console.log("showing data", this.$props.versions, this.moves, this.area);
+    // console.log("showing data", this.$props.versions, this.moves, this.area);
     this.toggleData(true);
   },
 };
@@ -120,7 +159,7 @@ export default {
 
 <style scoped>
 .pane {
-  position: relative;
+  position: absolute;
   width: 90vw;
   height: 65vh;
   left: 5vw;
@@ -138,15 +177,25 @@ export default {
   position: relative;
   top: 27%;
   /* border: 1px solid blue; */
-  height: 80%;
+  height: 75%;
   width: 100%;
+}
+.name {
+  /* border: 1px solid black; */
+  background-color: v-bind(accentColor);
+  color: #ffffff;
+  font-weight: bold;
+  font-size: 30px;
+  margin-bottom: 0%;
 }
 .entryContainer {
   position: absolute;
-  border: 1px solid red;
+  /* border: 1px solid red; */
   width: 30%;
   height: 90%;
-  overflow: auto;
+  border-radius: 2.5vh;
+  overflow: hidden;
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
 }
 .entryContainer#move {
   left: 2%;
@@ -157,7 +206,12 @@ export default {
 .entryContainer#item {
   left: 68%;
 }
-
+.entries {
+  /* border: 1px solid purple; */
+  width: 100%;
+  height: 92%;
+  overflow: auto;
+}
 .versionContainer {
   position: absolute;
   margin-top: 0%;
