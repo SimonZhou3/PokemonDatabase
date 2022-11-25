@@ -133,7 +133,7 @@ export default {
     this.areas = this.$props.pokemonData.areas;
     this.items = this.$props.pokemonData.items;
     this.allVersions = this.$props.pokemonData.version_list;
-    console.log("showing data", this.$props.versions, this.moves, this.area);
+    console.log("showing data");
     this.toggleData(true);
     gsap.fromTo(
       pane,
@@ -145,7 +145,7 @@ export default {
     this.moves = this.$props.pokemonData.moves;
     this.areas = this.$props.pokemonData.areas;
     this.allVersions = this.$props.pokemonData.version_list;
-    console.log("showing data", this.$props.versions, this.moves, this.area);
+    // console.log("showing data", this.$props.versions, this.moves, this.area);
     this.toggleData(true);
   },
 };

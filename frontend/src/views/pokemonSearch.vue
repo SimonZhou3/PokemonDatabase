@@ -128,7 +128,7 @@ export default {
       }
       // document.getElementById("app").style.backgroundColor =
       // this.typeColor[this.pokemonTypes[0].type].main;
-      console.log(mainColor, accentColor);
+      // console.log(mainColor, accentColor);
       let app = document.getElementById("app");
       gsap.to(app, {
         backgroundImage:
