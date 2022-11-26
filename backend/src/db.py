@@ -34,6 +34,7 @@ class Database:
                 async with pool.connection() as aconn:
                     async with aconn.cursor() as cur:
                         await cur.execute(SQL,params)
+                        aconn.commit()
                         return await cur.fetchall()
 
                 
