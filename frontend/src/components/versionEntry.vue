@@ -18,7 +18,7 @@ export default {
       image: require("../assets/" +
         this.$props.data.name.replace(/\s/g, "") +
         ".png"),
-        accentColor: this.$props.color.accent
+      accentColor: this.$props.color.accent,
     };
   },
   updated() {},
@@ -30,7 +30,7 @@ export default {
     loadAnimation() {
       if (this.data.version_id != this.$props.selected) {
         let icon = this.$refs.entry;
-        gsap.to(icon, { y: -20, duration: 0.5, ease: "expo",delay:0.5 });
+        gsap.to(icon, { y: -20, duration: 0.5, ease: "expo", delay: 0.5 });
         gsap.to(icon, {
           y: 0,
           duration: 0.5,
@@ -46,16 +46,14 @@ export default {
     // let name = this.$props.data.name.replace(/\s/g, "");
     // button.style.backgroundImage = "url('" + name + ".png')";
     if (this.data.version_id == this.$props.selected) {
-      button.style.border = "3px solid "+this.accentColor;
+      button.style.border = "3px solid " + this.accentColor;
     }
   },
-  computed: {
-  },
+  computed: {},
 };
 </script>
 
 <style scoped>
-
 .entry {
   margin-top: 15%;
   height: 12vh;
