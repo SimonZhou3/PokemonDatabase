@@ -92,7 +92,7 @@ export default {
     text-align: center;
     color: #ffffff;
     margin-left: 2%;
-    font-size: 3vh;
+    font-size: 2.5vh;
     font-weight: bold;
       box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
 }

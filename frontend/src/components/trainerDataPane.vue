@@ -1,5 +1,5 @@
 <template>
-<div>
+<div v-if="this.$props.isLoaded">
   <div class="pane" ref="pane">
     <div class="d-grid h-100 pane-background">
       <button class="btn btn-outline-light" data-bs-toggle="modal" data-bs-target="#addModal">
@@ -213,7 +213,7 @@ import { nextTick } from "vue";
 import TrainerStat from "./trainerStat.vue";
 
 export default {
-  props: ["trainerData", "allPokemon"],
+  props: ["trainerData", "allPokemon", "isLoaded"],
   data() {
     return {
       name: null,

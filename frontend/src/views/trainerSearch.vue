@@ -9,11 +9,13 @@
         :deleteTrainer="this.deleteTrainer"
         @querying="queryTrainerData"
         @completed="displayResults"
+        @resetComplete="hideAll"
         ref="searchBar"
     />
   </div>
   <TrainerDataPane
       v-if="this.show"
+      :isLoaded = "this.show"
       :trainerData="this.trainerData"
       :allPokemon = "this.allPokemon"
       :update="this.update"
@@ -49,6 +51,10 @@ export default {
   },
   methods: {
 
+    hideAll() {
+      this.$data.show = false;
+      window.location.reload()
+    },
     async forceRerender() {
       this.renderComponent = false;
       await nextTick();

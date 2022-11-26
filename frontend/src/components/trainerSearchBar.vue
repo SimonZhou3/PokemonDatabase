@@ -10,7 +10,7 @@
         Delete Trainer
       </i>
     </button>
-    <div class="barContainer" ref="barContainer" @click="reset">
+    <div class="barContainer" ref="barContainer" @click="this.reset">
       <input
           class="search"
           ref="search"
@@ -134,7 +134,7 @@ export default {
     return {
       query: "",
       loading: false,
-      loaded: false,
+      loaded : false,
       showImage: false,
       trainerSprite: this.$props.sprite,
     };
@@ -152,9 +152,38 @@ export default {
     },
   },
   methods: {
+
     reset() {
-      console.log("resetting trainer")
+      if (this.loaded) {
+        console.log("resetting to original state");
+        let sprite = this.$refs.sprite;
+        gsap.to(sprite, { scale: 0, duration: 0.5, ease: "back.in" });
+        this.$emit("reset");
+        let barContainer = this.$refs.barContainer;
+        barContainer.style.transformOrigin = "center";
+        gsap.to(barContainer, { top: "45vh", duration: 1, ease: "expo" });
+        gsap.to(barContainer, {
+          height: "10vh",
+          duration: 0.5,
+          ease: "expo",
+          delay: 0.3,
+        });
+        gsap.to(barContainer, {
+          width: "65vw",
+          duration: 0.5,
+          ease: "expo",
+          delay: 0.5,
+          onComplete: () => {
+            this.loading = false;
+            this.loaded = false;
+            this.showImage = false;
+            this.$emit("resetComplete")
+          },
+        });
+
+      }
     },
+
     async forceRerender() {
       this.renderComponent = false;
       await nextTick();
@@ -228,7 +257,7 @@ export default {
         onComplete: () => {
           this.$emit("completed");
           this.showImage = true;
-          this.loaded=true;
+          this.loaded = true;
           this.toggleSprite;
         },
       });

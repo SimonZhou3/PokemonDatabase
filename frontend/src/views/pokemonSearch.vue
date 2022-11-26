@@ -71,9 +71,9 @@ export default {
         grass: { main: "#27CB4F", accent: "#157A3F", text_accent: "#ffffff"},
         electric: { main: "#FBFB72", accent: "#E3E32B" , text_accent: "#000000"}, //need dark font
         psychic: { main: "#F81D8F", accent: "#A6296C", text_accent: "#ffffff"},
-        ice: { main: "#84D2F7", accent: "#86D2F5" , text_accent: "#000000"}, //need dark font
+        ice: { main: "#84D2F7", accent: "#75C3DB" , text_accent: "#000000"}, //need dark font
         dragon: { main: "#63C9D7", accent: "#448B95", text_accent: "#ffffff"},
-        dark: { main: "#5A5979", accent: "#448B95", text_accent: "#ffffff"},
+        dark: { main: "#448B95", accent: "#5A5979",  text_accent: "#ffffff"},
         fairy: { main: "#EA1369", accent: "#971944", text_accent: "#ffffff"},
         unknown: { main: "#A6A8A8", accent: "#AAA8AB" , text_accent: "#000000"}, //need dark font
         shadow: { main: "#272C3B", accent: "#1B1E28", text_accent: "#ffffff"},
