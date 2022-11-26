@@ -2,7 +2,7 @@
 
 # References
 > Our database fetched data from https://pokeapi.co/ 
-> 
+> PG_DUMP was used to export dynamic data into one SQL file (FOR postgreSQL)
 
 
 # Project Setup
