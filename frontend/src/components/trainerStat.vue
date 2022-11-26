@@ -6,12 +6,14 @@
           <thead>
             <tr>
               <th scope="col">Name</th>
+              <th>Pokemon ID</th>
               <th>Count</th>
             </tr>
           </thead>
           <tbody>
             <tr v-for="pokemon of this.trainerStats" :key="pokemon">
               <th scope="row">{{ pokemon.name }}</th>
+              <th>{{pokemon.pokemon_specific_id}}</th>
               <td>{{ pokemon.count }}</td>
             </tr>
           </tbody>
