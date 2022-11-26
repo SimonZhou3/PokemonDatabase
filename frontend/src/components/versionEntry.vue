@@ -18,7 +18,7 @@ export default {
       image: require("../assets/" +
         this.$props.data.name.replace(/\s/g, "") +
         ".png"),
-        accentColor: this.$props.color
+        accentColor: this.$props.color.accent
     };
   },
   updated() {},
