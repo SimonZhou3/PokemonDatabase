@@ -29,7 +29,7 @@ export default {
     pokemon_id: String,
   },
   setup() {
-    const activeNames = ref(["0"]);
+    const activeNames = ref(["1"]);
     return { activeNames };
   },
   data() {

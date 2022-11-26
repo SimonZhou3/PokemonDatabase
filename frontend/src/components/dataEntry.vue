@@ -4,10 +4,10 @@
       {{ this.dataName }}
     </button>
     <div class="moveEntryContainer">
-      <moveEntry :moveData="this.moveData" v-if="this.showMove" />
+      <moveEntry :moveData="this.moveData" :color="this.$props.color" v-if="this.showMove" />
     </div>
     <div class="entryContainer">
-      <itemEntry :itemData="this.itemData" v-if="this.showItem" />
+      <itemEntry :itemData="this.itemData" :color="this.$props.color" v-if="this.showItem" />
     </div>
   </div>
 </template>
@@ -24,7 +24,8 @@ export default {
   },
   data() {
     return {
-      accentColor: this.$props.color,
+      accentColor: this.$props.color.accent,
+      accentText: this.$props.color.text_accent,
       dataName: null,
       showMove: false,
       moveData: null,
@@ -70,9 +71,9 @@ export default {
       }
       this.received = true;
       let container = this.$refs.dataContainer;
-      let entry = this.$refs.entry
-      container.style.color = "#ffffff"
-      entry.style.color="#ffffff"
+      // let entry = this.$refs.entry
+      container.style.color = this.accentText
+      // entry.style.color="#ffffff"
       gsap.to(container, { backgroundColor: this.accentColor});
       console.log(data);
       // let dataContainer = this.$refs.dataContainer;
@@ -104,7 +105,7 @@ export default {
         let container = this.$refs.dataContainer;
         gsap.to(container, { backgroundColor: "#ffffff" });
               let entry = this.$refs.entry
-      entry.style.color="#000000"
+      entry.style.color="#2c3e50"
       }
       // this.$emit("queryData", this.$props.data, this.$props.type)
     },
@@ -130,6 +131,7 @@ export default {
 .entry:hover {
   cursor: pointer;
   background-color: v-bind(accentColor);
+  color: v-bind(accentText)
 }
 .dataContainer {
   /* border: 1px solid green; */

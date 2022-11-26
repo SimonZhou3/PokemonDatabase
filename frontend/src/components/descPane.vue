@@ -6,7 +6,8 @@
         v-bind:style="{
             backgroundImage: `linear-gradient(to right, ` +
             this.$props.colors[type.type].main + ', ' +
-            this.$props.colors[type.type].accent + ')'
+            this.$props.colors[type.type].accent + ')' ,
+            color: this.$props.colors[type.type].text_accent
             }"
         >{{type.type}}
         </div>
@@ -91,6 +92,8 @@ export default {
     text-align: center;
     color: #ffffff;
     margin-left: 2%;
+    font-size: 3vh;
+    font-weight: bold;
       box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
 }
 /* width */

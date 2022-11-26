@@ -12,9 +12,10 @@
 
 <script>
 export default {
-    props:["moveData"],
+    props:["moveData", "color"],
     data() {
         return {
+            accentText: this.$props.color.text_accent
         }
     },
     // mounted() {
@@ -34,5 +35,6 @@ export default {
 }
 .moveData{
     /* border: 1px solid blue; */
+    color: v-bind(accentText)
 }
 </style>

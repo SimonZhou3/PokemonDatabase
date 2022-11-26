@@ -17,7 +17,8 @@ export default {
     return {
       statName: null,
       statValue: 0,
-      accentColor: this.$props.color,
+      accentColor: this.$props.color.accent,
+      accentText: this.$props.color.text_accent
     };
   },
   methods: {
@@ -107,7 +108,7 @@ export default {
   left: -10%;
   float: left;
   z-index: 2;
-  color: #ffffff;
+  color: v-bind(accentText);
   font-weight: bold;
   font-size: 1vh;
 }

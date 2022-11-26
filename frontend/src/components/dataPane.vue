@@ -31,8 +31,7 @@
       </div>
       <div class="entryContainer" id="area" ref="area">
         <div class="name">Areas</div>
-        <div class="entries">
-          <div v-for="area of this.areas" :key="area">
+        <div class="entries">          <div v-for="area of this.areas" :key="area">
             <dataEntry
               :data="area"
               :color="this.$props.color"
@@ -81,7 +80,8 @@ export default {
       items: [],
       allVersions: [],
       refresh: this.$props.update,
-      accentColor: this.$props.color,
+      accentColor: this.$props.color.accent,
+      accentText: this.$props.color.text_accent
     };
   },
   components: {
@@ -183,7 +183,7 @@ export default {
 .name {
   /* border: 1px solid black; */
   background-color: v-bind(accentColor);
-  color: #ffffff;
+  color: v-bind(accentText);
   font-weight: bold;
   font-size: 30px;
   margin-bottom: 0%;

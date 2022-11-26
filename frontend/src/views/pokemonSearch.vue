@@ -15,7 +15,7 @@
       :pokemonData="this.pokemonData"
       :versions="this.versionData"
       :update="this.update"
-      :color="this.typeColor[this.pokemonTypes[0].type].accent"
+      :color="this.typeColor[this.pokemonTypes[0].type]"
       :toggle="this.reset"
       @query="queryPokemonSpecificData"
       @queryData="queryMoveAreaItem"
@@ -23,7 +23,7 @@
     <StatPane
       v-if="this.show"
       :stats="this.pokemonStats"
-      :color="this.typeColor[this.pokemonTypes[0].type].accent"
+      :color="this.typeColor[this.pokemonTypes[0].type]"
       :toggle="this.reset"
     />
     <DescPane
@@ -46,7 +46,7 @@ import DescPane from "../components/descPane.vue";
 export default {
   name: "App",
   components: {
-    SearchBar,
+    SearchBar, 
     DataPane,
     StatPane,
     DescPane,
@@ -57,26 +57,26 @@ export default {
       show: false,
       pokemonData: null,
       typeColor: {
-        normal: { main: "#CC99A8", accent: "#75515B" },
-        fighting: { main: "#EF6138", accent: "#994025" },
-        flying: { main: "#93B2C7", accent: "#49677D" },
-        poison: { main: "#9B69D9", accent: "#5E2D88" },
-        ground: { main: "#A96F2E", accent: "#6E491F" },
-        rock: { main: "#8B3E21", accent: "#421B0F" },
-        bug: { main: "#3B9852", accent: "#1C4B27" },
-        ghost: { main: "#906790", accent: "#313469" },
-        steel: { main: "#44BD94", accent: "#5F756D" },
-        fire: { main: "#FD4C5A", accent: "#A91F27" },
-        water: { main: "#86A9FA", accent: "#1552E2" },
-        grass: { main: "#27CB4F", accent: "#157A3F" },
-        electric: { main: "#FBFB72", accent: "#E3E32B" }, //need dark font
-        psychic: { main: "#F81D8F", accent: "#A6296C" },
-        ice: { main: "#84D2F7", accent: "#86D2F5" }, //need dark font
-        dragon: { main: "#63C9D7", accent: "#448B95" },
-        dark: { main: "#5A5979", accent: "#448B95" },
-        fairy: { main: "#EA1369", accent: "#971944" },
-        unknown: { main: "#A6A8A8", accent: "#AAA8AB" }, //need dark font
-        shadow: { main: "#272C3B", accent: "#1B1E28" },
+        normal: { main: "#CC99A8", accent: "#75515B", text_accent: "#ffffff"},
+        fighting: { main: "#EF6138", accent: "#994025", text_accent: "#ffffff"},
+        flying: { main: "#93B2C7", accent: "#49677D", text_accent: "#ffffff"},
+        poison: { main: "#9B69D9", accent: "#5E2D88", text_accent: "#ffffff"},
+        ground: { main: "#A96F2E", accent: "#6E491F", text_accent: "#ffffff"},
+        rock: { main: "#8B3E21", accent: "#421B0F", text_accent: "#ffffff"},
+        bug: { main: "#3B9852", accent: "#1C4B27", text_accent: "#ffffff"},
+        ghost: { main: "#906790", accent: "#313469" , text_accent: "#ffffff"},
+        steel: { main: "#44BD94", accent: "#5F756D", text_accent: "#ffffff"},
+        fire: { main: "#FD4C5A", accent: "#A91F27", text_accent: "#ffffff"},
+        water: { main: "#86A9FA", accent: "#1552E2", text_accent: "#ffffff"},
+        grass: { main: "#27CB4F", accent: "#157A3F", text_accent: "#ffffff"},
+        electric: { main: "#FBFB72", accent: "#E3E32B" , text_accent: "#000000"}, //need dark font
+        psychic: { main: "#F81D8F", accent: "#A6296C", text_accent: "#ffffff"},
+        ice: { main: "#84D2F7", accent: "#86D2F5" , text_accent: "#000000"}, //need dark font
+        dragon: { main: "#63C9D7", accent: "#448B95", text_accent: "#ffffff"},
+        dark: { main: "#5A5979", accent: "#448B95", text_accent: "#ffffff"},
+        fairy: { main: "#EA1369", accent: "#971944", text_accent: "#ffffff"},
+        unknown: { main: "#A6A8A8", accent: "#AAA8AB" , text_accent: "#000000"}, //need dark font
+        shadow: { main: "#272C3B", accent: "#1B1E28", text_accent: "#ffffff"},
       },
       pokemonList: [],
       pokemonSprite: null,

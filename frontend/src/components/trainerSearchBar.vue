@@ -10,7 +10,7 @@
         Delete Trainer
       </i>
     </button>
-    <div class="barContainer" ref="barContainer">
+    <div class="barContainer" ref="barContainer" @click="reset">
       <input
           class="search"
           ref="search"
@@ -152,6 +152,9 @@ export default {
     },
   },
   methods: {
+    reset() {
+      console.log("resetting trainer")
+    },
     async forceRerender() {
       this.renderComponent = false;
       await nextTick();
@@ -225,6 +228,7 @@ export default {
         onComplete: () => {
           this.$emit("completed");
           this.showImage = true;
+          this.loaded=true;
           this.toggleSprite;
         },
       });
@@ -357,6 +361,10 @@ export default {
   z-index: 1;
   overflow: hidden;
   box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+}
+.barContainer:hover {
+  /* background-color: #cf4444; */
+  cursor: pointer;
 }
 .search {
   position: relative;
