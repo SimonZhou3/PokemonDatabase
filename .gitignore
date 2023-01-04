@@ -4,3 +4,5 @@
 .vscode
 .env
 __pycache__/
+milestone
+./backend/src/init_DB/ExportedDatabase.sql
