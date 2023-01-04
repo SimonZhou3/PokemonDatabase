@@ -66,6 +66,5 @@ PORT=[<Port> | Optional]
             - Move
             - Region
             - Trainer
-            - 
     3. DBMS (using Postgres)
         - Intialize and populate tables and database
