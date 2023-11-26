@@ -1,4 +1,4 @@
-# project_n7z5j_r0b7x_x7g3b
+# Pokemon Database
 
 # References
 > - Our database fetched data from https://pokeapi.co/ <br>
